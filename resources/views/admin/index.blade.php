@@ -20,6 +20,7 @@
         <div class="col-md-12 text-center">
             <table>
                 <tr>
+                    <th>ID</th>
                     <th>@lang('general.title')</th>
                     <th>@lang('general.detail')</th>
                     <th>@lang('general.edit')</th>
@@ -27,6 +28,7 @@
                 </tr>
                 @foreach($posts as $post)
                     <tr>
+                        <td>{{ $post->id }}</td>
                         <td>{{ $post->title }}</td>
                         <td><a href="{{ route('content.post', ['id' => $post->id]) }}">@lang('general.moredetails')</a></td>
                         <td><a href="{{ route('admin.edit', ['id' => $post->id]) }}">@lang('general.edit')</a></td>
