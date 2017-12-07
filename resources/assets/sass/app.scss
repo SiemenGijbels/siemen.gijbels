@@ -1,0 +1,64 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+// Variables
+@import "variables";
+// Bootstrap
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+//own stuff
+
+.grid-item {
+  width: percentage(.85/3);
+  margin: 0 2.5% 100px 2.5%;
+  overflow: hidden;
+}
+
+.blogPics {
+  width: 100%;
+  height: 100%;
+}
+
+.grid {
+  width: 80%;
+  margin: auto;
+  height: auto;
+  overflow: hidden;
+}
+
+.loading {
+  background: white;
+  height: 100%;
+  width: 100%;
+  z-index: 999;
+  position: fixed;
+  h1 {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.navbar {
+  margin-bottom: 0 !important;
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+}
+
+.content {
+  padding-top: 200px;
+}
+
+table {
+  margin: 0 auto;
+}
+
+table tbody tr th {
+  padding: 30px 50px;
+}
+
+table tbody tr td {
+  padding: 5px 50px;
+}
+
