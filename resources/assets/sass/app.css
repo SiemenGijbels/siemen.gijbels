@@ -5834,6 +5834,10 @@ button.close {
 .content {
   padding-top: 200px; }
 
+.activeFront {
+  text-decoration: underline;
+  font-weight: bolder; }
+
 table {
   margin: 0 auto; }
 

@@ -18,9 +18,24 @@ Route::get('/', [
     'as' => 'content.index'
 ])->name('home');
 
+Route::get('archive', [
+    'uses' => 'PostController@getArchiveIndex',
+    'as' => 'content.archive'
+]);
+
 Route::get('post/{id}', [
     'uses' => 'PostController@getPost',
     'as' => 'content.post'
+]);
+
+Route::get('post/{id}/archive', [
+    'uses' => 'PostController@setArchived',
+    'as' => 'content.post.archive'
+]);
+
+Route::get('post/{id}/unarchive', [
+    'uses' => 'PostController@setUnarchived',
+    'as' => 'content.post.unarchive'
 ]);
 
 Route::get('post/{id}/Like', [

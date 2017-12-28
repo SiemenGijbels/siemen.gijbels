@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Like extends Model
 {
-    public function item() {
+    public function like() {
 
         return $this->belongsTo('App\Post', 'post_id');
     }

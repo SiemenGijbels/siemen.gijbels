@@ -11,7 +11,7 @@
     <title>@yield('page_title')</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('css/app.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
@@ -31,11 +31,27 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Blog
-                </a>
+                @if (\Request::is('/'))
+                    <a class="navbar-brand activeFront" href="{{ url('/') }}">
+                        Blog
+                    </a>
+                    @if(Auth::user())
+                        <a class="navbar-brand" href="{{ route('content.archive') }}">
+                            @lang('general.archive')
+                        </a>
+                    @endif
+                @endif
+                @if (\Request::is('archive'))
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        Blog
+                    </a>
+                    @if(Auth::user())
+                        <a class="navbar-brand activeFront" href="{{ url('archive') }}">
+                            @lang('general.archive')
+                        </a>
+                    @endif
+                @endif
             </div>
-
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
@@ -76,7 +92,7 @@
                                 <li>
                                     <a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                     document.getElementById('logout-form').submit();">
                                         @lang('general.logout')
                                     </a>
 
@@ -107,12 +123,12 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/masonry.pkgd.min.js') }}" type="text/javascript"></script>
 <script>
-        $('.blogPics').on('load', function() {
-            $('.grid').masonry({
-                itemSelector: '.grid-item'
-            });
-            $('.loading').fadeOut();
+    $('.blogPics').on('load', function () {
+        $('.grid').masonry({
+            itemSelector: '.grid-item'
         });
+        $('.loading').fadeOut();
+    });
 </script>
 </body>
 </html>

@@ -20,8 +20,14 @@ class PostController extends Controller
 
     public function getIndex() {
 
-        $posts = Post::orderBy('created_at', 'desc')->paginate(30);
+        $posts = Post::whereNull('archived')->orWhere('archived', 0)->orderBy('created_at', 'desc')->paginate(30);
         return view('content.index', ['posts' => $posts]);
+    }
+
+    public function getArchiveIndex() {
+
+        $posts = Post::where('archived',  1)->orderBy('created_at', 'desc')->paginate(30);
+        return view('content.archive', ['posts' => $posts]);
     }
 
     public function getPost($id) {
@@ -95,5 +101,21 @@ class PostController extends Controller
 
         $post->tags()->sync($request->input('tags') === null ? [] : $request->input('tags'));
         return redirect()->route('admin.index')->with('info', 'Post edited, new Title is: ' . $request->input('title'));
+    }
+
+    public function setArchived($id) {
+        $post = Post::where('id', $id)->first();
+        $post->archived = 1;
+        $post->save();
+
+        return redirect("archive");
+    }
+
+    public function setUnarchived($id) {
+        $post = Post::where('id', $id)->first();
+        $post->archived = 0;
+        $post->save();
+
+        return redirect("/");
     }
 }

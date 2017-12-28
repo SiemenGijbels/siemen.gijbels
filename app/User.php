@@ -15,6 +15,9 @@ class User extends Authenticatable
         $this->notify(new CustomPasswordReset($token));
     }
 
+    public function posts() {
+        return $this->hasMany('App\Post')->withTimestamps();
+    }
 
     /**
      * The attributes that are mass assignable.

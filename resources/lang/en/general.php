@@ -40,5 +40,14 @@ return [
     'adminindex' => 'Admin dashboard',
     'adminedit' => 'Edit post',
     'admincreate' => 'Create post',
+    'archive' => 'Archive',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
 
 ];

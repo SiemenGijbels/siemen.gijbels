@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('page_title', 'Blog Siemen Gijbels')
+@section('page_title', 'Archive Siemen Gijbels')
 
 @section('content')
-        <div class="loading">
-            <h1>@lang('general.loadingblog')</h1>
-        </div>
-        <div class="content">
+    <div class="loading">
+        <h1>@lang('general.loadingblog')</h1>
+    </div>
+    <div class="content">
         <div class="grid">
             @foreach($posts as $post)
                 <div class="grid-item">
