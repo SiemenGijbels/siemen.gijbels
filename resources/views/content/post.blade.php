@@ -14,11 +14,13 @@
                 <p>{{  $post->content }}</p>
             </div>
             <div class="col-md-12">
-                @if($post->archived == 0 || $post->archived == NULL)
-                    <p><a href="{{ route('content.post.archive', ['id' => $post->id]) }}">Archive</a></p>
-                @endif
-                @if($post->archived == 1)
-                    <p><a href="{{ route('content.post.unarchive', ['id' => $post->id]) }}">Unarchive</a></p>
+                @if($post->user_id == Auth::user()->id)
+                    @if($post->archived == 0 || $post->archived == NULL)
+                        <p><a href="{{ route('content.post.archive', ['id' => $post->id]) }}">@lang('general.archiveVerb')</a></p>
+                    @endif
+                    @if($post->archived == 1)
+                        <p><a href="{{ route('content.post.unarchive', ['id' => $post->id]) }}">@lang('general.unarchive')</a></p>
+                    @endif
                 @endif
             </div>
             <div class="col-md-12">

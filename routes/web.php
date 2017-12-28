@@ -11,16 +11,47 @@
 |
 */
 
+// AUTH STUFF
+
 Auth::routes();
+
+Route::post('login', [
+    'uses' => 'SignInController@signin',
+    'as' => 'auth.signin'
+]);
+
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
+
+// GENERAL
 
 Route::get('/', [
     'uses' => 'PostController@getIndex',
     'as' => 'content.index'
-])->name('home');
+]);
+
+Route::get('profile', [
+    'uses' => 'PostController@getProfileIndex',
+    'as' => 'profile.index'
+]);
 
 Route::get('archive', [
     'uses' => 'PostController@getArchiveIndex',
     'as' => 'content.archive'
+]);
+
+Route::get('about', function () {
+    return view('content.about');
+})->name('content.about');
+
+Route::get('create', [
+    'uses' => 'PostController@getCreate',
+    'as' => 'content.create'
+]);
+
+Route::post('create', [
+    'uses' => 'PostController@postCreate',
+    'as' => 'content.create'
 ]);
 
 Route::get('post/{id}', [
@@ -43,12 +74,6 @@ Route::get('post/{id}/Like', [
     'as' => 'content.post.like'
 ]);
 
-Route::post('login', [
-    'uses' => 'SignInController@signin',
-    'as' => 'auth.signin' 
-]);
-
-Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 // LANGUAGES
 
@@ -56,6 +81,7 @@ Route::get('lang/{lang}', [
     'uses'=>'LanguageController@changeLocale',
     'as'=>'lang.switch'
 ]);
+
 
 //  ADMIN
 

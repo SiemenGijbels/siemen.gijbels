@@ -5800,12 +5800,18 @@ button.close {
     display: none !important; } }
 .grid-item {
   width: 28.3333333333%;
-  margin: 0 2.5% 100px 2.5%;
-  overflow: hidden; }
+  margin: 0 2.5% 100px 2.5%; }
 
 .blogPics {
   width: 100%;
   height: 100%; }
+
+.archived {
+  -webkit-filter: blur(10px);
+  filter: blur(10px); }
+
+.archivedtext {
+  color: red; }
 
 .grid {
   width: 80%;

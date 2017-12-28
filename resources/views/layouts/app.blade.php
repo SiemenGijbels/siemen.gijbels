@@ -11,7 +11,7 @@
     <title>@yield('page_title')</title>
 
     <!-- Styles -->
-    <link href="{{ URL::asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('assets/css/app.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
@@ -31,6 +31,10 @@
                 </button>
 
                 <!-- Branding Image -->
+                @if(Auth::user())
+                    <a href="{{ route('content.create') }}" class="btn btn-success">@lang('general.newpost')</a>
+                @endif
+
                 @if (\Request::is('/'))
                     <a class="navbar-brand activeFront" href="{{ url('/') }}">
                         Blog
@@ -40,8 +44,10 @@
                             @lang('general.archive')
                         </a>
                     @endif
-                @endif
-                @if (\Request::is('archive'))
+                    <a class="navbar-brand" href="{{ url('about') }}">
+                        @lang('general.about')
+                    </a>
+                @elseif (\Request::is('archive'))
                     <a class="navbar-brand" href="{{ url('/') }}">
                         Blog
                     </a>
@@ -50,6 +56,33 @@
                             @lang('general.archive')
                         </a>
                     @endif
+                    <a class="navbar-brand" href="{{ url('about') }}">
+                        @lang('general.about')
+                    </a>
+                @elseif (\Request::is('about'))
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        Blog
+                    </a>
+                    @if(Auth::user())
+                        <a class="navbar-brand" href="{{ route('content.archive') }}">
+                            @lang('general.archive')
+                        </a>
+                    @endif
+                    <a class="navbar-brand activeFront" href="{{ url('about') }}">
+                        @lang('general.about')
+                    </a>
+                @else
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        Blog
+                    </a>
+                    @if(Auth::user())
+                        <a class="navbar-brand" href="{{ route('content.archive') }}">
+                            @lang('general.archive')
+                        </a>
+                    @endif
+                    <a class="navbar-brand" href="{{ url('about') }}">
+                        @lang('general.about')
+                    </a>
                 @endif
             </div>
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -100,6 +133,9 @@
                                           style="display: none;">
                                         {{ csrf_field() }}
                                     </form>
+                                </li>
+                                <li>
+                                    <a href="{{ route('profile.index') }}">@lang('general.profile')</a>
                                 </li>
                                 @if(Auth::user()->type == 1)
                                     <li>

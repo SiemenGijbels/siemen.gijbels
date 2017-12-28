@@ -31,6 +31,7 @@ class PostsTableSeeder extends Seeder
                 'content' => $record['content'],
                 'created_at' => date("Y-m-d H:i:s"),
                 'updated_at' => date("Y-m-d H:i:s"),
+                'user_id' => 1,
             ]);
         }
 

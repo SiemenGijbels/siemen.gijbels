@@ -12,19 +12,8 @@ use Illuminate\Support\Facades\Session;
 
 class LanguageController extends Controller
 {
-    public function changeLocale($lang) {
-//        $this->validate($request, ['locale' => 'required|in:nl,en']);
-//
-//        \Session::put('locale', $request->locale);
-//
-//        return redirect()->back();
-
-//        if (!\Session::has('locale')) {
-//            \Session::put('locale', Input::get('locale'));
-//        } else {
-//            Session::set('locale', Input::get('locale'));
-//        }
-//        return redirect()->back();
+    public function changeLocale($lang)
+    {
 
         if (array_key_exists($lang, Config::get('languages'))) {
             Session::put('applocale', $lang);
