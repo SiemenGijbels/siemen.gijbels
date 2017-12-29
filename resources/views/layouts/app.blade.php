@@ -32,7 +32,7 @@
 
                 <!-- Branding Image -->
                 @if(Auth::user())
-                    <a href="{{ route('content.create') }}" class="btn btn-success">@lang('general.newpost')</a>
+                    <a href="{{ route('content.create') }}" class="btn btn-success" @if (\Request::is('admin'))style="display: none" @endif>@lang('general.newpost')</a>
                 @endif
 
                 @if (\Request::is('/'))
@@ -116,8 +116,8 @@
 
 
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false" aria-haspopup="true">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="position:relative; padding-left:50px;">
+                                <img src="{{ asset('uploads/avatars/') }}/{{ Auth::user()->avatar }}" style="width:32px; height:32px; position:absolute; top:10px; left:10px; border-radius:50%">
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 

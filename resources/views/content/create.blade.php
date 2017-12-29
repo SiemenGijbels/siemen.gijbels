@@ -20,8 +20,7 @@
         @endif
 
         <div class="row">
-            <div class="col-md-12">
-                <form action="{{ route('content.create') }}" method="post">
+                <form enctype="multipart/form-data" action="{{ route('content.create') }}" method="post">
                     <div class="form-group">
                         <label for="title">@lang('general.title')</label>
                         <input type="text" class="form-control" id="title" name="title">
@@ -32,6 +31,10 @@
                     </div>
                     <div class="form-group">
                         <input type="hidden" class="form-control" id="user_id" name="user_id" value="{{ Auth::user()->id }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Image</label>
+                        <input type="file" name="image">
                     </div>
                     @foreach($tags as $tag)
                         <div class="checkbox">

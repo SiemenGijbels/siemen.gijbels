@@ -4,6 +4,7 @@
 
 @section('content')
     <div class="content">
+        <img src="{{ asset('uploads/images/') }}/{{ $post->image }}">
         <div class="row">
             <div class="col-md-12">
                 <p class="quote">{{ $post->title }}</p>

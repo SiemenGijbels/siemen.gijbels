@@ -23,7 +23,7 @@
         @if($comment->post_id == $post->id)
             <p>{{ $comment->user->name }}</p>
             <p>{{ $comment->created_at }}</p>
-            <p>{{ $comment->content }}!</p>
+            <p>{{ $comment->content }}</p>
             @if(Auth::user() && Auth::user()->type == 1 || Auth::user() && Auth::user()->id == $comment->user_id)
                 <a href="{{ route('content.post.deleteComment', ['postId' => $post->id, 'commentId' => $comment->id]) }}">@lang('general.delete')</a>
             @endif

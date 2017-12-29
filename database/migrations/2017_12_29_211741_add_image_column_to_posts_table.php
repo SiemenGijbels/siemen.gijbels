@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddUserLikesColumnToLikesTable extends Migration
+class AddImageColumnToPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddUserLikesColumnToLikesTable extends Migration
      */
     public function up()
     {
-        Schema::table('likes', function($table) {
-            $table->integer('user_like')->nullable();
+        Schema::table('posts', function($table) {
+            $table->string('image');
         });
     }
 
@@ -25,8 +25,8 @@ class AddUserLikesColumnToLikesTable extends Migration
      */
     public function down()
     {
-        Schema::table('likes', function($table) {
-            $table->dropColumn('user_like')->nullable();
+        Schema::table('posts', function($table) {
+            $table->dropColumn('image');
         });
     }
 }

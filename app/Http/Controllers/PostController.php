@@ -12,8 +12,8 @@ use App\Comment;
 use App\Post;
 use App\Like;
 use App\Tag;
+use Intervention\Image\Facades\Image;
 use Auth;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -58,6 +58,28 @@ class PostController extends Controller
         return view('profile.index', ['posts' => $posts]);
     }
 
+    //https://devdojo.com/episode/laravel-user-image
+    public function postAvatarUpdate(Request $request){
+
+        $user = Auth::user();
+        $posts = Post::where('user_id', $user->id)
+            ->orderBy('id', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(30);
+
+        if($request->hasFile('avatar')){
+            $avatar = $request->file('avatar');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+            Image::make($avatar)->crop(300, 300)->save( public_path('/uploads/avatars/' . $filename ) );
+
+            $user->avatar = $filename;
+            $user->save();
+        }
+
+        return view('profile.index', ['posts' => $posts]);
+
+    }
+
     public function getPost($id)
     {
         $post = Post::where('id', $id)
@@ -74,8 +96,6 @@ class PostController extends Controller
         $userLike = Like::where('user_id', Auth::user()->id)
             ->where('post_id', $post->id)
             ->first();
-
-        $userLike2 = Like::find($userLike);
 
         if($likes->isEmpty() || count($userLike) == 0 || count($userLike) == NULL) {
             $userLikeCount = 0;
@@ -127,8 +147,13 @@ class PostController extends Controller
         $post = new Post([
             'title' => $request->input('title'),
             'content' => $request->input('content'),
-            'user_id' => $request->input('user_id')
+            'user_id' => $request->input('user_id'),
+            'image' => $request->file('image')
         ]);
+        $image = $request->file('image');
+        $filename = time() . '.' . $image->getClientOriginalExtension();
+        Image::make($image)->save( public_path('/uploads/images/' . $filename ));
+        $post->image = $filename;
         $post->save();
         $post->tags()->attach($request->input('tags') === null ? [] : $request->input('tags'));
 
@@ -141,7 +166,10 @@ class PostController extends Controller
     {
 
         $posts = Post::orderBy('id', 'desc')->get();
-        return view('admin.index', ['posts' => $posts]);
+        $comments = Comment::all();
+        $likes = Like::all();
+
+        return view('admin.index', ['posts' => $posts, 'comments' => $comments, 'likes' => $likes]);
     }
 
     public function getAdminEdit($id)

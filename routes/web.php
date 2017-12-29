@@ -35,6 +35,11 @@ Route::get('profile', [
     'as' => 'profile.index'
 ]);
 
+Route::post('profile', [
+    'uses' => 'PostController@postAvatarUpdate',
+    'as' => 'profile.index.changeAvatar'
+]);
+
 Route::get('archive', [
     'uses' => 'PostController@getArchiveIndex',
     'as' => 'content.archive'
