@@ -45,11 +45,11 @@ return [
     'archiveVerb' => 'Archiveer',
     'unarchive' => 'Terug online zetten',
     'profile' => 'Profiel',
-    '' => '',
-    '' => '',
-    '' => '',
-    '' => '',
-    '' => '',
+    'commentVerb' => 'Reageren',
+    'comment' => 'Reactie',
+    'comments' => 'Reacties',
+    'like' => 'Like',
+    'unlike' => 'Ontlike',
     '' => '',
 
 ];

@@ -8,30 +8,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Post;
 use App\Like;
 use App\Tag;
 use Auth;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
 
-    public function __construct(){}
+    public function __construct()
+    {
+    }
 
-    public function getIndex() {
+    public function getIndex()
+    {
 
-        $posts = Post::where(function($query){
-                $query->whereNull('archived')
-                      ->orWhere('archived', 0);
-            })
+        $posts = Post::where(function ($query) {
+            $query->whereNull('archived')
+                ->orWhere('archived', 0);
+        })
             ->orderBy('id', 'desc')
             ->orderBy('created_at', 'desc')
             ->paginate(30);
         return view('content.index', ['posts' => $posts]);
     }
 
-    public function getArchiveIndex() {
+    public function getArchiveIndex()
+    {
 
         $user = Auth::user();
         $posts = Post::where('user_id', $user->id)
@@ -42,8 +48,8 @@ class PostController extends Controller
         return view('content.archive', ['posts' => $posts]);
     }
 
-    public function getProfileIndex() {
-
+    public function getProfileIndex()
+    {
         $user = Auth::user();
         $posts = Post::where('user_id', $user->id)
             ->orderBy('id', 'desc')
@@ -52,31 +58,67 @@ class PostController extends Controller
         return view('profile.index', ['posts' => $posts]);
     }
 
-    public function getPost($id) {
-
-        $post = Post::where('id', $id)
-            ->with('likes')
-            ->first();
-        return view('content.post', ['post' => $post]);
-    }
-
-    public function getLikePost($id) {
-
+    public function getPost($id)
+    {
         $post = Post::where('id', $id)
             ->first();
-        $like = new Like();
-        $post->likes()->save($like);
-        return redirect()->back();
+
+        $comments = Comment::where('post_id', $post->id)
+            ->orderBy('id', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $likes = Like::where('post_id', $post->id)
+            ->get();
+
+        $userLike = Like::where('user_id', Auth::user()->id)
+            ->where('post_id', $post->id)
+            ->first();
+
+        $userLike2 = Like::find($userLike);
+
+        if($likes->isEmpty() || count($userLike) == 0 || count($userLike) == NULL) {
+            $userLikeCount = 0;
+        }
+        else {
+            $userLikeCount = 1;
+        }
+
+        $countLikes = $likes->count();
+
+        return view('content.post', ['post' => $post, 'comments' => $comments, 'userLike' => $userLike, 'userLikeCount' => $userLikeCount, 'countLikes' => $countLikes]);
     }
 
-    public function getCreate() {
+    public function postLikePost(Request $request)
+    {
+        $like = new Like([
+            'post_id' => $request->input('post_id'),
+            'user_id' => $request->input('user_id')
+        ]);
+        $like->save();
+
+        return redirect()->route('content.post', ['id' => $request->input('post_id')]);
+    }
+
+    public function getUnlikePost($postId, $likeId)
+    {
+        $post = Post::find($postId);
+        $like = Like::find($likeId);
+        $like->delete();
+
+        return redirect()->route('content.post', ['id' => $post->id]);
+    }
+
+    public function getCreate()
+    {
 
         Auth::user();
         $tags = Tag::all();
         return view('content.create', ['tags' => $tags, 'user_id', Auth::user()]);
     }
 
-    public function postCreate(Request $request) {
+    public function postCreate(Request $request)
+    {
 
         $this->validate($request, [
             'title' => 'required|min:3',
@@ -95,20 +137,23 @@ class PostController extends Controller
 
     //ADMIN
 
-    public function getAdminIndex() {
+    public function getAdminIndex()
+    {
 
         $posts = Post::orderBy('id', 'desc')->get();
         return view('admin.index', ['posts' => $posts]);
     }
 
-    public function getAdminEdit($id) {
+    public function getAdminEdit($id)
+    {
 
         $post = Post::find($id);
         $tags = Tag::all();
         return view('admin.edit', ['post' => $post, 'postId' => $id, 'tags' => $tags]);
     }
 
-    public function getAdminDelete($id) {
+    public function getAdminDelete($id)
+    {
 
         $post = Post::find($id);
         $post->likes()->delete();
@@ -117,14 +162,16 @@ class PostController extends Controller
         return redirect()->route('admin.index')->with('info', 'Post deleted!');
     }
 
-    public function getAdminCreate() {
+    public function getAdminCreate()
+    {
 
         Auth::user();
         $tags = Tag::all();
         return view('admin.create', ['tags' => $tags, 'user_id', Auth::user()]);
     }
 
-    public function postAdminCreate(Request $request) {
+    public function postAdminCreate(Request $request)
+    {
 
         $this->validate($request, [
             'title' => 'required|min:3',
@@ -141,7 +188,8 @@ class PostController extends Controller
         return redirect()->route('admin.index')->with('info', 'Item created, Title is: ' . $request->input('title'));
     }
 
-    public function postAdminUpdate(Request $request) {
+    public function postAdminUpdate(Request $request)
+    {
 
         $this->validate($request, [
             'title' => 'required|min:3',
@@ -156,7 +204,8 @@ class PostController extends Controller
         return redirect()->route('admin.index')->with('info', 'Post edited, new Title is: ' . $request->input('title'));
     }
 
-    public function setArchived($id) {
+    public function setArchived($id)
+    {
         $post = Post::where('id', $id)->first();
         $post->archived = 1;
         $post->save();
@@ -164,7 +213,8 @@ class PostController extends Controller
         return redirect("archive");
     }
 
-    public function setUnarchived($id) {
+    public function setUnarchived($id)
+    {
         $post = Post::where('id', $id)->first();
         $post->archived = 0;
         $post->save();

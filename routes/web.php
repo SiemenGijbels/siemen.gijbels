@@ -69,9 +69,24 @@ Route::get('post/{id}/unarchive', [
     'as' => 'content.post.unarchive'
 ]);
 
-Route::get('post/{id}/Like', [
-    'uses' => 'PostController@getLikePost',
+Route::get('post/{postId}/deleteComment/{commentId}', [
+    'uses' => 'CommentController@getDeleteComment',
+    'as' => 'content.post.deleteComment'
+]);
+
+Route::post('post/{postId}/Like/{userId}', [
+    'uses' => 'PostController@postLikePost',
     'as' => 'content.post.like'
+]);
+
+Route::get('post/{postId}/unlike/{likeId}', [
+    'uses' => 'PostController@getUnlikePost',
+    'as' => 'content.post.unlike'
+]);
+
+Route::post('post/{id}', [
+    'uses' => 'CommentController@postCommentPost',
+    'as' => 'content.post'
 ]);
 
 

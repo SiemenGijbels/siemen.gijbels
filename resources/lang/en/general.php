@@ -45,10 +45,10 @@ return [
     'archiveVerb' => 'Archive',
     'unarchive' => 'Put back online',
     'profile' => 'Profile',
-    '' => '',
-    '' => '',
-    '' => '',
-    '' => '',
-    '' => '',
+    'commentVerb' => 'Comment',
+    'comment' => 'Comment',
+    'comments' => 'Comments',
+    'like' => 'Like',
+    'unlike' => 'Unlike',
 
 ];

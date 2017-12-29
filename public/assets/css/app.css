@@ -8408,6 +8408,10 @@ button.close {
   font-weight: bolder;
 }
 
+.row {
+  margin: 0 50px;
+}
+
 table {
   margin: 0 auto;
 }
