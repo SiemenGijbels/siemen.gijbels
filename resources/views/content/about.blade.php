@@ -11,13 +11,9 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda commodi illum nobis nostrum
-                    numquam officiis possimus provident rem repellat sint? Dicta eligendi eum hic, labore nisi non
-                    quidem quos voluptates.
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa debitis magni modi nihil numquam
-                    odit pariatur recusandae repellendus sint voluptates. Blanditiis expedita minus nostrum numquam
-                    placeat porro praesentium quae soluta!</p>
+                <p>Send me an <a href="mailto:gijbelssiemen@gmail.com">email</a>&comma; follow me on <a href="https://instagram.com/siemengijbels" target="_blank">Instagram</a>&comma; check my <a href="https://www.linkedin.com/in/siemen-gijbels-16300a130/" target="_blank">LinkedIn</a> or simply try to contact me on <a href="https://www.facebook.com/SiemenGijbels" target="_blank">Facebook</a> &lpar;can&apos;t guarantee that it will come through though&rpar;&period;</p>
             </div>
         </div>
     </div>
+    @include('partials.contact')
 @endsection

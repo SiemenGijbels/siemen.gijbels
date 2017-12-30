@@ -21,7 +21,7 @@ return [
     'forgotpassword' => 'Je wachtwoord vergeten?',
     'confirmpassword' => 'Bevestig wachtwoord',
     'name' => 'Naam',
-    '' => '',
+    'message' => 'Bericht',
     '' => '',
     '' => '',
     '' => '',

@@ -15,6 +15,9 @@
                 <p>{{  $post->content }}</p>
             </div>
             <div class="col-md-12">
+                <p><a href="{{ }}">Share</a></p>
+            </div>
+            <div class="col-md-12">
                 @if(Auth::user())
                     @if($post->user_id == Auth::user()->id)
                         @if($post->archived == 0 || $post->archived == NULL)

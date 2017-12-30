@@ -27,7 +27,11 @@
                     @if($post->archived == 0 || $post->archived == NULL)
                         <div class="grid-item">
                             <div class="col-md-12 text-center">
-                                <img class="blogPics" src="https://source.unsplash.com/random"/>
+                                @if(!$post->image == "")
+                                    <img class="blogPics" src="{{ asset('uploads/images/') }}/{{ $post->image }}">
+                                @else
+                                    <img class="blogPics" src="https://source.unsplash.com/random"/>
+                                @endif
                                 <h1 class="post-title">{{ $post->title }}</h1>
                                 <p style="font-weight: bold">
                                     @foreach($post->tags as $tag)
@@ -43,7 +47,11 @@
                     @else
                         <div class="grid-item">
                             <div class="col-md-12 text-center">
+                                @if(!$post->image == "")
+                                    <img class="blogPics archived" src="{{ asset('uploads/images/') }}/{{ $post->image }}">
+                                @else
                                     <img class="blogPics archived" src="https://source.unsplash.com/random"/>
+                                @endif
                                 <h1 class="post-title">{{ $post->title }}</h1>
                                 <p style="font-weight: bold">
                                     @foreach($post->tags as $tag)

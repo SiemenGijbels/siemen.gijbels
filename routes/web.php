@@ -30,6 +30,8 @@ Route::get('/', [
     'as' => 'content.index'
 ]);
 
+// PROFILE
+
 Route::get('profile', [
     'uses' => 'PostController@getProfileIndex',
     'as' => 'profile.index'
@@ -40,14 +42,19 @@ Route::post('profile', [
     'as' => 'profile.index.changeAvatar'
 ]);
 
-Route::get('archive', [
-    'uses' => 'PostController@getArchiveIndex',
-    'as' => 'content.archive'
+// ABOUT
+//https://www.cloudways.com/blog/laravel-contact-form/
+
+Route::get('about',
+    'ContactUSController@contactUs'
+);
+
+Route::post('about', [
+    'uses'=>'ContactUSController@contactUsPost',
+    'as'=>'content.about.store'
 ]);
 
-Route::get('about', function () {
-    return view('content.about');
-})->name('content.about');
+// CREATE
 
 Route::get('create', [
     'uses' => 'PostController@getCreate',
@@ -59,19 +66,11 @@ Route::post('create', [
     'as' => 'content.create'
 ]);
 
+// POST
+
 Route::get('post/{id}', [
     'uses' => 'PostController@getPost',
     'as' => 'content.post'
-]);
-
-Route::get('post/{id}/archive', [
-    'uses' => 'PostController@setArchived',
-    'as' => 'content.post.archive'
-]);
-
-Route::get('post/{id}/unarchive', [
-    'uses' => 'PostController@setUnarchived',
-    'as' => 'content.post.unarchive'
 ]);
 
 Route::get('post/{postId}/deleteComment/{commentId}', [
@@ -92,6 +91,35 @@ Route::get('post/{postId}/unlike/{likeId}', [
 Route::post('post/{id}', [
     'uses' => 'CommentController@postCommentPost',
     'as' => 'content.post'
+]);
+
+// EDIT
+
+Route::get('edit/{id}', [
+    'uses' => 'PostController@getEdit',
+    'as' => 'content.edit'
+]);
+
+Route::post('edit', [
+    'uses' => 'PostController@postUpdate',
+    'as' => 'content.update'
+]);
+
+// ARCHIVE
+
+Route::get('archive', [
+    'uses' => 'PostController@getArchiveIndex',
+    'as' => 'content.archive'
+]);
+
+Route::get('post/{id}/archive', [
+    'uses' => 'PostController@setArchived',
+    'as' => 'content.post.archive'
+]);
+
+Route::get('post/{id}/unarchive', [
+    'uses' => 'PostController@setUnarchived',
+    'as' => 'content.post.unarchive'
 ]);
 
 

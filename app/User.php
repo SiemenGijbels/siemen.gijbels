@@ -16,11 +16,11 @@ class User extends Authenticatable
     }
 
     public function posts() {
-        return $this->hasMany('App\Post')->withTimestamps();
+        return $this->hasMany('App\Post');
     }
 
     public function comments() {
-        return $this->hasMany('App\Comment')->withTimestamps();
+        return $this->hasMany('App\Comment', 'user_id', 'id')->withTimestamps();
     }
 
     public function likes() {

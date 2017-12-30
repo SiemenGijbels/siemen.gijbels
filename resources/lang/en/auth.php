@@ -21,7 +21,7 @@ return [
     'forgotpassword' => 'Forgot your password?',
     'confirmpassword' => 'Confirm password',
     'name' => 'Name',
-    '' => '',
+    'message' => 'Message',
     '' => '',
     '' => '',
     '' => '',

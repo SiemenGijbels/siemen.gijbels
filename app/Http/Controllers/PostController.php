@@ -12,6 +12,7 @@ use App\Comment;
 use App\Post;
 use App\Like;
 use App\Tag;
+use App\User;
 use Intervention\Image\Facades\Image;
 use Auth;
 use Illuminate\Http\Request;
@@ -23,9 +24,10 @@ class PostController extends Controller
     {
     }
 
+    // HOMEPAGE
+
     public function getIndex()
     {
-
         $posts = Post::where(function ($query) {
             $query->whereNull('archived')
                 ->orWhere('archived', 0);
@@ -36,49 +38,7 @@ class PostController extends Controller
         return view('content.index', ['posts' => $posts]);
     }
 
-    public function getArchiveIndex()
-    {
-
-        $user = Auth::user();
-        $posts = Post::where('user_id', $user->id)
-            ->where('archived', 1)
-            ->orderBy('id', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->paginate(30);
-        return view('content.archive', ['posts' => $posts]);
-    }
-
-    public function getProfileIndex()
-    {
-        $user = Auth::user();
-        $posts = Post::where('user_id', $user->id)
-            ->orderBy('id', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->paginate(30);
-        return view('profile.index', ['posts' => $posts]);
-    }
-
-    //https://devdojo.com/episode/laravel-user-image
-    public function postAvatarUpdate(Request $request){
-
-        $user = Auth::user();
-        $posts = Post::where('user_id', $user->id)
-            ->orderBy('id', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->paginate(30);
-
-        if($request->hasFile('avatar')){
-            $avatar = $request->file('avatar');
-            $filename = time() . '.' . $avatar->getClientOriginalExtension();
-            Image::make($avatar)->crop(300, 300)->save( public_path('/uploads/avatars/' . $filename ) );
-
-            $user->avatar = $filename;
-            $user->save();
-        }
-
-        return view('profile.index', ['posts' => $posts]);
-
-    }
+    // POST PAGE
 
     public function getPost($id)
     {
@@ -129,9 +89,75 @@ class PostController extends Controller
         return redirect()->route('content.post', ['id' => $post->id]);
     }
 
+    // ARCHIVE
+
+    public function getArchiveIndex()
+    {
+        $user = Auth::user();
+        $posts = Post::where('user_id', $user->id)
+            ->where('archived', 1)
+            ->orderBy('id', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(30);
+        return view('content.archive', ['posts' => $posts]);
+    }
+
+    public function setArchived($id)
+    {
+        $post = Post::where('id', $id)->first();
+        $post->archived = 1;
+        $post->save();
+
+        return redirect("archive");
+    }
+
+    public function setUnarchived($id)
+    {
+        $post = Post::where('id', $id)->first();
+        $post->archived = 0;
+        $post->save();
+
+        return redirect("/");
+    }
+
+    // PROFILE
+
+    public function getProfileIndex()
+    {
+        $user = Auth::user();
+        $posts = Post::where('user_id', $user->id)
+            ->orderBy('id', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(30);
+        return view('profile.index', ['posts' => $posts]);
+    }
+
+    //https://devdojo.com/episode/laravel-user-image
+    public function postAvatarUpdate(Request $request)
+    {
+        $user = Auth::user();
+        $posts = Post::where('user_id', $user->id)
+            ->orderBy('id', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(30);
+
+        if($request->hasFile('avatar')){
+            $avatar = $request->file('avatar');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+            Image::make($avatar)->crop(300, 300)->save( public_path('/uploads/avatars/' . $filename ) );
+
+            $user->avatar = $filename;
+            $user->save();
+        }
+
+        return view('profile.index', ['posts' => $posts]);
+
+    }
+
+    // CREATE POST
+
     public function getCreate()
     {
-
         Auth::user();
         $tags = Tag::all();
         return view('content.create', ['tags' => $tags, 'user_id', Auth::user()]);
@@ -139,7 +165,6 @@ class PostController extends Controller
 
     public function postCreate(Request $request)
     {
-
         $this->validate($request, [
             'title' => 'required|min:3',
             'content' => 'required|min:3',
@@ -164,17 +189,16 @@ class PostController extends Controller
 
     public function getAdminIndex()
     {
-
         $posts = Post::orderBy('id', 'desc')->get();
         $comments = Comment::all();
         $likes = Like::all();
+        $users = User::all();
 
-        return view('admin.index', ['posts' => $posts, 'comments' => $comments, 'likes' => $likes]);
+        return view('admin.index', ['posts' => $posts, 'comments' => $comments, 'likes' => $likes, 'users' => $users]);
     }
 
     public function getAdminEdit($id)
     {
-
         $post = Post::find($id);
         $tags = Tag::all();
         return view('admin.edit', ['post' => $post, 'postId' => $id, 'tags' => $tags]);
@@ -182,7 +206,6 @@ class PostController extends Controller
 
     public function getAdminDelete($id)
     {
-
         $post = Post::find($id);
         $post->likes()->delete();
         $post->tags()->detach();
@@ -192,7 +215,6 @@ class PostController extends Controller
 
     public function getAdminCreate()
     {
-
         Auth::user();
         $tags = Tag::all();
         return view('admin.create', ['tags' => $tags, 'user_id', Auth::user()]);
@@ -200,7 +222,6 @@ class PostController extends Controller
 
     public function postAdminCreate(Request $request)
     {
-
         $this->validate($request, [
             'title' => 'required|min:3',
             'content' => 'required|min:3',
@@ -218,7 +239,6 @@ class PostController extends Controller
 
     public function postAdminUpdate(Request $request)
     {
-
         $this->validate($request, [
             'title' => 'required|min:3',
             'content' => 'required|min:3'
@@ -230,23 +250,5 @@ class PostController extends Controller
 
         $post->tags()->sync($request->input('tags') === null ? [] : $request->input('tags'));
         return redirect()->route('admin.index')->with('info', 'Post edited, new Title is: ' . $request->input('title'));
-    }
-
-    public function setArchived($id)
-    {
-        $post = Post::where('id', $id)->first();
-        $post->archived = 1;
-        $post->save();
-
-        return redirect("archive");
-    }
-
-    public function setUnarchived($id)
-    {
-        $post = Post::where('id', $id)->first();
-        $post->archived = 0;
-        $post->save();
-
-        return redirect("/");
     }
 }

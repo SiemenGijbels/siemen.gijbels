@@ -11,7 +11,11 @@
             @foreach($posts as $post)
                 <div class="grid-item">
                     <div class="col-md-12 text-center">
-                        <img class="blogPics" src="https://source.unsplash.com/random"/>
+                        @if(!$post->image == "")
+                            <img class="blogPics" src="{{ asset('uploads/images/') }}/{{ $post->image }}">
+                        @else
+                            <img class="blogPics" src="https://source.unsplash.com/random"/>
+                        @endif
                         <h1 class="post-title">{{ $post->title }}</h1>
                         <p style="font-weight: bold">
                             @foreach($post->tags as $tag)
