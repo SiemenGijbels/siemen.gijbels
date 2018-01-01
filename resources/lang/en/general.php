@@ -57,7 +57,7 @@ return [
     'archived' => 'Archived',
     'yes' => 'Yes',
     'no' => 'No',
-    '' => '',
+    'softdeleted' => 'Soft deleted',
     '' => '',
     '' => '',
     '' => '',

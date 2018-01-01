@@ -57,10 +57,9 @@ class PostController extends Controller
             ->where('post_id', $post->id)
             ->first();
 
-        if($likes->isEmpty() || count($userLike) == 0 || count($userLike) == NULL) {
+        if ($likes->isEmpty() || count($userLike) == 0 || count($userLike) == NULL) {
             $userLikeCount = 0;
-        }
-        else {
+        } else {
             $userLikeCount = 1;
         }
 
@@ -87,6 +86,62 @@ class PostController extends Controller
         $like->delete();
 
         return redirect()->route('content.post', ['id' => $post->id]);
+    }
+
+    // EDIT POST
+
+    public function getEdit($id)
+    {
+        $post = Post::find($id);
+        $tags = Tag::all();
+        return view('content.edit', ['post' => $post, 'postId' => $id, 'tags' => $tags]);
+    }
+
+    public function postUpdate(Request $request)
+    {
+        $posts = Post::where(function ($query) {
+            $query->whereNull('archived')
+                ->orWhere('archived', 0);
+        })
+            ->orderBy('id', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(30);
+
+        $this->validate($request, [
+            'title' => 'required|min:3',
+            'content' => 'required|min:3'
+        ]);
+        $post = Post::find($request->input('id'));
+        $post->title = $request->input('title');
+        $post->content = $request->input('content');
+        $image = $request->file('image');
+        $filename = time() . '.' . $image->getClientOriginalExtension();
+        Image::make($image)->save(public_path('/uploads/images/' . $filename));
+        $post->image = $filename;
+        $post->save();
+
+        $post->tags()->sync($request->input('tags') === null ? [] : $request->input('tags'));
+
+        return redirect()->route('content.index', ['posts' => $posts]);
+    }
+
+    // USER SOFT DELETE POST
+
+    public function getSoftDelete($id)
+    {
+        $posts = Post::where(function ($query) {
+            $query->whereNull('archived')
+                ->orWhere('archived', 0);
+        })
+            ->orderBy('id', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(30);
+
+        $post = Post::where('id', $id)->first();
+        $post->archived = 2;
+        $post->save();
+
+        return redirect()->route('content.index', ['posts' => $posts])->with('info', 'Post deleted!');
     }
 
     // ARCHIVE
@@ -126,6 +181,11 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $posts = Post::where('user_id', $user->id)
+            ->where(function ($query) {
+                $query->whereNull('archived')
+                    ->orWhere('archived', 0)
+                    ->orWhere('archived', 1);
+            })
             ->orderBy('id', 'desc')
             ->orderBy('created_at', 'desc')
             ->paginate(30);
@@ -141,10 +201,10 @@ class PostController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(30);
 
-        if($request->hasFile('avatar')){
+        if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
             $filename = time() . '.' . $avatar->getClientOriginalExtension();
-            Image::make($avatar)->crop(300, 300)->save( public_path('/uploads/avatars/' . $filename ) );
+            Image::make($avatar)->crop(300, 300)->save(public_path('/uploads/avatars/' . $filename));
 
             $user->avatar = $filename;
             $user->save();
@@ -177,7 +237,7 @@ class PostController extends Controller
         ]);
         $image = $request->file('image');
         $filename = time() . '.' . $image->getClientOriginalExtension();
-        Image::make($image)->save( public_path('/uploads/images/' . $filename ));
+        Image::make($image)->save(public_path('/uploads/images/' . $filename));
         $post->image = $filename;
         $post->save();
         $post->tags()->attach($request->input('tags') === null ? [] : $request->input('tags'));
@@ -185,7 +245,9 @@ class PostController extends Controller
         return redirect()->route('content.index')->with('info', 'Item created, Title is: ' . $request->input('title'));
     }
 
-    //ADMIN
+
+    // ADMIN
+    // DASHBOARD
 
     public function getAdminIndex()
     {
@@ -197,12 +259,16 @@ class PostController extends Controller
         return view('admin.index', ['posts' => $posts, 'comments' => $comments, 'likes' => $likes, 'users' => $users]);
     }
 
+    // EDIT
+
     public function getAdminEdit($id)
     {
         $post = Post::find($id);
         $tags = Tag::all();
         return view('admin.edit', ['post' => $post, 'postId' => $id, 'tags' => $tags]);
     }
+
+    // HARD DELETE
 
     public function getAdminDelete($id)
     {
@@ -213,12 +279,35 @@ class PostController extends Controller
         return redirect()->route('admin.index')->with('info', 'Post deleted!');
     }
 
+    // GET CREATE
+
     public function getAdminCreate()
     {
         Auth::user();
         $tags = Tag::all();
         return view('admin.create', ['tags' => $tags, 'user_id', Auth::user()]);
     }
+
+    // UNDO SOFT DELETE
+
+    public function getPutBack($id)
+    {
+        $posts = Post::where(function ($query) {
+            $query->whereNull('archived')
+                ->orWhere('archived', 0);
+        })
+            ->orderBy('id', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(30);
+
+        $post = Post::where('id', $id)->first();
+        $post->archived = 0;
+        $post->save();
+
+        return redirect()->route('content.index', ['posts' => $posts])->with('info', 'Post deleted!');
+    }
+
+    // POST CREATE
 
     public function postAdminCreate(Request $request)
     {
@@ -236,6 +325,8 @@ class PostController extends Controller
 
         return redirect()->route('admin.index')->with('info', 'Item created, Title is: ' . $request->input('title'));
     }
+
+    // POST UPDATE
 
     public function postAdminUpdate(Request $request)
     {

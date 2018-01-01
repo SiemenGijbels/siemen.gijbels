@@ -44,7 +44,7 @@
                                 </p>
                             </div>
                         </div>
-                    @else
+                    @elseif($post->archived == 1)
                         <div class="grid-item">
                             <div class="col-md-12 text-center">
                                 @if(!$post->image == "")

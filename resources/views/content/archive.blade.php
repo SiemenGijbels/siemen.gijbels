@@ -8,6 +8,11 @@
     </div>
     <div class="content">
         <div class="grid">
+            @if($posts->count() == 0 || $posts->count() == NULL)
+                <div class="col-md-12 text-center">
+                    <h1>No archived posts yet!</h1>
+                </div>
+            @else
             @foreach($posts as $post)
                 <div class="grid-item">
                     <div class="col-md-12 text-center">
@@ -27,6 +32,7 @@
                     </div>
                 </div>
             @endforeach
+            @endif
         </div>
         <div>
             <div>
@@ -35,4 +41,12 @@
         </div>
     </div>
 
-@endsection
+    <script>
+        @if($posts->count() == 0 || $posts->count() == NULL)
+        $(window).on('load', function () {
+            $('.loading').fadeOut();
+        });
+        @endif
+
+    </script>
+@stop

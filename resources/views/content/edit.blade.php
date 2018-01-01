@@ -6,7 +6,8 @@
     <div class="content">
         <div class="row">
             <div class="col-md-12">
-                <form action="{{ route('content.update') }}" method="post">
+                <form enctype="multipart/form-data" action="{{ route('content.update') }}" method="post">
+                    <img src="{{ asset('uploads/images/') }}/{{ $post->image  }}">
                     <div class="form-group">
                         <label for="title">@lang('general.title')</label>
                         <input type="text" class="form-control" id="title" name="title"
@@ -16,6 +17,10 @@
                         <label for="content">@lang('general.content')</label>
                         <input type="text" class="form-control" id="content" name="content"
                                value="{{ $post->content }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Update image</label>
+                        <input type="file" class="form-control" id="image" name="image">
                     </div>
                     @foreach($tags as $tag)
                         <div class="checkbox">

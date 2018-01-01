@@ -11,6 +11,7 @@
 |
 */
 
+
 // AUTH STUFF
 
 Auth::routes();
@@ -30,6 +31,7 @@ Route::get('/', [
     'as' => 'content.index'
 ]);
 
+
 // PROFILE
 
 Route::get('profile', [
@@ -41,6 +43,7 @@ Route::post('profile', [
     'uses' => 'PostController@postAvatarUpdate',
     'as' => 'profile.index.changeAvatar'
 ]);
+
 
 // ABOUT
 //https://www.cloudways.com/blog/laravel-contact-form/
@@ -54,6 +57,7 @@ Route::post('about', [
     'as'=>'content.about.store'
 ]);
 
+
 // CREATE
 
 Route::get('create', [
@@ -65,6 +69,7 @@ Route::post('create', [
     'uses' => 'PostController@postCreate',
     'as' => 'content.create'
 ]);
+
 
 // POST
 
@@ -93,6 +98,7 @@ Route::post('post/{id}', [
     'as' => 'content.post'
 ]);
 
+
 // EDIT
 
 Route::get('edit/{id}', [
@@ -104,6 +110,15 @@ Route::post('edit', [
     'uses' => 'PostController@postUpdate',
     'as' => 'content.update'
 ]);
+
+
+// SOFT DELETE
+
+Route::get('post/{id}/delete', [
+    'uses' => 'PostController@getSoftDelete',
+    'as' => 'content.post.softdelete'
+]);
+
 
 // ARCHIVE
 
@@ -153,6 +168,11 @@ Route::group(['prefix' => 'admin'], function (){
     Route::get('delete/{id}', [
         'uses' => 'PostController@getAdminDelete',
         'as' => 'admin.delete'
+    ]);
+
+    Route::get('post/{id}/putback', [
+        'uses' => 'PostController@getPutBack',
+        'as' => 'admin.post.putback'
     ]);
 
     //POST routes Admin

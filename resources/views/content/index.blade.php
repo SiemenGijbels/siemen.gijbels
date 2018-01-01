@@ -22,7 +22,7 @@
                                 {{ $tag->name }}
                             @endforeach
                         </p>
-                        <p>{{ $post->content }}!</p>
+                        <p>{{ $post->content }}</p>
                         <p><a href="{{ route('content.post', ['id' => $post->id]) }}">@lang('general.moredetails')</a>
                         </p>
                     </div>

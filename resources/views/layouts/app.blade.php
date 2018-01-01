@@ -16,6 +16,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
+@yield('social_share')
 <div id="app">
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
@@ -154,7 +155,7 @@
 
     @yield('content')
 </div>
-
+@yield('scripts')
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/masonry.pkgd.min.js') }}" type="text/javascript"></script>

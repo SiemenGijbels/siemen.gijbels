@@ -45,6 +45,7 @@
                         <th>Likes</th>
                         <th>@lang('general.comments')</th>
                         <th>@lang('general.archived')</th>
+                        <th>@lang('general.softdeleted')</th>
                         <th>@lang('general.edit')</th>
                         <th>@lang('general.delete')</th>
                     </tr>
@@ -60,7 +61,12 @@
                             <td>{{ $post->comments->count() }}</td>
                             @if($post->archived == 1)
                                 <td>@lang('general.yes')</td>
-                            @elseif($post->archived == 0 || $post->archived == NULL)
+                            @else
+                                <td>@lang('general.no')</td>
+                            @endif
+                            @if($post->archived == 2)
+                                <td>@lang('general.yes') | <a href="{{ route('admin.post.putback', ['id' => $post->id]) }}">@lang('general.unarchive')</a></td>
+                            @else
                                 <td>@lang('general.no')</td>
                             @endif
                             <td><a href="{{ route('admin.edit', ['id' => $post->id]) }}">@lang('general.edit')</a></td>
