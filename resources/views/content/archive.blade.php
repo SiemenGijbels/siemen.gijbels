@@ -40,13 +40,23 @@
             </div>
         </div>
     </div>
+@stop
 
+@section('scripts')
+    <script src="{{ asset('js/masonry.pkgd.min.js') }}" type="text/javascript"></script>
+    <script>
+        $('.blogPics').on('load', function () {
+            $('.grid').masonry({
+                itemSelector: '.grid-item'
+            });
+            $('.loading').fadeOut();
+        });
+    </script>
     <script>
         @if($posts->count() == 0 || $posts->count() == NULL)
         $(window).on('load', function () {
             $('.loading').fadeOut();
         });
         @endif
-
     </script>
 @stop

@@ -77,3 +77,15 @@
     </div>
 
 @endsection
+
+@section('scripts')
+    <script src="{{ asset('js/masonry.pkgd.min.js') }}" type="text/javascript"></script>
+    <script>
+        $('.blogPics').on('load', function () {
+            $('.grid').masonry({
+                itemSelector: '.grid-item'
+            });
+            $('.loading').fadeOut();
+        });
+    </script>
+@stop

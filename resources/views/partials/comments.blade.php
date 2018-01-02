@@ -17,16 +17,18 @@
         </form>
     </div>
 @endif
-
-<div class="col-md-12">
-    @foreach($comments as $comment)
-        @if($comment->post_id == $post->id)
-            <p>{{ $comment->user->name }}</p>
-            <p>{{ $comment->created_at }}</p>
-            <p>{{ $comment->content }}</p>
-            @if(Auth::user() && Auth::user()->type == 1 || Auth::user() && Auth::user()->id == $comment->user_id)
-                <a href="{{ route('content.post.deleteComment', ['postId' => $post->id, 'commentId' => $comment->id]) }}">@lang('general.delete')</a>
-            @endif
-        @endif
-    @endforeach
-</div>
+@foreach($comments as $comment)
+    @if($comment->post_id == $post->id)
+        <div class="col-md-12 commentPost">
+            <img class="commentAvatar" src="{{ asset('uploads/avatars/') }}/{{ $comment->user->avatar }}">
+            <div class="commentDiv">
+                <h6>{{ $comment->user->name }} — {{ $comment->created_at }}</h6>
+                <p>{{ $comment->content }}</p>
+                @if(Auth::user() && Auth::user()->type == 1 || Auth::user() && Auth::user()->id == $comment->user_id)
+                    <a href="{{ route('content.post.deleteComment', ['postId' => $post->id, 'commentId' => $comment->id]) }}"><i
+                                class="fas fa-trash-alt"></i></a>
+                @endif
+            </div>
+        </div>
+    @endif
+@endforeach

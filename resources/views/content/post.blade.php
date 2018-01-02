@@ -2,6 +2,14 @@
 
 @section('page_title', $post->title)
 
+@section('open_graph')
+    <meta property="og:site_name" content="Laravel blog Siemen Gijbels"/>
+    <meta property="og:title" content="{{ $post->title }}"/>
+    <meta property="og:description" content="{{ $post->content }}"/>
+    <meta property="og:image" content="{{ $post->image }}">
+    <meta property="og:url" content="{{ Request::url() }}">
+@stop
+
 @section('social_share')
     <div id="fb-root"></div>
     <script>(function (d, s, id) {
@@ -54,104 +62,104 @@
 
 @section('content')
     <div class="content">
-        <img src="{{ asset('uploads/images/') }}/{{ $post->image }}">
-        <div class="row">
-            <div class="col-md-12">
-                <p class="quote">{{ $post->title }}</p>
-            </div>
+        <div class="left">
+            <img id="postImg" src="{{ asset('uploads/images/') }}/{{ $post->image }}">
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <p>{{  $post->content }}</p>
+        <div class="right">
+            <div class="row">
+                <div class="col-md-12 post-title">
+                    <h1 class="quote">{{ $post->title }}</h1>
+                </div>
             </div>
-            <div class="col-md-12">
-                @if(Auth::user())
-                    @if($post->user_id == Auth::user()->id || Auth::user()->type == 1)
-                        <p>
-                            <a href="{{ route('content.edit', ['id' => $post->id]) }}">@lang('general.edit')</a>
-                        </p>
-                        @if($post->archived == 0 || $post->archived == NULL)
-                            <p>
-                                <a href="{{ route('content.post.archive', ['id' => $post->id]) }}">@lang('general.archiveVerb')</a>
-                            </p>
-                            <p>
-                                <a href="{{ route('content.post.softdelete', ['id' => $post->id]) }}">@lang('general.delete')</a>
-                            </p>
+            <div class="row">
+                <div class="col-md-12 post-content">
+                    <h5>{{  $post->user->name }} — {{ $post->created_at }}</h5>
+                    <p>{{  $post->content }}</p>
+                </div>
+                <div class="col-md-12 post-actions">
+                    @if(Auth::user())
+                        @if($post->user_id == Auth::user()->id || Auth::user()->type == 1)
+                            <a class="action-link" href="{{ route('content.edit', ['id' => $post->id]) }}"><i
+                                        class="fas fa-pencil-alt"></i></a>
+                            @if($post->archived == 0 || $post->archived == NULL)
+                                <a class="action-link"
+                                   href="{{ route('content.post.archive', ['id' => $post->id]) }}"><i
+                                            class="fas fa-archive"></i></a>
+                                <a class="action-link"
+                                   href="{{ route('content.post.softdelete', ['id' => $post->id]) }}"><i
+                                            class="fas fa-trash-alt"></i></a>
+                            @endif
+                            @if($post->archived == 1)
+                                <a class="action-link"
+                                   href="{{ route('content.post.unarchive', ['id' => $post->id]) }}"><i
+                                            class="fas fa-th"></i></a>
+                                <a class="action-link"
+                                   href="{{ route('content.post.softdelete', ['id' => $post->id]) }}"><i
+                                            class="fas fa-trash-alt"></i></a>
+                            @endif
                         @endif
-                        @if($post->archived == 1)
-                            <p>
-                                <a href="{{ route('content.post.unarchive', ['id' => $post->id]) }}">@lang('general.unarchive')</a>
-                            </p>
-                            <p>
-                                <a href="{{ route('content.post.softdelete', ['id' => $post->id]) }}">@lang('general.delete')</a>
-                            </p>
+                </div>
+                @if($userLikeCount == 0 || $userLikeCount == NULL || empty($userLikeCount))
+                    <form action="{{ route('content.post.like', ['postId' => $post->id, 'userId' => Auth::user()->id]) }}"
+                          method="post">
+                        {{ $countLikes }} likes
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="post_id" name="post_id"
+                                   value="{{ $post->id }}">
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="user_id" name="user_id"
+                                   value="{{ Auth::user()->id }}">
+                        </div>
+                        {{ csrf_field() }}
+                        <button type="submit" class="btn btn-primary btn-like"><i class="far fa-thumbs-up"></i></button>
+                    </form>
+                @endif
+                @if($userLikeCount == 1)
+                    <form>
+                        {{ $countLikes }} likes
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="post_id" name="post_id"
+                                   value="{{ $post->id }}">
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="user_id" name="user_id"
+                                   value="{{ Auth::user()->id }}">
+                        </div>
+                        {{ csrf_field() }}
+                        <a class="btn btn-primary btn-like"
+                           href="{{ route('content.post.unlike', ['postId' => $post->id, 'likeId' => $userLike->id]) }}"><i
+                                    class="far fa-thumbs-down"></i></a>
+                    </form>
+                @endif
+                @endif
+                <div class="col-md-12 socialshare">
+                    <div class="fb-share-button" data-href="{{ Request::url() }}" data-layout="button_count"
+                         data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank"
+                                                                        href="https://www.facebook.com/sharer/sharer.php?u="
+                                                                        . {{ urlencode(Request::url()) }}>Share</a>
+                    </div>
+                    <a class="twitter-share-button" href="https://twitter.com/intent/tweet">Tweet</a>
+                    <a class="redditLink" href="//www.reddit.com/submit"
+                       onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false">
+                        @if(app()->getLocale() == 'en_US')
+                            <img id="redditBtn" src="{{ asset('uploads/images/redditbutton.png') }}"
+                                 alt="submit to reddit"
+                                 border="0"/>
+                        @elseif(app()->getLocale() == 'nl_NL')
+                            <img id="redditBtn" src="{{ asset('uploads/images/redditbutton_nl.png') }}"
+                                 alt="post op reddit"
+                                 border="0"/>
                         @endif
-                    @endif
+                    </a>
+                    <a class="pinterestBtn" href="https://www.pinterest.com/pin/create/button/"
+                       data-pin-do="buttonBookmark"></a>
+                    <script src="//platform.linkedin.com/in.js"
+                            type="text/javascript"> lang: {{ app()->getLocale() }}</script>
+                    <script type="IN/Share" data-url="{{ Request::url() }}"></script>
+                </div>
+                @include('partials.comments')
             </div>
-            @if($userLikeCount == 0 || $userLikeCount == NULL || empty($userLikeCount))
-                <form action="{{ route('content.post.like', ['postId' => $post->id, 'userId' => Auth::user()->id]) }}"
-                      method="post">
-                    <div class="form-group">
-                        <p>
-                            {{ $countLikes }} Likes
-                        </p>
-                    </div>
-                    <div class="form-group">
-                        <input type="hidden" class="form-control" id="post_id" name="post_id" value="{{ $post->id }}">
-                    </div>
-                    <div class="form-group">
-                        <input type="hidden" class="form-control" id="user_id" name="user_id"
-                               value="{{ Auth::user()->id }}">
-                    </div>
-                    {{ csrf_field() }}
-                    <button type="submit" class="btn btn-primary">@lang('general.like')</button>
-                </form>
-            @endif
-            @if($userLikeCount == 1)
-                <form>
-                    <div class="form-group">
-                        <p>
-                            {{ $countLikes }} Likes
-                        </p>
-                    </div>
-                    <div class="form-group">
-                        <input type="hidden" class="form-control" id="post_id" name="post_id" value="{{ $post->id }}">
-                    </div>
-                    <div class="form-group">
-                        <input type="hidden" class="form-control" id="user_id" name="user_id"
-                               value="{{ Auth::user()->id }}">
-                    </div>
-                    {{ csrf_field() }}
-                    <a class="btn btn-primary"
-                       href="{{ route('content.post.unlike', ['postId' => $post->id, 'likeId' => $userLike->id]) }}">@lang('general.unlike')</a>
-                </form>
-            @endif
-            @endif
-            <div class="col-md-12 socialshare">
-                <div class="fb-share-button" data-href="{{ Request::url() }}" data-layout="button_count"
-                     data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank"
-                                                                    href="https://www.facebook.com/sharer/sharer.php?u="
-                                                                    . {{ urlencode(Request::url()) }}>Share</a></div>
-                <a class="twitter-share-button" href="https://twitter.com/intent/tweet">Tweet</a>
-                <a class="redditLink" href="//www.reddit.com/submit"
-                   onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false">
-                    @if(app()->getLocale() == 'en_US')
-                        <img id="redditBtn" src="{{ asset('uploads/images/redditbutton.png') }}"
-                             alt="submit to reddit"
-                             border="0"/>
-                    @elseif(app()->getLocale() == 'nl_NL')
-                        <img id="redditBtn" src="{{ asset('uploads/images/redditbutton_nl.png') }}"
-                             alt="post op reddit"
-                             border="0"/>
-                    @endif
-                </a>
-                <a class="pinterestBtn" href="https://www.pinterest.com/pin/create/button/"
-                   data-pin-do="buttonBookmark"></a>
-                <script src="//platform.linkedin.com/in.js"
-                        type="text/javascript"> lang: {{ app()->getLocale() }}</script>
-                <script type="IN/Share" data-url="{{ Request::url() }}"></script>
-            </div>
-            @include('partials.comments')
         </div>
     </div>
 @stop
