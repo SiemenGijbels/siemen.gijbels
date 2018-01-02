@@ -1,11 +1,16 @@
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import "fonts";
+
 // Variables
 @import "variables";
 // Bootstrap
 @import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
 //own stuff
+
+* {
+  font-family: "SF Display";
+}
 
 .grid-item {
   width: percentage(.85/3);
@@ -118,7 +123,32 @@
   .commentDiv {
     float: left;
     margin-left: 20px;
+    max-width: 90%;
+    .deletecomment {
+      margin-left: 10px;
+    }
   }
+}
+
+.form-group-like{
+  @extend .form-group;
+  width: 30px;
+  float: left;
+  margin-right: 10px;
+  .btn-like {
+    margin-top: -7px;
+  }
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border: 1px solid #ccd0d2;
+}
+
+.form-textarea {
+  resize: none;
+  outline: 0;
+  height: 100px !important;
 }
 
 .fb_iframe_widget {
@@ -139,8 +169,20 @@
   text-decoration: none;
 }
 
+.socialshare, .like {
+  margin: 0 0 50px 0;
+  float: left;
+  max-width: 500px;
+}
+
 .socialshare {
-  margin: 50px 0;
+  margin-top: 17px;
+}
+
+.like {
+  width: 15%;
+  min-width: 75px;
+  max-width: 300px;
 }
 
 .activeFront {

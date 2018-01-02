@@ -6,34 +6,50 @@
     <div class="content">
         <div class="row">
             <div class="col-md-12">
-                <form enctype="multipart/form-data" action="{{ route('content.update') }}" method="post">
-                    <img src="{{ asset('uploads/images/') }}/{{ $post->image  }}">
-                    <div class="form-group">
-                        <label for="title">@lang('general.title')</label>
-                        <input type="text" class="form-control" id="title" name="title"
-                               value="{{ $post->title }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="content">@lang('general.content')</label>
-                        <input type="text" class="form-control" id="content" name="content"
-                               value="{{ $post->content }}">
-                    </div>
-                    <div class="form-group">
-                        <label>Update image</label>
-                        <input type="file" class="form-control" id="image" name="image">
-                    </div>
-                    @foreach($tags as $tag)
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="tags[]"
-                                       value="{{ $tag->id }}" {{ $post->tags->contains($tag->id) ? 'checked' : '' }}> {{ $tag->name }}
-                            </label>
+
+                @if(Auth::user())
+                    <div class="col-md-12">
+
+                        {!! Form::open(array('route' => array('content.update'), 'files' => true)) !!}
+
+                        <img src="{{ asset('uploads/images/') }}/{{ $post->image  }}">
+
+                        <div class="form-group">
+                            {!! Form::label(trans('general.title')) !!}
+                            {!! Form::text('title', $post->title, ['class'=>'form-control']) !!}
                         </div>
-                    @endforeach
-                    {{ csrf_field() }}
-                    <input type="hidden" name="id" value="{{ $postId }}">
-                    <button type="submit" class="btn btn-primary">@lang('general.submit')</button>
-                </form>
+
+                        <div class="form-group">
+                            {!! Form::label(trans('general.content')) !!}
+                            {!! Form::textarea('content', $post->content, ['class'=>'form-control form-textarea']) !!}
+                        </div>
+
+                        <div class="form-group">
+                            {!! Form::label(trans('general.updateimage')) !!}
+                            {!! Form::file('image', ['class'=>'form-control']) !!}
+                        </div>
+
+                        @foreach($tags as $tag)
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="tags[]"
+                                           value="{{ $tag->id }}" {{ $post->tags->contains($tag->id) ? 'checked' : '' }}> {{ $tag->name }}
+                                </label>
+                            </div>
+                        @endforeach
+
+                        <div class=" form-group">
+                            {!! Form::hidden('post_id', $post->id, ['class'=>'form-control']) !!}
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-success">@lang('general.submit')</button>
+                        </div>
+
+                        {!! Form::close() !!}
+
+                    </div>
+                @endif
             </div>
         </div>
     </div>

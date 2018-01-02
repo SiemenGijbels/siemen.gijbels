@@ -58,7 +58,7 @@ return [
     'yes' => 'Yes',
     'no' => 'No',
     'softdeleted' => 'Soft deleted',
-    '' => '',
+    'updateimage' => 'Update image',
     '' => '',
     '' => '',
     '' => '',

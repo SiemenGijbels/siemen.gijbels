@@ -1,20 +1,32 @@
 @if(Auth::user())
     <div class="col-md-12">
-        <form action="{{ route('content.post', ['id' => $post->id]) }}" method="post">
-            <div class="form-group">
-                <label for="content">@lang('general.commentVerb')</label>
-                <input type="text" class="form-control" id="content" name="content">
+        @if(Session::has('success'))
+            <div class="alert alert-success">
+                {{ Session::get('success') }}
             </div>
-            <div class="form-group">
-                <input type="hidden" class="form-control" id="user_id" name="post_id" value="{{ $post->id }}">
-            </div>
-            <div class="form-group">
-                <input type="hidden" class="form-control" id="user_id" name="user_id"
-                       value="{{ Auth::user()->id }}">
-            </div>
-            {{ csrf_field() }}
-            <button type="submit" class="btn btn-primary">@lang('general.submit')</button>
-        </form>
+        @endif
+
+        {!! Form::open(array('route' => array('content.post', $post->id))) !!}
+
+        <div class="form-group {{ $errors->has('message') ? 'has-error' : '' }}">
+            {!! Form::label(trans('general.commentVerb')) !!}
+            {!! Form::textarea('content', old('content'), ['class'=>'form-control form-textarea']) !!}
+        </div>
+
+        <div class="form-group">
+            {!! Form::hidden('user_id', Auth::user()->id, ['class'=>'form-control']) !!}
+        </div>
+
+        <div class="form-group">
+            {!! Form::hidden('post_id', $post->id, ['class'=>'form-control']) !!}
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-success">@lang('general.submit')</button>
+        </div>
+
+        {!! Form::close() !!}
+
     </div>
 @endif
 @foreach($comments as $comment)
@@ -22,12 +34,11 @@
         <div class="col-md-12 commentPost">
             <img class="commentAvatar" src="{{ asset('uploads/avatars/') }}/{{ $comment->user->avatar }}">
             <div class="commentDiv">
-                <h6>{{ $comment->user->name }} — {{ $comment->created_at }}</h6>
+                <h6>{{ $comment->user->name }} — {{ $comment->created_at }}    @if(Auth::user() && Auth::user()->type == 1 || Auth::user() && Auth::user()->id == $comment->user_id)
+                        <a class="deletecomment" href="{{ route('content.post.deleteComment', ['postId' => $post->id, 'commentId' => $comment->id]) }}"><i
+                                    class="fas fa-trash-alt"></i></a>
+                    @endif</h6>
                 <p>{{ $comment->content }}</p>
-                @if(Auth::user() && Auth::user()->type == 1 || Auth::user() && Auth::user()->id == $comment->user_id)
-                    <a href="{{ route('content.post.deleteComment', ['postId' => $post->id, 'commentId' => $comment->id]) }}"><i
-                                class="fas fa-trash-alt"></i></a>
-                @endif
             </div>
         </div>
     @endif

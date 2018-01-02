@@ -1,4 +1,148 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);@charset "UTF-8";
+@charset "UTF-8";
+
+/** Black */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 900;
+  src: url(/fonts/SF-Pro-Display-Black.otf?11e421ee3f03e231763aeb70962badd8);
+}
+
+/** Black Italic */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 900;
+  src: url(/fonts/SF-Pro-Display-BlackItalic.otf?647ad7b734271f858d61a94283fd0502);
+}
+
+/** Heavy */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 800;
+  src: url(/fonts/SF-Pro-Display-Heavy.otf?a545fc03ce079844a5ff898a25fe589b);
+}
+
+/** Heavy Italic */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 800;
+  src: url(/fonts/SF-Pro-Display-HeavyItalic.otf?d70a8b7adbe065dd69b16459ffab4231);
+}
+
+/** Bold */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 700;
+  src: url(/fonts/SF-Pro-Display-Bold.otf?644563f48ab5fe8e9082b64b2729b068);
+}
+
+/** Bold Italic */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 700;
+  src: url(/fonts/SF-Pro-Display-BoldItalic.otf?9d7f6005cb34acd97c4a5f0a454bc7a5);
+}
+
+/** Semibold */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 600;
+  src: url(/fonts/SF-Pro-Display-Semibold.otf?e6ef4ea3cf5b1b533a85a5591534e3e4);
+}
+
+/** Semibold Italic */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 600;
+  src: url(/fonts/SF-Pro-Display-SemiboldItalic.otf?fce0a93d0980a16d75a2f71173c80838);
+}
+
+/** Medium */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 500;
+  src: url(/fonts/SF-Pro-Display-Medium.otf?51fd7406327f2b1dbc8e708e6a9da9a5);
+}
+
+/** Medium Italic */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 500;
+  src: url(/fonts/SF-Pro-Display-MediumItalic.otf?33d39d7c5573584d97fbb77ead48a296);
+}
+
+/** Regular */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 400;
+  src: url(/fonts/SF-Pro-Display-Regular.otf?aaeac71d99a345145a126a8c9dd2615f);
+}
+
+/** Regular Italic */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 400;
+  src: url(/fonts/SF-Pro-Display-RegularItalic.otf?87d7573445a739a1a8210207d1b346a3);
+}
+
+/** Thin */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 300;
+  src: url(/fonts/SF-Pro-Display-Thin.otf?f35e961114e962e90cf926bf979a8abc);
+}
+
+/** Thin Italic */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 300;
+  src: url(/fonts/SF-Pro-Display-ThinItalic.otf?9d5ed420ac3a432eb716c670ce00b662);
+}
+
+/** Light */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 200;
+  src: url(/fonts/SF-Pro-Display-Light.otf?ac5237052941a94686167d278e1c1c9d);
+}
+
+/** Light Italic */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 200;
+  src: url(/fonts/SF-Pro-Display-LightItalic.otf?bee8986f3bf3e269e81e7b64996e423c);
+}
+
+/** Ultralight */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 100;
+  src: url(/fonts/SF-Pro-Display-Ultralight.otf?bc55c63e7841855767b283b78bbd8d3a);
+}
+
+/** Ultralight Italic */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 100;
+  src: url(/fonts/SF-Pro-Display-UltralightItalic.otf?fa570fc4ded697c72608eae4e3675959);
+}
 
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
@@ -3471,7 +3615,8 @@ input[type="search"] {
   }
 }
 
-.form-group {
+.form-group,
+.form-group-like {
   margin-bottom: 15px;
 }
 
@@ -3844,7 +3989,8 @@ select[multiple].input-lg,
 }
 
 @media (min-width: 768px) {
-  .form-inline .form-group {
+  .form-inline .form-group,
+  .form-inline .form-group-like {
     display: inline-block;
     margin-bottom: 0;
     vertical-align: middle;
@@ -3918,18 +4064,22 @@ select[multiple].input-lg,
   min-height: 29px;
 }
 
-.form-horizontal .form-group {
+.form-horizontal .form-group,
+.form-horizontal .form-group-like {
   margin-left: -15px;
   margin-right: -15px;
 }
 
 .form-horizontal .form-group:before,
-.form-horizontal .form-group:after {
+.form-horizontal .form-group-like:before,
+.form-horizontal .form-group:after,
+.form-horizontal .form-group-like:after {
   content: " ";
   display: table;
 }
 
-.form-horizontal .form-group:after {
+.form-horizontal .form-group:after,
+.form-horizontal .form-group-like:after {
   clear: both;
 }
 
@@ -5545,7 +5695,8 @@ tbody.collapse.in {
 }
 
 @media (min-width: 768px) {
-  .navbar-form .form-group {
+  .navbar-form .form-group,
+  .navbar-form .form-group-like {
     display: inline-block;
     margin-bottom: 0;
     vertical-align: middle;
@@ -5606,11 +5757,13 @@ tbody.collapse.in {
 }
 
 @media (max-width: 767px) {
-  .navbar-form .form-group {
+  .navbar-form .form-group,
+  .navbar-form .form-group-like {
     margin-bottom: 5px;
   }
 
-  .navbar-form .form-group:last-child {
+  .navbar-form .form-group:last-child,
+  .navbar-form .form-group-like:last-child {
     margin-bottom: 0;
   }
 }
@@ -8350,6 +8503,10 @@ button.close {
   }
 }
 
+* {
+  font-family: "SF Display";
+}
+
 .grid-item {
   width: 28.33333333%;
   margin: 0 2.5% 100px 2.5%;
@@ -8464,6 +8621,33 @@ button.close {
 .commentPost .commentDiv {
   float: left;
   margin-left: 20px;
+  max-width: 90%;
+}
+
+.commentPost .commentDiv .deletecomment {
+  margin-left: 10px;
+}
+
+.form-group-like {
+  width: 30px;
+  float: left;
+  margin-right: 10px;
+}
+
+.form-group-like .btn-like {
+  margin-top: -7px;
+}
+
+.form-control:focus {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border: 1px solid #ccd0d2;
+}
+
+.form-textarea {
+  resize: none;
+  outline: 0;
+  height: 100px !important;
 }
 
 .fb_iframe_widget {
@@ -8486,8 +8670,21 @@ button.close {
   text-decoration: none;
 }
 
+.socialshare,
+.like {
+  margin: 0 0 50px 0;
+  float: left;
+  max-width: 500px;
+}
+
 .socialshare {
-  margin: 50px 0;
+  margin-top: 17px;
+}
+
+.like {
+  width: 15%;
+  min-width: 75px;
+  max-width: 300px;
 }
 
 .activeFront {

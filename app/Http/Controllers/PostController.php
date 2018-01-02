@@ -111,9 +111,9 @@ class PostController extends Controller
             'title' => 'required|min:3',
             'content' => 'required|min:3'
         ]);
-        $post = Post::find($request->input('id'));
-        $post->title = $request->input('title');
-        $post->content = $request->input('content');
+        $post = Post::find($request->get('post_id'));
+        $post->title = $request->get('title');
+        $post->content = $request->get('content');
         $image = $request->file('image');
         $filename = time() . '.' . $image->getClientOriginalExtension();
         Image::make($image)->save(public_path('/uploads/images/' . $filename));

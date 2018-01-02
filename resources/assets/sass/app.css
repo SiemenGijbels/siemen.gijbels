@@ -1,5 +1,94 @@
 @charset "UTF-8";
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+/** Black */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 900;
+  src: url("../../../public/fonts/SF/SF-Pro-Display-Black.otf"); }
+/** Black Italic */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 900;
+  src: url("../../../public/fonts/SF/SF-Pro-Display-BlackItalic.otf"); }
+/** Heavy */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 800;
+  src: url("../../../public/fonts/SF/SF-Pro-Display-Heavy.otf"); }
+/** Heavy Italic */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 800;
+  src: url("../../../public/fonts/SF/SF-Pro-Display-HeavyItalic.otf"); }
+/** Bold */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 700;
+  src: url("../../../public/fonts/SF/SF-Pro-Display-Bold.otf"); }
+/** Bold Italic */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 700;
+  src: url("../../../public/fonts/SF/SF-Pro-Display-BoldItalic.otf"); }
+/** Semibold */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 600;
+  src: url("../../../public/fonts/SF/SF-Pro-Display-Semibold.otf"); }
+/** Semibold Italic */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 600;
+  src: url("../../../public/fonts/SF/SF-Pro-Display-SemiboldItalic.otf"); }
+/** Medium */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 500;
+  src: url("../../../public/fonts/SF/SF-Pro-Display-Medium.otf"); }
+/** Medium Italic */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 500;
+  src: url("../../../public/fonts/SF/SF-Pro-Display-MediumItalic.otf"); }
+/** Regular */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 400;
+  src: url("../../../public/fonts/SF/SF-Pro-Display-Regular.otf"); }
+/** Regular Italic */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 400;
+  src: url("../../../public/fonts/SF/SF-Pro-Display-RegularItalic.otf"); }
+/** Thin */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 300;
+  src: url("../../../public/fonts/SF/SF-Pro-Display-Thin.otf"); }
+/** Thin Italic */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 300;
+  src: url("../../../public/fonts/SF/SF-Pro-Display-ThinItalic.otf"); }
+/** Light */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 200;
+  src: url("../../../public/fonts/SF/SF-Pro-Display-Light.otf"); }
+/** Light Italic */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 200;
+  src: url("../../../public/fonts/SF/SF-Pro-Display-LightItalic.otf"); }
+/** Ultralight */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 100;
+  src: url("../../../public/fonts/SF/SF-Pro-Display-Ultralight.otf"); }
+/** Ultralight Italic */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 100;
+  src: url("../../../public/fonts/SF/SF-Pro-Display-UltralightItalic.otf"); }
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
@@ -2517,7 +2606,7 @@ input[type="search"] {
   .input-group-lg > input[type="month"].input-group-addon,
   .input-group-lg > .input-group-btn > input[type="month"].btn, .input-group-lg input[type="month"] {
     line-height: 46px; } }
-.form-group {
+.form-group, .form-group-like {
   margin-bottom: 15px; }
 
 .radio,
@@ -2789,7 +2878,7 @@ select[multiple].input-lg,
   color: #a4aaae; }
 
 @media (min-width: 768px) {
-  .form-inline .form-group {
+  .form-inline .form-group, .form-inline .form-group-like {
     display: inline-block;
     margin-bottom: 0;
     vertical-align: middle; }
@@ -2837,13 +2926,13 @@ select[multiple].input-lg,
 .form-horizontal .radio,
 .form-horizontal .checkbox {
   min-height: 29px; }
-.form-horizontal .form-group {
+.form-horizontal .form-group, .form-horizontal .form-group-like {
   margin-left: -15px;
   margin-right: -15px; }
-  .form-horizontal .form-group:before, .form-horizontal .form-group:after {
+  .form-horizontal .form-group:before, .form-horizontal .form-group-like:before, .form-horizontal .form-group:after, .form-horizontal .form-group-like:after {
     content: " ";
     display: table; }
-  .form-horizontal .form-group:after {
+  .form-horizontal .form-group:after, .form-horizontal .form-group-like:after {
     clear: both; }
 @media (min-width: 768px) {
   .form-horizontal .control-label {
@@ -3851,7 +3940,7 @@ tbody.collapse.in {
   margin-top: 7px;
   margin-bottom: 7px; }
   @media (min-width: 768px) {
-    .navbar-form .form-group {
+    .navbar-form .form-group, .navbar-form .form-group-like {
       display: inline-block;
       margin-bottom: 0;
       vertical-align: middle; }
@@ -3889,9 +3978,9 @@ tbody.collapse.in {
     .navbar-form .has-feedback .form-control-feedback {
       top: 0; } }
   @media (max-width: 767px) {
-    .navbar-form .form-group {
+    .navbar-form .form-group, .navbar-form .form-group-like {
       margin-bottom: 5px; }
-      .navbar-form .form-group:last-child {
+      .navbar-form .form-group:last-child, .navbar-form .form-group-like:last-child {
         margin-bottom: 0; } }
   @media (min-width: 768px) {
     .navbar-form {
@@ -5798,6 +5887,9 @@ button.close {
 @media print {
   .hidden-print {
     display: none !important; } }
+* {
+  font-family: "SF Display"; }
+
 .grid-item {
   width: 28.3333333333%;
   margin: 0 2.5% 100px 2.5%; }
@@ -5880,7 +5972,26 @@ button.close {
     float: left; }
   .commentPost .commentDiv {
     float: left;
-    margin-left: 20px; }
+    margin-left: 20px;
+    max-width: 90%; }
+    .commentPost .commentDiv .deletecomment {
+      margin-left: 10px; }
+
+.form-group-like {
+  width: 30px;
+  float: left;
+  margin-right: 10px; }
+  .form-group-like .btn-like {
+    margin-top: -7px; }
+
+.form-control:focus {
+  box-shadow: none;
+  border: 1px solid #ccd0d2; }
+
+.form-textarea {
+  resize: none;
+  outline: 0;
+  height: 100px !important; }
 
 .fb_iframe_widget {
   margin-top: -8px;
@@ -5896,8 +6007,18 @@ button.close {
 .redditLink:hover {
   text-decoration: none; }
 
+.socialshare, .like {
+  margin: 0 0 50px 0;
+  float: left;
+  max-width: 500px; }
+
 .socialshare {
-  margin: 50px 0; }
+  margin-top: 17px; }
+
+.like {
+  width: 15%;
+  min-width: 75px;
+  max-width: 300px; }
 
 .activeFront {
   text-decoration: underline;

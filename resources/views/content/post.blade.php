@@ -76,8 +76,81 @@
                     <h5>{{  $post->user->name }} — {{ $post->created_at }}</h5>
                     <p>{{  $post->content }}</p>
                 </div>
-                <div class="col-md-12 post-actions">
-                    @if(Auth::user())
+                @if(Auth::user())
+                    <div class="col-md-12 like">
+                        @if($userLikeCount == 0 || $userLikeCount == NULL || empty($userLikeCount))
+
+                            {!! Form::open(array('route' => array('content.post.like', $post->id, Auth::user()->id))) !!}
+
+                            <div class="form-group-like">
+                                <p>{{ $countLikes }} <i class="fas fa-thumbs-up"></i></p>
+                            </div>
+
+                            <div class="form-group-like">
+                                <button class="btn btn-primary btn-like"><i class="far fa-thumbs-up"></i></button>
+                            </div>
+
+
+                            <div class=" form-group">
+                                {!! Form::hidden('post_id', $post->id, ['class'=>'form-control']) !!}
+                            </div>
+
+                            <div class=" form-group">
+                                {!! Form::hidden('user_id', Auth::user()->id, ['class'=>'form-control']) !!}
+                            </div>
+
+                            {!! Form::close() !!}
+
+                        @endif
+                        @if($userLikeCount == 1)
+                            <form>
+                                <div class="form-group-like">
+                                    <p>{{ $countLikes }} <i class="fas fa-thumbs-up"></i></p>
+                                </div>
+                                <div class="form-group-like">
+                                    <a class="btn btn-primary btn-like"
+                                       href="{{ route('content.post.unlike', ['postId' => $post->id, 'likeId' => $userLike->id]) }}"><i
+                                                class="far fa-thumbs-down"></i></a>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control" id="post_id" name="post_id"
+                                           value="{{ $post->id }}">
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control" id="user_id" name="user_id"
+                                           value="{{ Auth::user()->id }}">
+                                </div>
+                                {{ csrf_field() }}
+                            </form>
+                        @endif
+                    </div>
+                    <div class="col-md-12 socialshare">
+                        <div class="fb-share-button" data-href="{{ Request::url() }}" data-layout="button_count"
+                             data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank"
+                                                                            href="https://www.facebook.com/sharer/sharer.php?u="
+                                                                            . {{ urlencode(Request::url()) }}>Share</a>
+                        </div>
+                        <a class="twitter-share-button" href="https://twitter.com/intent/tweet">Tweet</a>
+                        <a class="redditLink" href="//www.reddit.com/submit"
+                           onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false">
+                            @if(app()->getLocale() == 'en_US')
+                                <img id="redditBtn" src="{{ asset('uploads/images/redditbutton.png') }}"
+                                     alt="submit to reddit"
+                                     border="0"/>
+                            @elseif(app()->getLocale() == 'nl_NL')
+                                <img id="redditBtn" src="{{ asset('uploads/images/redditbutton_nl.png') }}"
+                                     alt="post op reddit"
+                                     border="0"/>
+                            @endif
+                        </a>
+                        <a class="pinterestBtn" href="https://www.pinterest.com/pin/create/button/"
+                           data-pin-do="buttonBookmark"></a>
+                        <script src="//platform.linkedin.com/in.js"
+                                type="text/javascript"> lang: {{ app()->getLocale() }}</script>
+                        <script type="IN/Share" data-url="{{ Request::url() }}"></script>
+                    </div>
+                    <div class="col-md-12 post-actions">
                         @if($post->user_id == Auth::user()->id || Auth::user()->type == 1)
                             <a class="action-link" href="{{ route('content.edit', ['id' => $post->id]) }}"><i
                                         class="fas fa-pencil-alt"></i></a>
@@ -98,66 +171,8 @@
                                             class="fas fa-trash-alt"></i></a>
                             @endif
                         @endif
-                </div>
-                @if($userLikeCount == 0 || $userLikeCount == NULL || empty($userLikeCount))
-                    <form action="{{ route('content.post.like', ['postId' => $post->id, 'userId' => Auth::user()->id]) }}"
-                          method="post">
-                        {{ $countLikes }} likes
-                        <div class="form-group">
-                            <input type="hidden" class="form-control" id="post_id" name="post_id"
-                                   value="{{ $post->id }}">
-                        </div>
-                        <div class="form-group">
-                            <input type="hidden" class="form-control" id="user_id" name="user_id"
-                                   value="{{ Auth::user()->id }}">
-                        </div>
-                        {{ csrf_field() }}
-                        <button type="submit" class="btn btn-primary btn-like"><i class="far fa-thumbs-up"></i></button>
-                    </form>
-                @endif
-                @if($userLikeCount == 1)
-                    <form>
-                        {{ $countLikes }} likes
-                        <div class="form-group">
-                            <input type="hidden" class="form-control" id="post_id" name="post_id"
-                                   value="{{ $post->id }}">
-                        </div>
-                        <div class="form-group">
-                            <input type="hidden" class="form-control" id="user_id" name="user_id"
-                                   value="{{ Auth::user()->id }}">
-                        </div>
-                        {{ csrf_field() }}
-                        <a class="btn btn-primary btn-like"
-                           href="{{ route('content.post.unlike', ['postId' => $post->id, 'likeId' => $userLike->id]) }}"><i
-                                    class="far fa-thumbs-down"></i></a>
-                    </form>
-                @endif
-                @endif
-                <div class="col-md-12 socialshare">
-                    <div class="fb-share-button" data-href="{{ Request::url() }}" data-layout="button_count"
-                         data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank"
-                                                                        href="https://www.facebook.com/sharer/sharer.php?u="
-                                                                        . {{ urlencode(Request::url()) }}>Share</a>
                     </div>
-                    <a class="twitter-share-button" href="https://twitter.com/intent/tweet">Tweet</a>
-                    <a class="redditLink" href="//www.reddit.com/submit"
-                       onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false">
-                        @if(app()->getLocale() == 'en_US')
-                            <img id="redditBtn" src="{{ asset('uploads/images/redditbutton.png') }}"
-                                 alt="submit to reddit"
-                                 border="0"/>
-                        @elseif(app()->getLocale() == 'nl_NL')
-                            <img id="redditBtn" src="{{ asset('uploads/images/redditbutton_nl.png') }}"
-                                 alt="post op reddit"
-                                 border="0"/>
-                        @endif
-                    </a>
-                    <a class="pinterestBtn" href="https://www.pinterest.com/pin/create/button/"
-                       data-pin-do="buttonBookmark"></a>
-                    <script src="//platform.linkedin.com/in.js"
-                            type="text/javascript"> lang: {{ app()->getLocale() }}</script>
-                    <script type="IN/Share" data-url="{{ Request::url() }}"></script>
-                </div>
+                @endif
                 @include('partials.comments')
             </div>
         </div>

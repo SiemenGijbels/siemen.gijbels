@@ -20,32 +20,43 @@
         @endif
 
         <div class="row">
-                <form enctype="multipart/form-data" action="{{ route('content.create') }}" method="post">
-                    <div class="form-group">
-                        <label for="title">@lang('general.title')</label>
-                        <input type="text" class="form-control" id="title" name="title">
-                    </div>
-                    <div class="form-group">
-                        <label for="content">@lang('general.content')</label>
-                        <input type="text" class="form-control" id="content" name="content">
-                    </div>
-                    <div class="form-group">
-                        <input type="hidden" class="form-control" id="user_id" name="user_id" value="{{ Auth::user()->id }}">
-                    </div>
-                    <div class="form-group">
-                        <label>Image</label>
-                        <input type="file" name="image">
-                    </div>
-                    @foreach($tags as $tag)
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="tags[]" value="{{ $tag->id }}"> {{ $tag->name }}
-                            </label>
-                        </div>
-                    @endforeach
-                    {{ csrf_field() }}
-                    <button type="submit" class="btn btn-primary">@lang('general.submit')</button>
-                </form>
+
+            {!! Form::open(array('route' => array('content.create'), 'files' => true)) !!}
+
+
+            <div class="form-group">
+                {!! Form::label(trans('general.title')) !!}
+                {!! Form::text('title', old('title'), ['class'=>'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label(trans('general.content')) !!}
+                {!! Form::textarea('content',  old('content'),['class'=>'form-control form-textarea']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label(trans('general.updateimage')) !!}
+                {!! Form::file('image', ['class'=>'form-control']) !!}
+            </div>
+
+            @foreach($tags as $tag)
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="tags[]" value="{{ $tag->id }}"> {{ $tag->name }}
+                    </label>
+                </div>
+            @endforeach
+
+            <div class=" form-group">
+                {!! Form::hidden('user_id', Auth::user()->id, ['class'=>'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-success">@lang('general.submit')</button>
+            </div>
+
+            {!! Form::close() !!}
+
             </div>
         </div>
     </div>

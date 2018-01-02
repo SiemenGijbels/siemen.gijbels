@@ -58,7 +58,7 @@ return [
     'yes' => 'Ja',
     'no' => 'Nee',
     'softdeleted' => 'Soft gedeleted',
-    '' => '',
+    'updateimage' => 'Afbeelding updaten',
     '' => '',
     '' => '',
     '' => '',
