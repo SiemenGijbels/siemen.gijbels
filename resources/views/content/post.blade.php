@@ -4,10 +4,11 @@
 
 @section('social_share')
     <div id="fb-root"></div>
-    <script>(function(d, s, id) {
+    <script>(function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
+            js = d.createElement(s);
+            js.id = id;
             js.src = 'https://connect.facebook.net/{{ app()->getLocale() }}/sdk.js#xfbml=1&version=v2.11&appId=778280482363322';
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script>
@@ -48,7 +49,7 @@
             pjs.parentNode.insertBefore(js, pjs);
         }(document, 'script', 'pinterest-jssdk'));
     </script>
-    <script type="text/javascript" async defer src="//assets.pinterest.com/js/pinit.js"></script>
+    <script type="text/javascript" async defer src="{{ asset('js/pinit.js') }}"></script>
 @stop
 
 @section('content')
@@ -62,9 +63,6 @@
         <div class="row">
             <div class="col-md-12">
                 <p>{{  $post->content }}</p>
-            </div>
-            <div class="col-md-12">
-                <p><a href="">Share</a></p>
             </div>
             <div class="col-md-12">
                 @if(Auth::user())
@@ -129,29 +127,31 @@
                 </form>
             @endif
             @endif
-            <div class="fb-share-button" data-href="{{ Request::url() }}" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=" . {{ urlencode(Request::url()) }}>Share</a></div>
-            <a class="twitter-share-button" href="https://twitter.com/intent/tweet">Tweet</a>
-            <a href="//www.reddit.com/submit"
-               onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false">
-                <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0"/> </a>
-            <a href="https://www.pinterest.com/pin/create/button/" data-pin-do="buttonBookmark">
-            </a>
-            <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: {{ app()->getLocale() }}</script>
-            <script type="IN/Share" data-url="{{ Request::url() }}"></script>
+            <div class="col-md-12 socialshare">
+                <div class="fb-share-button" data-href="{{ Request::url() }}" data-layout="button_count"
+                     data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank"
+                                                                    href="https://www.facebook.com/sharer/sharer.php?u="
+                                                                    . {{ urlencode(Request::url()) }}>Share</a></div>
+                <a class="twitter-share-button" href="https://twitter.com/intent/tweet">Tweet</a>
+                <a class="redditLink" href="//www.reddit.com/submit"
+                   onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false">
+                    @if(app()->getLocale() == 'en_US')
+                        <img id="redditBtn" src="{{ asset('uploads/images/redditbutton.png') }}"
+                             alt="submit to reddit"
+                             border="0"/>
+                    @elseif(app()->getLocale() == 'nl_NL')
+                        <img id="redditBtn" src="{{ asset('uploads/images/redditbutton_nl.png') }}"
+                             alt="post op reddit"
+                             border="0"/>
+                    @endif
+                </a>
+                <a class="pinterestBtn" href="https://www.pinterest.com/pin/create/button/"
+                   data-pin-do="buttonBookmark"></a>
+                <script src="//platform.linkedin.com/in.js"
+                        type="text/javascript"> lang: {{ app()->getLocale() }}</script>
+                <script type="IN/Share" data-url="{{ Request::url() }}"></script>
+            </div>
             @include('partials.comments')
         </div>
     </div>
-@stop
-
-@section('scripts')
-    <script>
-        function fbShare() {
-            FB.ui({
-                method: 'share',
-                display: 'popup',
-                href: '{{ Request::url() }}',
-            }, function (response) {
-            });
-        };
-    </script>
 @stop

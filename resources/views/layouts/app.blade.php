@@ -11,7 +11,7 @@
     <title>@yield('page_title')</title>
 
     <!-- Styles -->
-    <link href="{{ URL::asset('assets/css/app.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('css/app.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     {{--<script type="text/javascript" src="//platform.linkedin.com/in.js">--}}

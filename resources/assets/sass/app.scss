@@ -58,6 +58,29 @@
   padding-top: 200px;
 }
 
+.fb_iframe_widget {
+  margin-top: -8px;
+  margin-bottom: 6px;
+  vertical-align: middle;
+}
+
+#redditBtn {
+  height: 20px;
+  vertical-align: initial;
+}
+
+#redditBtn:hover {
+  filter: grayscale(0.3);
+}
+
+.redditLink:hover {
+  text-decoration: none;
+}
+
+.socialshare {
+  margin: 50px 0;
+}
+
 .activeFront {
   text-decoration: underline;
   font-weight: bolder;
