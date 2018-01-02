@@ -14,6 +14,10 @@
     <link href="{{ URL::asset('assets/css/app.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    {{--<script type="text/javascript" src="//platform.linkedin.com/in.js">--}}
+        {{--api_key:   86r5ifzyjdxn8y--}}
+        {{--authorize: true--}}
+    {{--</script>--}}
 </head>
 <body>
 @yield('social_share')

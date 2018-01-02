@@ -3,27 +3,52 @@
 @section('page_title', $post->title)
 
 @section('social_share')
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/{{ app()->getLocale() }}/sdk.js#xfbml=1&version=v2.11&appId=778280482363322';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
     <script>
-        window.fbAsyncInit = function () {
-            FB.init({
-                appId: '778280482363322',
-                autoLogAppEvents: true,
-                xfbml: true,
-                version: 'v2.11'
+        window.twttr = (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+                t = window.twttr || {};
+            if (d.getElementById(id)) return t;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+
+            t._e = [];
+            t.ready = function (f) {
+                t._e.push(f);
+            };
+
+            return t;
+        }(document, "script", "twitter-wjs"));
+    </script>
+    <script>
+        window.pAsyncInit = function () {
+            PDK.init({
+                appId: "<your app-id>", // Change this
+                cookie: true
             });
         };
 
         (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
+            var js, pjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) {
                 return;
             }
             js = d.createElement(s);
             js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
+            js.src = "//assets.pinterest.com/sdk/sdk.js";
+            pjs.parentNode.insertBefore(js, pjs);
+        }(document, 'script', 'pinterest-jssdk'));
     </script>
+    <script type="text/javascript" async defer src="//assets.pinterest.com/js/pinit.js"></script>
 @stop
 
 @section('content')
@@ -104,7 +129,15 @@
                 </form>
             @endif
             @endif
-            <button onclick="fbShare()" id="fbBtn" class="btn-default">Facebook</button>
+            <div class="fb-share-button" data-href="{{ Request::url() }}" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=" . {{ urlencode(Request::url()) }}>Share</a></div>
+            <a class="twitter-share-button" href="https://twitter.com/intent/tweet">Tweet</a>
+            <a href="//www.reddit.com/submit"
+               onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false">
+                <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0"/> </a>
+            <a href="https://www.pinterest.com/pin/create/button/" data-pin-do="buttonBookmark">
+            </a>
+            <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: {{ app()->getLocale() }}</script>
+            <script type="IN/Share" data-url="{{ Request::url() }}"></script>
             @include('partials.comments')
         </div>
     </div>

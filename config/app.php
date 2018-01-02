@@ -78,11 +78,11 @@ return [
     |
     */
 
-    'locale' => 'nl',
+    'locale' => 'nl_NL',
 
     'languages'     => array(
-        'en' => 'en_GB',
-        'nl' => 'nl_BE',
+        'en' => 'en_US',
+        'nl' => 'nl_NL',
     ),
 
     /*
@@ -96,7 +96,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'nl',
+    'fallback_locale' => 'nl_NL',
 
     /*
     |--------------------------------------------------------------------------
