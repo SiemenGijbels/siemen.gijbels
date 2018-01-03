@@ -8560,7 +8560,8 @@ button.close {
   color: white;
   border-radius: 5px;
   padding: 3px 6px;
-  margin-bottom: 10px;
+  display: inline-block;
+  margin: 3px;
 }
 
 .grid .grid-item .indexContent {

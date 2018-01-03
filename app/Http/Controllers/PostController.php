@@ -114,10 +114,12 @@ class PostController extends Controller
         $post = Post::find($request->get('post_id'));
         $post->title = $request->get('title');
         $post->content = $request->get('content');
-        $image = $request->file('image');
-        $filename = time() . '.' . $image->getClientOriginalExtension();
-        Image::make($image)->save(public_path('/uploads/images/' . $filename));
-        $post->image = $filename;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            Image::make($image)->save(public_path('/uploads/images/' . $filename));
+            $post->image = $filename;
+        }
         $post->save();
 
         $post->tags()->sync($request->input('tags') === null ? [] : $request->input('tags'));
