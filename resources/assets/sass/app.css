@@ -1,94 +1,58 @@
 @charset "UTF-8";
+/** WARNING - USE AT OWN RISK */
+/** IT IS AGAINST APPLE'S POLICY TO USE SF PRO FOR ANYTHING OTHER THAN iOS/tvOS/macOS/watchOS DESIGN & DEVELOPMENT */
+/** https://sf.abarba.me/LICENSE.pdf */
+/** 1. Copy/import this file into your main css/scss file */
+/** 2. Change css font-family: to "SF Text", "SF Display" or "SF Mono" */
+/** 3. Apply font-weight or italic to html elements */
+/*---------------------------------------------------------------------------*
+ * SF UI Display
+ *---------------------------------------------------------------------------*/
 /** Black */
 @font-face {
   font-family: "SF Display";
   font-weight: 900;
-  src: url("../../../public/fonts/SF-Pro-Display-Black.otf"); }
-/** Black Italic */
-@font-face {
-  font-family: "SF Display";
-  font-weight: 900;
-  src: url("../../../public/fonts/SF-Pro-Display-BlackItalic.otf"); }
-/** Heavy */
-@font-face {
-  font-family: "SF Display";
-  font-weight: 800;
-  src: url("../../../public/fonts/SF-Pro-Display-Heavy.otf"); }
-/** Heavy Italic */
-@font-face {
-  font-family: "SF Display";
-  font-weight: 800;
-  src: url("../../../public/fonts/SF-Pro-Display-HeavyItalic.otf"); }
+  src: url("https://sf.abarba.me/SF-UI-Display-Black.otf"); }
 /** Bold */
 @font-face {
   font-family: "SF Display";
   font-weight: 700;
-  src: url("../../../public/fonts/SF-Pro-Display-Bold.otf"); }
-/** Bold Italic */
+  src: url("https://sf.abarba.me/SF-UI-Display-Bold.otf"); }
+/** Heavy */
 @font-face {
   font-family: "SF Display";
-  font-weight: 700;
-  src: url("../../../public/fonts/SF-Pro-Display-BoldItalic.otf"); }
-/** Semibold */
-@font-face {
-  font-family: "SF Display";
-  font-weight: 600;
-  src: url("../../../public/fonts/SF-Pro-Display-Semibold.otf"); }
-/** Semibold Italic */
-@font-face {
-  font-family: "SF Display";
-  font-weight: 600;
-  src: url("../../../public/fonts/SF-Pro-Display-SemiboldItalic.otf"); }
-/** Medium */
-@font-face {
-  font-family: "SF Display";
-  font-weight: 500;
-  src: url("../../../public/fonts/SF-Pro-Display-Medium.otf"); }
-/** Medium Italic */
-@font-face {
-  font-family: "SF Display";
-  font-weight: 500;
-  src: url("../../../public/fonts/SF-Pro-Display-MediumItalic.otf"); }
-/** Regular */
-@font-face {
-  font-family: "SF Display";
-  font-weight: 400;
-  src: url("../../../public/fonts/SF-Pro-Display-Regular.otf"); }
-/** Regular Italic */
-@font-face {
-  font-family: "SF Display";
-  font-weight: 400;
-  src: url("../../../public/fonts/SF-Pro-Display-RegularItalic.otf"); }
-/** Thin */
-@font-face {
-  font-family: "SF Display";
-  font-weight: 300;
-  src: url("../../../public/fonts/SF-Pro-Display-Thin.otf"); }
-/** Thin Italic */
-@font-face {
-  font-family: "SF Display";
-  font-weight: 300;
-  src: url("../../../public/fonts/SF-Pro-Display-ThinItalic.otf"); }
+  font-weight: 800;
+  src: url("https://sf.abarba.me/SF-UI-Display-Heavy.otf"); }
 /** Light */
 @font-face {
   font-family: "SF Display";
   font-weight: 200;
-  src: url("../../../public/fonts/SF-Pro-Display-Light.otf"); }
-/** Light Italic */
+  src: url("https://sf.abarba.me/SF-UI-Display-Light.otf"); }
+/** Medium */
 @font-face {
   font-family: "SF Display";
-  font-weight: 200;
-  src: url("../../../public/fonts/SF-Pro-Display-LightItalic.otf"); }
+  font-weight: 500;
+  src: url("https://sf.abarba.me/SF-UI-Display-Medium.otf"); }
+/** Regular */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 400;
+  src: url("https://sf.abarba.me/SF-UI-Display-Regular.otf"); }
+/** Semibold */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 600;
+  src: url("https://sf.abarba.me/SF-UI-Display-Semibold.otf"); }
+/** Thin */
+@font-face {
+  font-family: "SF Display";
+  font-weight: 300;
+  src: url("https://sf.abarba.me/SF-UI-Display-Thin.otf"); }
 /** Ultralight */
 @font-face {
   font-family: "SF Display";
   font-weight: 100;
-  src: url("../../../public/fonts/SF-Pro-Display-Ultralight.otf"); }
-/** Ultralight Italic */
-@font-face {
-  font-family: "SF Display";
-  font-weight: 100;
-  src: url("../../../public/fonts/SF-Pro-Display-UltralightItalic.otf"); }
+  src: url("https://sf.abarba.me/SF-UI-Display-Ultralight.otf"); }
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
@@ -5918,14 +5882,8 @@ button.close {
       position: relative; }
     .grid .grid-item h1 {
       margin-bottom: 20px;
-      margin-top: -20px; }
-    .grid .grid-item .tagblock {
-      background-color: #3d6983;
-      color: white;
-      border-radius: 5px;
-      padding: 3px 6px;
-      display: inline-block;
-      margin: 3px; }
+      margin-top: -30px;
+      font-weight: 800; }
     .grid .grid-item .indexContent {
       margin: 20px;
       overflow: hidden;
@@ -5985,7 +5943,7 @@ button.close {
   overflow: auto !important;
   height: 100vh; }
 
-#postImg {
+.postImg {
   width: auto;
   height: auto;
   max-width: 100%;
@@ -5994,6 +5952,14 @@ button.close {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); }
+
+.tagblock {
+  background-color: #3d6983;
+  color: white;
+  border-radius: 5px;
+  padding: 3px 6px;
+  display: inline-block;
+  margin: 3px; }
 
 .post, .post-title, .post-content, .post-actions {
   margin-bottom: 50px; }
@@ -6090,6 +6056,10 @@ button.close {
 .btn {
   border: none; }
 
+.editImage {
+  max-width: 1000px;
+  max-height: 1000px; }
+
 body {
   background-color: white; }
 
@@ -6097,7 +6067,8 @@ table {
   margin: 0 auto; }
 
 table tbody tr th {
-  padding: 30px 50px; }
+  padding: 30px 50px;
+  text-align: center; }
 
 table tbody tr td {
   padding: 5px 50px; }

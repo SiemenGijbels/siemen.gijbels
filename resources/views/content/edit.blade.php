@@ -8,11 +8,12 @@
             <div class="col-md-12">
 
                 @if(Auth::user())
-                    <div class="col-md-12">
-
+                    <div class="col-md-6">
+                        <img class="editImage" src="{{ asset('uploads/images/') }}/{{ $post->image  }}">
+                    </div>
+                    <div class="col-md-6">
                         {!! Form::open(array('route' => array('content.update'), 'files' => true)) !!}
 
-                        <img src="{{ asset('uploads/images/') }}/{{ $post->image  }}">
 
                         <div class="form-group">
                             {!! Form::label(trans('general.title')) !!}
@@ -30,12 +31,10 @@
                         </div>
 
                         @foreach($tags as $tag)
-                            <div class="checkbox">
                                 <label>
                                     <input type="checkbox" name="tags[]"
                                            value="{{ $tag->id }}" {{ $post->tags->contains($tag->id) ? 'checked' : '' }}> {{ $tag->name }}
                                 </label>
-                            </div>
                         @endforeach
 
                         <div class=" form-group">

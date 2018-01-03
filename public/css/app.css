@@ -1,35 +1,27 @@
 @charset "UTF-8";
 
+/** WARNING - USE AT OWN RISK */
+
+/** IT IS AGAINST APPLE'S POLICY TO USE SF PRO FOR ANYTHING OTHER THAN iOS/tvOS/macOS/watchOS DESIGN & DEVELOPMENT */
+
+/** https://sf.abarba.me/LICENSE.pdf */
+
+/** 1. Copy/import this file into your main css/scss file */
+
+/** 2. Change css font-family: to "SF Text", "SF Display" or "SF Mono" */
+
+/** 3. Apply font-weight or italic to html elements */
+
+/*---------------------------------------------------------------------------*
+ * SF UI Display
+ *---------------------------------------------------------------------------*/
+
 /** Black */
 
 @font-face {
   font-family: "SF Display";
   font-weight: 900;
-  src: url(/fonts/SF-Pro-Display-Black.otf?11e421ee3f03e231763aeb70962badd8);
-}
-
-/** Black Italic */
-
-@font-face {
-  font-family: "SF Display";
-  font-weight: 900;
-  src: url(/fonts/SF-Pro-Display-BlackItalic.otf?647ad7b734271f858d61a94283fd0502);
-}
-
-/** Heavy */
-
-@font-face {
-  font-family: "SF Display";
-  font-weight: 800;
-  src: url(/fonts/SF-Pro-Display-Heavy.otf?a545fc03ce079844a5ff898a25fe589b);
-}
-
-/** Heavy Italic */
-
-@font-face {
-  font-family: "SF Display";
-  font-weight: 800;
-  src: url(/fonts/SF-Pro-Display-HeavyItalic.otf?d70a8b7adbe065dd69b16459ffab4231);
+  src: url("https://sf.abarba.me/SF-UI-Display-Black.otf");
 }
 
 /** Bold */
@@ -37,79 +29,15 @@
 @font-face {
   font-family: "SF Display";
   font-weight: 700;
-  src: url(/fonts/SF-Pro-Display-Bold.otf?644563f48ab5fe8e9082b64b2729b068);
+  src: url("https://sf.abarba.me/SF-UI-Display-Bold.otf");
 }
 
-/** Bold Italic */
+/** Heavy */
 
 @font-face {
   font-family: "SF Display";
-  font-weight: 700;
-  src: url(/fonts/SF-Pro-Display-BoldItalic.otf?9d7f6005cb34acd97c4a5f0a454bc7a5);
-}
-
-/** Semibold */
-
-@font-face {
-  font-family: "SF Display";
-  font-weight: 600;
-  src: url(/fonts/SF-Pro-Display-Semibold.otf?e6ef4ea3cf5b1b533a85a5591534e3e4);
-}
-
-/** Semibold Italic */
-
-@font-face {
-  font-family: "SF Display";
-  font-weight: 600;
-  src: url(/fonts/SF-Pro-Display-SemiboldItalic.otf?fce0a93d0980a16d75a2f71173c80838);
-}
-
-/** Medium */
-
-@font-face {
-  font-family: "SF Display";
-  font-weight: 500;
-  src: url(/fonts/SF-Pro-Display-Medium.otf?51fd7406327f2b1dbc8e708e6a9da9a5);
-}
-
-/** Medium Italic */
-
-@font-face {
-  font-family: "SF Display";
-  font-weight: 500;
-  src: url(/fonts/SF-Pro-Display-MediumItalic.otf?33d39d7c5573584d97fbb77ead48a296);
-}
-
-/** Regular */
-
-@font-face {
-  font-family: "SF Display";
-  font-weight: 400;
-  src: url(/fonts/SF-Pro-Display-Regular.otf?aaeac71d99a345145a126a8c9dd2615f);
-}
-
-/** Regular Italic */
-
-@font-face {
-  font-family: "SF Display";
-  font-weight: 400;
-  src: url(/fonts/SF-Pro-Display-RegularItalic.otf?87d7573445a739a1a8210207d1b346a3);
-}
-
-/** Thin */
-
-@font-face {
-  font-family: "SF Display";
-  font-weight: 300;
-  src: url(/fonts/SF-Pro-Display-Thin.otf?f35e961114e962e90cf926bf979a8abc);
-}
-
-/** Thin Italic */
-
-@font-face {
-  font-family: "SF Display";
-  font-weight: 300;
-  src: url(/fonts/SF-Pro-Display-ThinItalic.otf?9d5ed420ac3a432eb716c670ce00b662);
+  font-weight: 800;
+  src: url("https://sf.abarba.me/SF-UI-Display-Heavy.otf");
 }
 
 /** Light */
@@ -117,15 +45,39 @@
 @font-face {
   font-family: "SF Display";
   font-weight: 200;
-  src: url(/fonts/SF-Pro-Display-Light.otf?ac5237052941a94686167d278e1c1c9d);
+  src: url("https://sf.abarba.me/SF-UI-Display-Light.otf");
 }
 
-/** Light Italic */
+/** Medium */
 
 @font-face {
   font-family: "SF Display";
-  font-weight: 200;
-  src: url(/fonts/SF-Pro-Display-LightItalic.otf?bee8986f3bf3e269e81e7b64996e423c);
+  font-weight: 500;
+  src: url("https://sf.abarba.me/SF-UI-Display-Medium.otf");
+}
+
+/** Regular */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 400;
+  src: url("https://sf.abarba.me/SF-UI-Display-Regular.otf");
+}
+
+/** Semibold */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 600;
+  src: url("https://sf.abarba.me/SF-UI-Display-Semibold.otf");
+}
+
+/** Thin */
+
+@font-face {
+  font-family: "SF Display";
+  font-weight: 300;
+  src: url("https://sf.abarba.me/SF-UI-Display-Thin.otf");
 }
 
 /** Ultralight */
@@ -133,15 +85,7 @@
 @font-face {
   font-family: "SF Display";
   font-weight: 100;
-  src: url(/fonts/SF-Pro-Display-Ultralight.otf?bc55c63e7841855767b283b78bbd8d3a);
-}
-
-/** Ultralight Italic */
-
-@font-face {
-  font-family: "SF Display";
-  font-weight: 100;
-  src: url(/fonts/SF-Pro-Display-UltralightItalic.otf?fa570fc4ded697c72608eae4e3675959);
+  src: url("https://sf.abarba.me/SF-UI-Display-Ultralight.otf");
 }
 
 /*!
@@ -8552,16 +8496,8 @@ button.close {
 
 .grid .grid-item h1 {
   margin-bottom: 20px;
-  margin-top: -20px;
-}
-
-.grid .grid-item .tagblock {
-  background-color: #3d6983;
-  color: white;
-  border-radius: 5px;
-  padding: 3px 6px;
-  display: inline-block;
-  margin: 3px;
+  margin-top: -30px;
+  font-weight: 800;
 }
 
 .grid .grid-item .indexContent {
@@ -8649,7 +8585,7 @@ button.close {
   height: 100vh;
 }
 
-#postImg {
+.postImg {
   width: auto;
   height: auto;
   max-width: 100%;
@@ -8659,6 +8595,15 @@ button.close {
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+}
+
+.tagblock {
+  background-color: #3d6983;
+  color: white;
+  border-radius: 5px;
+  padding: 3px 6px;
+  display: inline-block;
+  margin: 3px;
 }
 
 .post,
@@ -8799,6 +8744,11 @@ button.close {
   border: none;
 }
 
+.editImage {
+  max-width: 1000px;
+  max-height: 1000px;
+}
+
 body {
   background-color: white;
 }
@@ -8809,6 +8759,7 @@ table {
 
 table tbody tr th {
   padding: 30px 50px;
+  text-align: center;
 }
 
 table tbody tr td {

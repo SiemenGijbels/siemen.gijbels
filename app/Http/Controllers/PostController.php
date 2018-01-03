@@ -257,8 +257,10 @@ class PostController extends Controller
         $comments = Comment::all();
         $likes = Like::all();
         $users = User::all();
+        $archivedPosts = Post::where('archived', 1)->get();
+        $softDeletedPosts = Post::where('archived', 2)->get();
 
-        return view('admin.index', ['posts' => $posts, 'comments' => $comments, 'likes' => $likes, 'users' => $users]);
+        return view('admin.index', ['posts' => $posts, 'archivedPosts' => $archivedPosts, 'softDeletedPosts' => $softDeletedPosts, 'comments' => $comments, 'likes' => $likes, 'users' => $users]);
     }
 
     // EDIT

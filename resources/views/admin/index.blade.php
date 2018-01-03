@@ -22,12 +22,16 @@
                     <tr>
                         <th>@lang('general.users')</th>
                         <th>@lang('general.posts')</th>
+                        <th>@lang('general.archived')</th>
+                        <th>@lang('general.softdeleted')</th>
                         <th>@lang('general.comments')</th>
                         <th>Likes</th>
                     </tr>
                     <tr>
                         <td>{{ $users->count() }}</td>
                         <td>{{ $posts->count() }}</td>
+                        <td>{{ $archivedPosts->count() }}</td>
+                        <td>{{ $softDeletedPosts->count() }}</td>
                         <td>{{ $comments->count() }}</td>
                         <td>{{ $likes->count() }}</td>
                     </tr>

@@ -20,6 +20,34 @@ class TagsTableSeeder extends Seeder
         ]);
 
         DB::table('tags')->insert([
+            'name' => "New York"
+        ]);
+
+        DB::table('tags')->insert([
+            'name' => "London"
+        ]);
+
+        DB::table('tags')->insert([
+            'name' => "Berlin"
+        ]);
+
+        DB::table('tags')->insert([
+            'name' => "Utrecht"
+        ]);
+
+        DB::table('tags')->insert([
+            'name' => "Art"
+        ]);
+
+        DB::table('tags')->insert([
+            'name' => "Architecture"
+        ]);
+
+        DB::table('tags')->insert([
+            'name' => "Food"
+        ]);
+
+        DB::table('tags')->insert([
             'name' => "Leisure time"
         ]);
 

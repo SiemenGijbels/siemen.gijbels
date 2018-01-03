@@ -68,13 +68,20 @@
     <div class="content">
         <div class="left">
             <div class="imageDiv">
-                <img id="postImg" src="{{ asset('uploads/images/') }}/{{ $post->image }}">
+                <img id="photo{{ $post->id }}" class="postImg" src="{{ asset('uploads/images/') }}/{{ $post->image }}">
             </div>
         </div>
         <div class="right">
             <div class="row">
                 <div class="col-md-12 post-title">
                     <h1 class="titlePost">{{ $post->title }}</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 tags">
+                    @foreach($post->tags as $tag)
+                        <span class="tagblock">{{ $tag->name }}</span>
+                    @endforeach
                 </div>
             </div>
             <div class="row">
@@ -190,7 +197,7 @@
     <script type="text/javascript" src="{{ asset('js/color-thief.min.js') }}"></script>
     <script>
         $(document).ready(function () {
-            var sourceImage = document.getElementById("postImg");
+            var sourceImage = document.getElementById("photo{{ $post->id }}");
             var colorThief = new ColorThief();
             var color = colorThief.getColor(sourceImage);
             $(".action-link").css("color", "rgb(" + color + ")");
@@ -199,5 +206,29 @@
             $(".btn-success").css("background-color", "rgb(" + color + ")");
             $(".btn-like").css("background-color", "rgb(" + color + ")");
         });
+    </script>
+    {{--https://github.com/lokesh/color-thief/--}}
+    <script type="text/javascript" defer src="{{ asset('js/color-thief.min.js') }}"></script>
+    <script>
+        @if($post->tags->count() > 1)
+        $(document).ready(function () {
+            var sourceImage = document.getElementById('photo{{ $post->id }}');
+            var colorThief = new ColorThief();
+            var obj = $(".tagblock");
+            var tagArray = $.makeArray(obj);
+            var colorPalette = colorThief.getPalette(sourceImage, '{{ $post->tags->count() }}');
+            for (var i = 0; i < tagArray.length; i++) {
+                $(tagArray[i]).css("background-color", "rgb(" + colorPalette[i] + ")");
+            }
+            ;
+        });
+        @elseif($post->tags->count() == 1)
+        $(document).ready(function () {
+            var sourceImage = document.getElementById('photo{{ $post->id }}');
+            var colorThief = new ColorThief();
+            var color = colorThief.getColor(sourceImage);
+            $("#grid-item{{ $post->id }} .grid-item-content .tagblock").css("background-color", "rgb(" + color + ")");
+        });
+        @endif
     </script>
 @stop
