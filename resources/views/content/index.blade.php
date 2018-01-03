@@ -9,24 +9,25 @@
     <div class="content">
         <div class="grid">
             @foreach($posts as $post)
-                <div class="grid-item">
-                    <div class="col-md-12 text-center">
+                <a class="grid-link" href="{{ route('content.post', ['id' => $post->id]) }}">
+                    <div class="grid-item text-center">
                         @if(!$post->image == "")
                             <img class="blogPics" src="{{ asset('uploads/images/') }}/{{ $post->image }}">
                         @else
                             <img class="blogPics" src="https://source.unsplash.com/random"/>
                         @endif
-                        <h1 class="post-title">{{ $post->title }}</h1>
-                        <p style="font-weight: bold">
+                        <div class="grid-item-content">
+                            <img class="blogPics blogPicProfile"
+                                 src="{{ asset('uploads/avatars/') }}/{{ empty($post->user->avatar) ? 'default.png' : $post->user->avatar }}">
+                            <p class="byUser">@lang('general.by') {{ empty($post->user->name) ? 'No user' : $post->user->name }}</p>
+                            <h1 class="post-title">{{ $post->title }}</h1>
                             @foreach($post->tags as $tag)
-                                {{ $tag->name }}
+                                <span class="tagblock">{{ $tag->name }}</span>
                             @endforeach
-                        </p>
-                        <p>{{ $post->content }}</p>
-                        <p><a href="{{ route('content.post', ['id' => $post->id]) }}">@lang('general.moredetails')</a>
-                        </p>
+                            <p class="indexContent">{{ $post->content }}</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             @endforeach
         </div>
         <div>

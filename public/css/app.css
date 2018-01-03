@@ -8503,18 +8503,14 @@ button.close {
   }
 }
 
-* {
-  font-family: "SF Display";
-}
-
-.grid-item {
-  width: 28.33333333%;
-  margin: 0 2.5% 100px 2.5%;
-}
-
-.blogPics {
-  width: 100%;
-  height: 100%;
+*,
+*:hover,
+*:focus,
+*:active {
+  font-family: "SF Display", "Helvetica", "Helvetica Neue", "Arial", sans-serif;
+  outline: 0;
+  -webkit-transition: 0.1s ease;
+  transition: 0.1s ease;
 }
 
 .archived {
@@ -8530,7 +8526,80 @@ button.close {
   width: 80%;
   margin: auto;
   height: auto;
+}
+
+.grid-link {
+  color: black;
+}
+
+.grid-link:hover {
+  color: black;
+}
+
+.grid .grid-item {
+  width: 28.33333333%;
+  margin: 0 2.5% 50px 2.5%;
+  border-radius: 10px;
+  border: 1px solid lightgrey;
+  background-color: white;
+  -webkit-transition: 0.1s ease;
+  transition: 0.1s ease;
+}
+
+.grid .grid-item-content {
+  position: relative;
+}
+
+.grid .grid-item h1 {
+  margin-bottom: 20px;
+  margin-top: -20px;
+}
+
+.grid .grid-item .tagblock {
+  background-color: #3d6983;
+  color: white;
+  border-radius: 5px;
+  padding: 3px 6px;
+  margin-bottom: 10px;
+}
+
+.grid .grid-item .indexContent {
+  margin: 20px;
   overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
+
+.grid .grid-item .blogPics {
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.grid .grid-item .byUser {
+  position: relative;
+  top: -35px;
+}
+
+.grid .grid-item .blogPicProfile {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: relative;
+  border: 4px solid white;
+  top: -25px;
+  left: -35%;
+}
+
+.grid .grid-item:hover {
+  -webkit-transform: scale(1.01);
+          transform: scale(1.01);
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+  -webkit-box-shadow: 0px 3px 20px #AAAAAA;
+          box-shadow: 0px 3px 20px #AAAAAA;
 }
 
 .loading {
@@ -8574,7 +8643,7 @@ button.close {
 }
 
 .content {
-  padding-top: 65px;
+  padding: 100px 0 0 0;
   overflow: auto !important;
   height: 100vh;
 }
@@ -8656,6 +8725,14 @@ button.close {
   vertical-align: middle;
 }
 
+.btn-like:hover,
+.action-link:hover,
+.deletecomment:hover,
+.btn-success:hover {
+  -webkit-filter: grayscale(0.3);
+          filter: grayscale(0.3);
+}
+
 #redditBtn {
   height: 20px;
   vertical-align: initial;
@@ -8688,8 +8765,7 @@ button.close {
 }
 
 .activeFront {
-  text-decoration: underline;
-  font-weight: bolder;
+  font-weight: bold;
 }
 
 .row {
@@ -8709,8 +8785,17 @@ button.close {
   position: relative;
 }
 
+.left .imageDiv {
+  position: relative;
+  height: 90%;
+}
+
 .right {
   overflow-y: scroll;
+}
+
+.btn {
+  border: none;
 }
 
 body {

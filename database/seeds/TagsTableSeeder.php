@@ -12,23 +12,35 @@ class TagsTableSeeder extends Seeder
     public function run()
     {
         DB::table('tags')->insert([
-            'name' => "God-tier kaassaus"
+            'name' => "Travel"
         ]);
 
         DB::table('tags')->insert([
-            'name' => "Goede kaassaus"
+            'name' => "Photography"
         ]);
 
         DB::table('tags')->insert([
-            'name' => "Middelmatige kaassaus"
+            'name' => "Leisure time"
         ]);
 
         DB::table('tags')->insert([
-            'name' => "Ondermaatse kaassaus"
+            'name' => "Memes"
         ]);
 
         DB::table('tags')->insert([
-            'name' => "Ronduit slechte kaassaus"
+            'name' => "Coding"
+        ]);
+
+        DB::table('tags')->insert([
+            'name' => "Inspiration"
+        ]);
+
+        DB::table('tags')->insert([
+            'name' => "Design"
+        ]);
+
+        DB::table('tags')->insert([
+            'name' => "Fashion"
         ]);
     }
 }

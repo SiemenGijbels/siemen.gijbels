@@ -59,7 +59,7 @@ return [
     'no' => 'Nee',
     'softdeleted' => 'Soft gedeleted',
     'updateimage' => 'Afbeelding updaten',
-    '' => '',
+    'by' => 'Door',
     '' => '',
     '' => '',
     '' => '',

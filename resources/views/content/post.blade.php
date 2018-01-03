@@ -60,15 +60,21 @@
     <script type="text/javascript" async defer src="{{ asset('js/pinit.js') }}"></script>
 @stop
 
+@section('head_scripts')
+
+@stop
+
 @section('content')
     <div class="content">
         <div class="left">
-            <img id="postImg" src="{{ asset('uploads/images/') }}/{{ $post->image }}">
+            <div class="imageDiv">
+                <img id="postImg" src="{{ asset('uploads/images/') }}/{{ $post->image }}">
+            </div>
         </div>
         <div class="right">
             <div class="row">
                 <div class="col-md-12 post-title">
-                    <h1 class="quote">{{ $post->title }}</h1>
+                    <h1 class="titlePost">{{ $post->title }}</h1>
                 </div>
             </div>
             <div class="row">
@@ -127,7 +133,8 @@
                     </div>
                     <div class="col-md-12 socialshare">
                         <div class="fb-share-button" data-href="{{ Request::url() }}" data-layout="button_count"
-                             data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank"
+                             data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore"
+                                                                            target="_blank"
                                                                             href="https://www.facebook.com/sharer/sharer.php?u="
                                                                             . {{ urlencode(Request::url()) }}>Share</a>
                         </div>
@@ -177,4 +184,20 @@
             </div>
         </div>
     </div>
+@stop
+
+@section('scripts')
+    <script type="text/javascript" src="{{ asset('js/color-thief.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            var sourceImage = document.getElementById("postImg");
+            var colorThief = new ColorThief();
+            var color = colorThief.getColor(sourceImage);
+            $(".action-link").css("color", "rgb(" + color + ")");
+            $(".titlePost").css("color", "rgb(" + color + ")");
+            $(".deletecomment").css("color", "rgb(" + color + ")");
+            $(".btn-success").css("background-color", "rgb(" + color + ")");
+            $(".btn-like").css("background-color", "rgb(" + color + ")");
+        });
+    </script>
 @stop

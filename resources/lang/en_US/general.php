@@ -59,7 +59,7 @@ return [
     'no' => 'No',
     'softdeleted' => 'Soft deleted',
     'updateimage' => 'Update image',
-    '' => '',
+    'by' => 'By',
     '' => '',
     '' => '',
     '' => '',

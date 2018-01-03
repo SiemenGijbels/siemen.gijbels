@@ -1,6 +1,5 @@
 // Fonts
 @import "fonts";
-
 // Variables
 @import "variables";
 // Bootstrap
@@ -8,18 +7,10 @@
 
 //own stuff
 
-* {
-  font-family: "SF Display";
-}
-
-.grid-item {
-  width: percentage(.85/3);
-  margin: 0 2.5% 100px 2.5%;
-}
-
-.blogPics {
-  width: 100%;
-  height: 100%;
+*, *:hover, *:focus, *:active {
+  font-family: "SF Display", "Helvetica", "Helvetica Neue", "Arial", sans-serif;
+  outline: 0;
+  transition: 0.1s ease;
 }
 
 .archived {
@@ -35,7 +26,65 @@
   width: 80%;
   margin: auto;
   height: auto;
-  overflow: hidden;
+  &-link {
+    color: black;
+  }
+  &-link:hover {
+    color: black;
+  }
+  .grid-item {
+    width: percentage(.85/3);
+    margin: 0 2.5% 50px 2.5%;
+    border-radius: 10px;
+    border: 1px solid lightgrey;
+    background-color: white;
+    transition: 0.1s ease;
+    &-content {
+      position: relative;
+    }
+    h1 {
+      margin-bottom: 20px;
+      margin-top: -20px;
+    }
+    .tagblock {
+      background-color: #3d6983;
+      color: white;
+      border-radius: 5px;
+      padding: 3px 6px;
+      margin-bottom: 10px;
+    }
+    .indexContent {
+      margin: 20px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+    }
+    .blogPics {
+      width: 100%;
+      height: 100%;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    .byUser {
+      position: relative;
+      top: -35px;
+    }
+    .blogPicProfile {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      position: relative;
+      border: 4px solid white;
+      top: -25px;
+      left: -35%;
+    }
+  }
+  .grid-item:hover {
+    transform: scale(1.01);
+    transition: 0.2s ease;
+    box-shadow: 0px 3px 20px #AAAAAA;
+  }
 }
 
 .loading {
@@ -73,7 +122,7 @@
 }
 
 .content {
-  padding-top: 65px;
+  padding: 100px 0 0 0;
   overflow: auto !important;
   height: 100vh;
 }
@@ -130,7 +179,7 @@
   }
 }
 
-.form-group-like{
+.form-group-like {
   @extend .form-group;
   width: 30px;
   float: left;
@@ -155,6 +204,12 @@
   margin-top: -8px;
   margin-bottom: 6px;
   vertical-align: middle;
+}
+
+.btn-like, .action-link, .deletecomment, .btn-success {
+  &:hover {
+    filter: grayscale(0.3);
+  }
 }
 
 #redditBtn {
@@ -186,8 +241,7 @@
 }
 
 .activeFront {
-  text-decoration: underline;
-  font-weight: bolder;
+  font-weight: bold;
 }
 
 .row {
@@ -204,10 +258,18 @@
   overflow-x: auto;
   overflow-y: hidden;
   position: relative;
+  .imageDiv {
+    position: relative;
+    height: 90%;
+  }
 }
 
 .right {
   overflow-y: scroll;
+}
+
+.btn {
+  border: none;
 }
 
 body {

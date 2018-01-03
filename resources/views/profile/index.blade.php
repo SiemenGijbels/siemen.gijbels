@@ -11,7 +11,8 @@
     <div class="content">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                <img src="{{ asset('uploads/avatars/') }}/{{ Auth::user()->avatar  }}" style="width:150px; height:150px; float:left; border-radius:50%; margin-right:25px;">
+                <img src="{{ asset('uploads/avatars/') }}/{{ Auth::user()->avatar  }}"
+                     style="width:150px; height:150px; float:left; border-radius:50%; margin-right:25px;">
                 <h2>{{ Auth::user()->name }}</h2>
                 <form enctype="multipart/form-data" action="{{ route('profile.index.changeAvatar') }}" method="POST">
                     <label>Update Profile Image</label>
@@ -25,45 +26,41 @@
             @foreach($posts as $post)
                 @if($post->user_id == Auth::user()->id)
                     @if($post->archived == 0 || $post->archived == NULL)
-                        <div class="grid-item">
-                            <div class="col-md-12 text-center">
-                                @if(!$post->image == "")
-                                    <img class="blogPics" src="{{ asset('uploads/images/') }}/{{ $post->image }}">
-                                @else
-                                    <img class="blogPics" src="https://source.unsplash.com/random"/>
-                                @endif
-                                <h1 class="post-title">{{ $post->title }}</h1>
-                                <p style="font-weight: bold">
-                                    @foreach($post->tags as $tag)
-                                        {{ $tag->name }}
-                                    @endforeach
-                                </p>
-                                <p>{{ $post->content }}!</p>
-                                <p>
-                                    <a href="{{ route('content.post', ['id' => $post->id]) }}">@lang('general.moredetails')</a>
-                                </p>
-                            </div>
+                        <div class="grid-item text-center">
+                            @if(!$post->image == "")
+                                <img class="blogPics" src="{{ asset('uploads/images/') }}/{{ $post->image }}">
+                            @else
+                                <img class="blogPics" src="https://source.unsplash.com/random"/>
+                            @endif
+                            <h1 class="post-title">{{ $post->title }}</h1>
+                            <p style="font-weight: bold">
+                                @foreach($post->tags as $tag)
+                                    {{ $tag->name }}
+                                @endforeach
+                            </p>
+                            <p>{{ $post->content }}!</p>
+                            <p>
+                                <a href="{{ route('content.post', ['id' => $post->id]) }}">@lang('general.moredetails')</a>
+                            </p>
                         </div>
                     @elseif($post->archived == 1)
-                        <div class="grid-item">
-                            <div class="col-md-12 text-center">
-                                @if(!$post->image == "")
-                                    <img class="blogPics archived" src="{{ asset('uploads/images/') }}/{{ $post->image }}">
-                                @else
-                                    <img class="blogPics archived" src="https://source.unsplash.com/random"/>
-                                @endif
-                                <h1 class="post-title">{{ $post->title }}</h1>
-                                <p style="font-weight: bold">
-                                    @foreach($post->tags as $tag)
-                                        {{ $tag->name }}
-                                    @endforeach
-                                </p>
-                                <p class="archivedtext">This post is archived</p>
-                                <p>{{ $post->content }}!</p>
-                                <p>
-                                    <a href="{{ route('content.post', ['id' => $post->id]) }}">@lang('general.moredetails')</a>
-                                </p>
-                            </div>
+                        <div class="grid-item text-center">
+                            @if(!$post->image == "")
+                                <img class="blogPics archived" src="{{ asset('uploads/images/') }}/{{ $post->image }}">
+                            @else
+                                <img class="blogPics archived" src="https://source.unsplash.com/random"/>
+                            @endif
+                            <h1 class="post-title">{{ $post->title }}</h1>
+                            <p style="font-weight: bold">
+                                @foreach($post->tags as $tag)
+                                    {{ $tag->name }}
+                                @endforeach
+                            </p>
+                            <p class="archivedtext">This post is archived</p>
+                            <p>{{ $post->content }}!</p>
+                            <p>
+                                <a href="{{ route('content.post', ['id' => $post->id]) }}">@lang('general.moredetails')</a>
+                            </p>
                         </div>
                     @endif
                 @endif
