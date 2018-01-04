@@ -16,57 +16,35 @@
     </div>
     <div class="content">
         <div class="profileTop">
-            @foreach($tags as $tag)
-                @if($tag->id == collect(request()->segments())->last())
-                    <h1 class="tagName">{{ $tag->name }}</h1>
-                @endif
-            @endforeach
-
+            <h1 class="tagName">{{ $tag->name }}</h1>
         </div>
         <div class="grid">
-            @foreach($posts as $post)
-                @foreach($post->tags as $tag)
-                    @if($tag->id == collect(request()->segments())->last()) {{--$tagId proberen meevoeren maar dit lukte niet dus los ik het op deze manier op--}}
-                        <a class="grid-link" href="{{ route('content.post', ['id' => $post->id]) }}">
-                            <div id="grid-item{{ $post->id }}" class="grid-item text-center">
-                                <div class="blogPicsDiv">
-                                    @if(!$post->image == "")
-                                        <img id="photo{{ $post->id }}" class="blogPics withId"
-                                             src="{{ asset('uploads/images/') }}/{{ $post->image }}">
-                                    @else
-                                        <img class="blogPics" src="{{ asset('uploads/images/default.jpg') }}"/>
-                                    @endif
-                                </div>
-                                <div class="grid-item-content">
-                                    <img class="blogPics blogPicProfile"
-                                         src="{{ asset('uploads/avatars/') }}/{{ empty($post->user->avatar) ? 'default.png' : $post->user->avatar }}">
-                                    <p class="byUser">@lang('general.by') {{ empty($post->user->name) ? 'No user' : $post->user->name }}</p>
-                                    <h1 class="post-title">{{ $post->title }}</h1>
-                                    <div class="tags">
-                                        @foreach($post->tags as $tag)
-
-                                            {!! Form::open(array('route' => array('content.sortByTag', $tag->id))) !!}
-
-                                            {!! Form::hidden('id', $tag->id, ['class'=>'form-control']) !!}
-                                            <button type="submit" id="{{ $tag->id }}"
-                                                    class="tagblock">{{ $tag->name }}</button>
-
-
-                                            {!! Form::close() !!}
-                                        @endforeach
-                                    </div>
-                                    <p class="indexContent">{{ $post->content }}</p>
-                                </div>
+            @foreach($blogPosts as $blogPost)
+                <a class="grid-link" href="{{ route('content.post', ['id' => $blogPost->id]) }}">
+                    <div id="grid-item{{ $blogPost->id }}" class="grid-item text-center">
+                        <div class="blogPicsDiv">
+                            @if(!$blogPost->image == "")
+                                <img id="photo{{ $blogPost->id }}" class="blogPics withId"
+                                     src="{{ asset('uploads/images/') }}/{{ $blogPost->image }}">
+                            @else
+                                <img class="blogPics" src="{{ asset('uploads/images/default.jpg') }}"/>
+                            @endif
+                        </div>
+                        <div class="grid-item-content">
+                            <img class="blogPics blogPicProfile"
+                                 src="{{ asset('uploads/avatars/') }}/{{ empty($blogPost->user->avatar) ? 'default.png' : $blogPost->user->avatar }}">
+                            <p class="byUser">@lang('general.by') {{ empty($blogPost->user->name) ? 'No user' : $blogPost->user->name }}</p>
+                            <h1 class="post-title">{{ $blogPost->title }}</h1>
+                            <div class="tags">
+                                @foreach($blogPost->tags as $tag)
+                                    <a class="tagblock" href="{{ route('content.sortByTag', ['name' => $tag->name]) }}">#{{ $tag->name }}</a>
+                                @endforeach
                             </div>
-                        </a>
-                    @endif
-                @endforeach
+                            <p class="indexContent">{{ $blogPost->content }}</p>
+                        </div>
+                    </div>
+                </a>
             @endforeach
-        </div>
-        <div>
-            <div>
-                {{ $posts->links() }}
-            </div>
         </div>
     </div>
 
@@ -86,25 +64,25 @@
     {{--https://github.com/lokesh/color-thief/--}}
     <script type="text/javascript" defer src="{{ asset('js/color-thief.min.js') }}"></script>
     <script>
-        @foreach($posts as $post)
-        @if($post->tags->count() > 1)
+        @foreach($blogPosts as $blogPost)
+        @if($blogPost->tags->count() > 1)
         $(document).ready(function () {
-            var sourceImage = document.getElementById('photo{{ $post->id }}');
+            var sourceImage = document.getElementById('photo{{ $blogPost->id }}');
             var colorThief = new ColorThief();
-            var obj = $("#grid-item{{ $post->id }} .grid-item-content .tagblock");
+            var obj = $("#grid-item{{ $blogPost->id }} .grid-item-content .tagblock");
             var tagArray = $.makeArray(obj);
-            var colorPalette = colorThief.getPalette(sourceImage, '{{ $post->tags->count() }}');
+            var colorPalette = colorThief.getPalette(sourceImage, '{{ $blogPost->tags->count() }}');
             for (var i = 0; i < tagArray.length; i++) {
                 $(tagArray[i]).css("background-color", "rgb(" + colorPalette[i] + ")");
             }
             ;
         });
-        @elseif($post->tags->count() == 1)
+        @elseif($blogPost->tags->count() == 1)
         $(document).ready(function () {
-            var sourceImage = document.getElementById('photo{{ $post->id }}');
+            var sourceImage = document.getElementById('photo{{ $blogPost->id }}');
             var colorThief = new ColorThief();
             var color = colorThief.getColor(sourceImage);
-            $("#grid-item{{ $post->id }} .grid-item-content .tagblock").css("background-color", "rgb(" + color + ")");
+            $("#grid-item{{ $blogPost->id }} .grid-item-content .tagblock").css("background-color", "rgb(" + color + ")");
         });
         @endif
         @endforeach

@@ -31,14 +31,7 @@
                                 <h1 class="post-title">{{ $post->title }}</h1>
                                 <div class="tags">
                                     @foreach($post->tags as $tag)
-
-                                        {!! Form::open(array('route' => array('content.sortByTag', $tag->id))) !!}
-
-                                        {!! Form::hidden('id', $tag->id, ['class'=>'form-control']) !!}
-                                        <button type="submit" id="{{ $tag->id }}" class="tagblock">{{ $tag->name }}</button>
-
-
-                                        {!! Form::close() !!}
+                                        <a class="tagblock" href="{{ route('content.sortByTag', ['name' => $tag->name]) }}">#{{ $tag->name }}</a>
                                     @endforeach
                                 </div>
                                 <p class="indexContent">{{ $post->content }}</p>
@@ -49,7 +42,7 @@
             @endif
         </div>
         <div>
-            <div>
+            <div style="text-align: center">
                 {{ $posts->links() }}
             </div>
         </div>

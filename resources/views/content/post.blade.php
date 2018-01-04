@@ -80,15 +80,7 @@
             <div class="row">
                 <div class="col-md-12 tags">
                     @foreach($post->tags as $tag)
-
-                        {!! Form::open(array('route' => array('content.sortByTag', $tag->id))) !!}
-
-                        {!! Form::hidden('id', $tag->id, ['class'=>'form-control']) !!}
-                        <button type="submit" id="{{ $tag->id }}"
-                                class="tagblock">{{ $tag->name }}</button>
-
-
-                        {!! Form::close() !!}
+                        <a class="tagblock" href="{{ route('content.sortByTag', ['name' => $tag->name]) }}">#{{ $tag->name }}</a>
                     @endforeach
                 </div>
             </div>

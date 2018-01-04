@@ -12,10 +12,10 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        $path = resource_path() .'/postSeed/seed.csv';
+        $path = resource_path() .'/postSeed/postseed.csv';
         $reader = Reader::createFromPath($path, 'r');
 
-        $records = $reader->getRecords(['title', 'content', 'image']);
+        $records = $reader->getRecords(['title', 'content', 'image', 'user_id']);
         foreach ($records as $offset => $record) {
             var_export($record);
 
@@ -25,7 +25,7 @@ class PostsTableSeeder extends Seeder
                 'image' => $record['image'],
                 'created_at' => date("Y-m-d H:i:s"),
                 'updated_at' => date("Y-m-d H:i:s"),
-                'user_id' => 1,
+                'user_id' => $record['user_id'],
             ]);
         }
     }

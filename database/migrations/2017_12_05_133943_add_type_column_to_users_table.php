@@ -13,7 +13,7 @@ class AddTypeColumnToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function($table) {
-            $table->string('type')->nullable();
+            $table->integer('type')->nullable();
         });
     }
 

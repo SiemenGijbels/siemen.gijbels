@@ -22,7 +22,7 @@
 
     <div class="form-group {{ $errors->has('message') ? 'has-error' : '' }}">
         {!! Form::label(trans('auth.message')) !!}
-        {!! Form::textarea('message', old('message'), ['class'=>'form-control']) !!}
+        {!! Form::textarea('message', old('message'), ['class'=>'form-control form-textarea']) !!}
         <span class="text-danger">{{ $errors->first('message') }}</span>
     </div>
 

@@ -12,63 +12,47 @@ class TagsTableSeeder extends Seeder
     public function run()
     {
         DB::table('tags')->insert([
-            'name' => "Travel"
+            'name' => "travel"
         ]);
 
         DB::table('tags')->insert([
-            'name' => "Photography"
+            'name' => "photography"
         ]);
 
         DB::table('tags')->insert([
-            'name' => "New York"
+            'name' => "cities"
         ]);
 
         DB::table('tags')->insert([
-            'name' => "London"
+            'name' => "art"
         ]);
 
         DB::table('tags')->insert([
-            'name' => "Berlin"
+            'name' => "architecture"
         ]);
 
         DB::table('tags')->insert([
-            'name' => "Utrecht"
+            'name' => "food"
         ]);
 
         DB::table('tags')->insert([
-            'name' => "Art"
+            'name' => "culture"
         ]);
 
         DB::table('tags')->insert([
-            'name' => "Architecture"
+            'name' => "coding"
         ]);
 
         DB::table('tags')->insert([
-            'name' => "Food"
+            'name' => "inspiration"
         ]);
 
         DB::table('tags')->insert([
-            'name' => "Leisure time"
+            'name' => "design"
         ]);
 
         DB::table('tags')->insert([
-            'name' => "Memes"
-        ]);
-
-        DB::table('tags')->insert([
-            'name' => "Coding"
-        ]);
-
-        DB::table('tags')->insert([
-            'name' => "Inspiration"
-        ]);
-
-        DB::table('tags')->insert([
-            'name' => "Design"
-        ]);
-
-        DB::table('tags')->insert([
-            'name' => "Fashion"
+            'name' => "fashion"
         ]);
     }
 }

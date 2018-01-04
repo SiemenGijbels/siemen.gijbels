@@ -13,6 +13,8 @@ use App\Post;
 use App\Like;
 use App\Tag;
 use App\User;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Input;
 use Intervention\Image\Facades\Image;
 use Auth;
 use Illuminate\Http\Request;
@@ -34,17 +36,17 @@ class PostController extends Controller
         })
             ->orderBy('id', 'desc')
             ->orderBy('created_at', 'desc')
-            ->paginate(30);
+            ->paginate(15);
         return view('content.index', ['posts' => $posts]);
     }
 
     //  HOMEPAGE SORTED BY TAG
 
-    public function getIndexByTag(Request $request)
+    public function getIndexByTag($name)
     {
-        $tagId = $request->input('id');
+        $tag = Tag::where('name', $name)->first();
 
-        $tags = Tag::all();
+        $tagId = Tag::where('id', $tag->id)->first();
 
         $posts = Post::where(function ($query) {
             $query->whereNull('archived')
@@ -52,8 +54,14 @@ class PostController extends Controller
         })
             ->orderBy('id', 'desc')
             ->orderBy('created_at', 'desc')
-            ->paginate(30);
-        return view('content.sortByTag', ['posts' => $posts, 'tags' => $tags, 'id' => $request->input('id')]);
+            ->paginate(15);
+
+        for($i = 0; $i < count($posts); $i++){
+            if($posts[$i]->tags->contains($tagId)){
+                $blogPosts[] = $posts[$i];
+            }
+        }
+        return view('content.sortByTag', ['blogPosts' => $blogPosts, 'tag' => $tag]);
     }
 
 
@@ -162,7 +170,7 @@ class PostController extends Controller
         })
             ->orderBy('id', 'desc')
             ->orderBy('created_at', 'desc')
-            ->paginate(30);
+            ->paginate(15);
 
         $post = Post::where('id', $id)->first();
         $post->archived = 2;
@@ -180,7 +188,7 @@ class PostController extends Controller
             ->where('archived', 1)
             ->orderBy('id', 'desc')
             ->orderBy('created_at', 'desc')
-            ->paginate(30);
+            ->paginate(15);
         return view('content.archive', ['posts' => $posts]);
     }
 
@@ -215,7 +223,7 @@ class PostController extends Controller
             })
             ->orderBy('id', 'desc')
             ->orderBy('created_at', 'desc')
-            ->paginate(30);
+            ->paginate(15);
         return view('profile.index', ['posts' => $posts]);
     }
 
@@ -226,7 +234,7 @@ class PostController extends Controller
         $posts = Post::where('user_id', $user->id)
             ->orderBy('id', 'desc')
             ->orderBy('created_at', 'desc')
-            ->paginate(30);
+            ->paginate(15);
 
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
@@ -327,7 +335,7 @@ class PostController extends Controller
         })
             ->orderBy('id', 'desc')
             ->orderBy('created_at', 'desc')
-            ->paginate(30);
+            ->paginate(15);
 
         $post = Post::where('id', $id)->first();
         $post->archived = 0;

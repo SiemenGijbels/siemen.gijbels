@@ -29,7 +29,7 @@
                         <i class="fas fa-archive"></i> @lang('general.archive')
                     </a>
                 @endif
-                <a class="navbar-brand" href="{{ url('about') }}">
+                <a class="navbar-brand" href="{{ route('content.about') }}">
                     <i class="fas fa-info-circle"></i> @lang('general.about')
                 </a>
             @elseif (\Request::is('archive'))
@@ -41,7 +41,7 @@
                         <i class="fas fa-archive"></i> @lang('general.archive')
                     </a>
                 @endif
-                <a class="navbar-brand" href="{{ url('about') }}">
+                <a class="navbar-brand" href="{{ route('content.about') }}">
                     <i class="fas fa-info-circle"></i> @lang('general.about')
                 </a>
             @elseif (\Request::is('about'))
@@ -53,7 +53,7 @@
                         <i class="fas fa-archive"></i> @lang('general.archive')
                     </a>
                 @endif
-                <a class="navbar-brand activeFront" href="{{ url('about') }}">
+                <a class="navbar-brand activeFront" href="{{ route('content.about') }}">
                     <i class="fas fa-info-circle"></i> @lang('general.about')
                 </a>
             @else
@@ -65,7 +65,7 @@
                         <i class="fas fa-archive"></i> @lang('general.archive')
                     </a>
                 @endif
-                <a class="navbar-brand" href="{{ url('about') }}">
+                <a class="navbar-brand" href="{{ route('content.about') }}">
                     <i class="fas fa-info-circle"></i> @lang('general.about')
                 </a>
         @endif

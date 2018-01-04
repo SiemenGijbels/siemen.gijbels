@@ -5853,7 +5853,6 @@ button.close {
     display: none !important; } }
 *, *:hover, *:focus, *:active {
   font-family: "SF Display", "Helvetica", "Helvetica Neue", "Arial", sans-serif;
-  outline: 0;
   transition: 0.1s ease; }
 
 h1, h2, h3, h4, h5, h6, p, span {
@@ -5861,6 +5860,13 @@ h1, h2, h3, h4, h5, h6, p, span {
 
 h1 {
   font-weight: 800; }
+
+.btn, a {
+  outline: 0; }
+  .btn:active, a:active {
+    outline: 0; }
+  .btn:focus, a:focus {
+    outline: 0; }
 
 .archived {
   -webkit-filter: blur(10px);
@@ -5876,7 +5882,8 @@ h1 {
   .grid-link {
     color: black; }
   .grid-link:hover {
-    color: black; }
+    color: black;
+    text-decoration: none; }
   .grid .grid-item {
     width: 28.3333333333%;
     margin: 0 2.5% 50px 2.5%;
@@ -5974,7 +5981,8 @@ h1 {
     display: inline-block; }
 
 .tagName {
-  font-size: 4em; }
+  font-size: 4em;
+  text-transform: capitalize; }
 
 .tagblock {
   background-color: #3d6983;
@@ -5987,6 +5995,8 @@ h1 {
   text-align: left;
   border: none; }
   .tagblock:hover {
+    text-decoration: none;
+    color: white;
     transform: scale(1.1); }
 
 .post, .post-content, .post-actions {
@@ -6132,6 +6142,14 @@ table tbody tr th {
 
 table tbody tr td {
   padding: 5px 50px; }
+
+.pagination > li > a, .pagination > li > span {
+  border: none; }
+
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+  color: black;
+  border: none;
+  background-color: transparent; }
 
 @media only screen and (max-width: 1400px) {
   .grid, .profileTop {
