@@ -5856,6 +5856,12 @@ button.close {
   outline: 0;
   transition: 0.1s ease; }
 
+h1, h2, h3, h4, h5, h6, p, span {
+  color: black; }
+
+h1 {
+  font-weight: 800; }
+
 .archived {
   -webkit-filter: blur(10px);
   filter: blur(10px); }
@@ -5875,29 +5881,42 @@ button.close {
     width: 28.3333333333%;
     margin: 0 2.5% 50px 2.5%;
     border-radius: 10px;
-    border: 1px solid lightgrey;
     background-color: white;
     transition: 0.1s ease; }
     .grid .grid-item-content {
       position: relative; }
+      .grid .grid-item-content .tags {
+        text-align: justify;
+        padding: 3px 20px; }
+        .grid .grid-item-content .tags form {
+          display: inline-block; }
     .grid .grid-item h1 {
       margin-bottom: 20px;
       margin-top: -30px;
-      font-weight: 800; }
+      text-align: left;
+      padding: 5px 20px; }
     .grid .grid-item .indexContent {
       margin: 20px;
       overflow: hidden;
       display: -webkit-box;
       -webkit-line-clamp: 5;
-      -webkit-box-orient: vertical; }
-    .grid .grid-item .blogPics {
-      width: 100%;
-      height: 100%;
+      -webkit-box-orient: vertical;
+      text-align: justify; }
+    .grid .grid-item .blogPicsDiv {
       border-top-left-radius: 10px;
       border-top-right-radius: 10px; }
+      .grid .grid-item .blogPicsDiv .blogPics {
+        width: 100%;
+        height: 100%;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px; }
     .grid .grid-item .byUser {
       position: relative;
-      top: -35px; }
+      top: -40px;
+      text-align: right;
+      padding-right: 20px;
+      font-size: 1.2em;
+      font-weight: 500; }
     .grid .grid-item .blogPicProfile {
       width: 50px;
       height: 50px;
@@ -5957,15 +5976,46 @@ button.close {
   background-color: #3d6983;
   color: white;
   border-radius: 5px;
+  height: 28px;
   padding: 3px 6px;
   display: inline-block;
-  margin: 3px; }
+  margin: 3px;
+  text-align: left;
+  border: none; }
+  .tagblock:hover {
+    transform: scale(1.1); }
 
-.post, .post-title, .post-content, .post-actions {
+.post, .post-content, .post-actions {
   margin-bottom: 50px; }
 
-.post-title h1 {
-  font-weight: bolder; }
+.profileTop {
+  width: 80%;
+  min-height: 150px;
+  margin: auto;
+  padding: 0 2.5%; }
+  .profileTop .profilePic {
+    width: 100px;
+    height: 100px;
+    float: left;
+    border-radius: 50%;
+    margin-right: 25px; }
+  .profileTop .profileName, .profileTop .profileSettings {
+    float: left;
+    margin-top: 32px;
+    margin-right: 20px; }
+  .profileTop .profileSettings {
+    margin-right: 2.5%; }
+  .profileTop #settings {
+    display: none;
+    margin: 30px 0 60px 0;
+    border: 1px solid transparent; }
+    .profileTop #settings .form-group, .profileTop #settings .form-group-like {
+      width: 50%;
+      float: left;
+      text-align: center; }
+
+canvas {
+  display: none; }
 
 .post-actions .action-link {
   font-size: 2em;
@@ -6026,6 +6076,9 @@ button.close {
 .socialshare {
   margin-top: 17px; }
 
+.notloggedin {
+  margin-top: 2px; }
+
 .like {
   width: 15%;
   min-width: 75px;
@@ -6056,9 +6109,12 @@ button.close {
 .btn {
   border: none; }
 
+.profile-info {
+  margin-bottom: 30px; }
+
 .editImage {
-  max-width: 1000px;
-  max-height: 1000px; }
+  max-width: 100%;
+  max-height: 100%; }
 
 body {
   background-color: white; }
@@ -6072,5 +6128,60 @@ table tbody tr th {
 
 table tbody tr td {
   padding: 5px 50px; }
+
+@media only screen and (max-width: 1400px) {
+  .grid, .profileTop {
+    width: 90%; } }
+@media only screen and (max-width: 1200px) {
+  .grid, .profileTop {
+    width: 95%; } }
+@media only screen and (max-width: 1100px) {
+  .grid, .profileTop {
+    width: 80%; }
+    .grid .grid-item, .profileTop .grid-item {
+      width: 45%; } }
+@media only screen and (max-width: 850px) {
+  .grid, .profileTop {
+    width: 90%; } }
+@media only screen and (max-width: 750px) {
+  .grid, .profileTop {
+    width: 95%; } }
+@media only screen and (max-width: 700px) {
+  .grid, .profileTop {
+    width: 80%; }
+    .grid .grid-item, .profileTop .grid-item {
+      width: 95%; }
+      .grid .grid-item .blogPicsDiv, .profileTop .grid-item .blogPicsDiv {
+        max-height: 350px;
+        overflow: hidden;
+        -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC); } }
+@media only screen and (max-width: 600px) {
+  .profileTop .profilePic {
+    width: 80px;
+    height: 80px; }
+  .profileTop .profileName, .profileTop .profileSettings {
+    margin-top: 25px; }
+  .profileTop .profileName {
+    font-size: 30px; } }
+@media only screen and (max-width: 515px) {
+  .profileTop {
+    min-height: 100px; }
+    .profileTop .profilePic {
+      display: none; }
+    .profileTop .profileName {
+      font-size: 36px; } }
+@media only screen and (max-width: 430px) {
+  .profileTop .profileName {
+    font-size: 30px; } }
+@media only screen and (max-width: 400px) {
+  .grid, .profileTop {
+    width: 90%; }
+    .grid .grid-item h1, .profileTop .grid-item h1 {
+      font-size: 30px; } }
+@media only screen and (max-width: 335px) {
+  .profileTop .profileName {
+    font-size: 28px; }
+  .profileTop #settings {
+    margin-bottom: 90px; } }
 
 /*# sourceMappingURL=app.css.map */

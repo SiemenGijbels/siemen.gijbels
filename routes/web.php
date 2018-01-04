@@ -31,6 +31,12 @@ Route::get('/', [
     'as' => 'content.index'
 ]);
 
+// TAG
+
+Route::post('sortByTag/{id}', [
+    'uses' => 'PostController@getIndexByTag',
+    'as' => 'content.sortByTag'
+]);
 
 // PROFILE
 

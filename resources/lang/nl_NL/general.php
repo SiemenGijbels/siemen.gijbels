@@ -60,7 +60,7 @@ return [
     'softdeleted' => 'Soft gedeleted',
     'updateimage' => 'Afbeelding updaten',
     'by' => 'Door',
-    '' => '',
+    'updateavatar' => 'Update profielfoto',
     '' => '',
     '' => '',
     '' => '',

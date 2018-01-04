@@ -89,7 +89,7 @@
                     <h5>{{  $post->user->name }} — {{ $post->created_at }}</h5>
                     <p>{{  $post->content }}</p>
                 </div>
-                @if(Auth::user())
+                @if(Auth::check())
                     <div class="col-md-12 like">
                         @if($userLikeCount == 0 || $userLikeCount == NULL || empty($userLikeCount))
 
@@ -186,6 +186,36 @@
                             @endif
                         @endif
                     </div>
+                @elseif(!Auth::check())
+                    <div class="col-md-12 like">
+                        <p>{{ $countLikes }} <i class="fas fa-thumbs-up"></i></p>
+                    </div>
+                    <div class="col-md-12 socialshare notloggedin">
+                        <div class="fb-share-button" data-href="{{ Request::url() }}" data-layout="button_count"
+                             data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore"
+                                                                            target="_blank"
+                                                                            href="https://www.facebook.com/sharer/sharer.php?u="
+                                                                            . {{ urlencode(Request::url()) }}>Share</a>
+                        </div>
+                        <a class="twitter-share-button" href="https://twitter.com/intent/tweet">Tweet</a>
+                        <a class="redditLink" href="//www.reddit.com/submit"
+                           onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false">
+                            @if(app()->getLocale() == 'en_US')
+                                <img id="redditBtn" src="{{ asset('uploads/images/redditbutton.png') }}"
+                                     alt="submit to reddit"
+                                     border="0"/>
+                            @elseif(app()->getLocale() == 'nl_NL')
+                                <img id="redditBtn" src="{{ asset('uploads/images/redditbutton_nl.png') }}"
+                                     alt="post op reddit"
+                                     border="0"/>
+                            @endif
+                        </a>
+                        <a class="pinterestBtn" href="https://www.pinterest.com/pin/create/button/"
+                           data-pin-do="buttonBookmark"></a>
+                        <script src="//platform.linkedin.com/in.js"
+                                type="text/javascript"> lang: {{ app()->getLocale() }}</script>
+                        <script type="IN/Share" data-url="{{ Request::url() }}"></script>
+                    </div>
                 @endif
                 @include('partials.comments')
             </div>
@@ -201,7 +231,6 @@
             var colorThief = new ColorThief();
             var color = colorThief.getColor(sourceImage);
             $(".action-link").css("color", "rgb(" + color + ")");
-            $(".titlePost").css("color", "rgb(" + color + ")");
             $(".deletecomment").css("color", "rgb(" + color + ")");
             $(".btn-success").css("background-color", "rgb(" + color + ")");
             $(".btn-like").css("background-color", "rgb(" + color + ")");

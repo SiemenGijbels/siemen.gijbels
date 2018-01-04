@@ -60,7 +60,7 @@ return [
     'softdeleted' => 'Soft deleted',
     'updateimage' => 'Update image',
     'by' => 'By',
-    '' => '',
+    'updateavatar' => 'Update profile picture',
     '' => '',
     '' => '',
     '' => '',

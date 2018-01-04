@@ -2,6 +2,14 @@
 
 @section('page_title', 'Blog Siemen Gijbels')
 
+@section('open_graph')
+    <meta property="og:site_name" content="Laravel blog Siemen Gijbels"/>
+    <meta property="og:title" content="Blog Siemen Gijbels"/>
+    <meta property="og:description" content="Blog Siemen Gijbels"/>
+    <meta property="og:image" content="{{ asset('uploads/images/default.jpg') }}">
+    <meta property="og:url" content="{{ Request::url() }}">
+@stop
+
 @section('content')
     <div class="loading">
         <h1>@lang('general.loadingblog')</h1>
@@ -11,20 +19,31 @@
             @foreach($posts as $post)
                 <a class="grid-link" href="{{ route('content.post', ['id' => $post->id]) }}">
                     <div id="grid-item{{ $post->id }}" class="grid-item text-center">
-                        @if(!$post->image == "")
-                            <img id="photo{{ $post->id }}" class="blogPics withId"
-                                 src="{{ asset('uploads/images/') }}/{{ $post->image }}">
-                        @else
-                            <img class="blogPics" src="{{ asset('uploads/images/default.jpg') }}"/>
-                        @endif
+                        <div class="blogPicsDiv">
+                            @if(!$post->image == "")
+                                <img id="photo{{ $post->id }}" class="blogPics withId"
+                                     src="{{ asset('uploads/images/') }}/{{ $post->image }}">
+                            @else
+                                <img class="blogPics" src="{{ asset('uploads/images/default.jpg') }}"/>
+                            @endif
+                        </div>
                         <div class="grid-item-content">
                             <img class="blogPics blogPicProfile"
                                  src="{{ asset('uploads/avatars/') }}/{{ empty($post->user->avatar) ? 'default.png' : $post->user->avatar }}">
                             <p class="byUser">@lang('general.by') {{ empty($post->user->name) ? 'No user' : $post->user->name }}</p>
                             <h1 class="post-title">{{ $post->title }}</h1>
-                            @foreach($post->tags as $tag)
-                                <span class="tagblock">{{ $tag->name }}</span>
-                            @endforeach
+                            <div class="tags">
+                                @foreach($post->tags as $tag)
+
+                                    {!! Form::open(array('route' => array('content.sortByTag', $tag->id))) !!}
+
+                                    {!! Form::hidden('id', $tag->id, ['class'=>'form-control']) !!}
+                                    <button type="submit" id="{{ $tag->id }}" class="tagblock">{{ $tag->name }}</button>
+
+
+                                    {!! Form::close() !!}
+                                @endforeach
+                            </div>
                             <p class="indexContent">{{ $post->content }}</p>
                         </div>
                     </div>
@@ -59,12 +78,13 @@
         $(document).ready(function () {
             var sourceImage = document.getElementById('photo{{ $post->id }}');
             var colorThief = new ColorThief();
-            var obj = $( "#grid-item{{ $post->id }} .grid-item-content .tagblock" );
-            var tagArray = $.makeArray( obj );
+            var obj = $("#grid-item{{ $post->id }} .grid-item-content .tagblock");
+            var tagArray = $.makeArray(obj);
             var colorPalette = colorThief.getPalette(sourceImage, '{{ $post->tags->count() }}');
-            for(var i = 0; i < tagArray.length; i++){
+            for (var i = 0; i < tagArray.length; i++) {
                 $(tagArray[i]).css("background-color", "rgb(" + colorPalette[i] + ")");
-            };
+            }
+            ;
         });
         @elseif($post->tags->count() == 1)
         $(document).ready(function () {

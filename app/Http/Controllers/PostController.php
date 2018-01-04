@@ -38,6 +38,25 @@ class PostController extends Controller
         return view('content.index', ['posts' => $posts]);
     }
 
+    //  HOMEPAGE SORTED BY TAG
+
+    public function getIndexByTag(Request $request)
+    {
+        $tagId = $request->input('id');
+
+        $tags = Tag::all();
+
+        $posts = Post::where(function ($query) {
+            $query->whereNull('archived')
+                ->orWhere('archived', 0);
+        })
+            ->orderBy('id', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(30);
+        return view('content.sortByTag', ['posts' => $posts, 'tags' => $tags, 'id' => $request->input('id')]);
+    }
+
+
     // POST PAGE
 
     public function getPost($id)
@@ -53,19 +72,25 @@ class PostController extends Controller
         $likes = Like::where('post_id', $post->id)
             ->get();
 
-        $userLike = Like::where('user_id', Auth::user()->id)
-            ->where('post_id', $post->id)
-            ->first();
+        if (Auth::user()) {
+            $userLike = Like::where('user_id', Auth::user()->id)
+                ->where('post_id', $post->id)
+                ->first();
 
-        if ($likes->isEmpty() || count($userLike) == 0 || count($userLike) == NULL) {
-            $userLikeCount = 0;
-        } else {
-            $userLikeCount = 1;
+            if ($likes->isEmpty() || count($userLike) == 0 || count($userLike) == NULL) {
+                $userLikeCount = 0;
+            } else {
+                $userLikeCount = 1;
+            }
         }
 
         $countLikes = $likes->count();
 
-        return view('content.post', ['post' => $post, 'comments' => $comments, 'userLike' => $userLike, 'userLikeCount' => $userLikeCount, 'countLikes' => $countLikes]);
+        if (Auth::user()) {
+            return view('content.post', ['post' => $post, 'comments' => $comments, 'userLike' => $userLike, 'userLikeCount' => $userLikeCount, 'countLikes' => $countLikes]);
+        } else {
+            return view('content.post', ['post' => $post, 'comments' => $comments, 'countLikes' => $countLikes]);
+        }
     }
 
     public function postLikePost(Request $request)

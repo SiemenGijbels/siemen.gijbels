@@ -45,7 +45,6 @@
                         <th>ID</th>
                         <th>@lang('general.user')</th>
                         <th>@lang('general.title')</th>
-                        <th>@lang('general.detail')</th>
                         <th>Likes</th>
                         <th>@lang('general.comments')</th>
                         <th>@lang('general.archived')</th>
@@ -57,9 +56,8 @@
                         <tr>
                             <td>{{ $post->id }}</td>
                             <td>{{ empty($post->user) ? trans('general.nouser') : $post->user->name }}</td>
-                            <td>{{ $post->title }}</td>
                             <td>
-                                <a href="{{ route('content.post', ['id' => $post->id]) }}">@lang('general.moredetails')</a>
+                                <a href="{{ route('content.post', ['id' => $post->id]) }}">{{ $post->title }}</a>
                             </td>
                             <td>{{ $post->likes->count() }}</td>
                             <td>{{ $post->comments->count() }}</td>
@@ -73,8 +71,8 @@
                             @else
                                 <td>@lang('general.no')</td>
                             @endif
-                            <td><a href="{{ route('admin.edit', ['id' => $post->id]) }}">@lang('general.edit')</a></td>
-                            <td><a href="{{ route('admin.delete', ['id' => $post->id]) }}">@lang('general.delete')</a>
+                            <td><a href="{{ route('admin.edit', ['id' => $post->id]) }}"><i class="fas fa-pencil-alt"></i></a></td>
+                            <td><a href="{{ route('admin.delete', ['id' => $post->id]) }}"><i class="fas fa-trash-alt"></i></a>
                             </td>
                         </tr>
                     @endforeach

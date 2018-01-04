@@ -16,20 +16,31 @@
             @foreach($posts as $post)
                     <a class="grid-link" href="{{ route('content.post', ['id' => $post->id]) }}">
                         <div id="grid-item{{ $post->id }}" class="grid-item text-center">
-                            @if(!$post->image == "")
-                                <img id="photo{{ $post->id }}" class="blogPics withId"
-                                     src="{{ asset('uploads/images/') }}/{{ $post->image }}">
-                            @else
-                                <img class="blogPics" src="{{ asset('uploads/images/default.jpg') }}"/>
-                            @endif
+                            <div class="blogPicsDiv">
+                                @if(!$post->image == "")
+                                    <img id="photo{{ $post->id }}" class="blogPics withId"
+                                         src="{{ asset('uploads/images/') }}/{{ $post->image }}">
+                                @else
+                                    <img class="blogPics" src="{{ asset('uploads/images/default.jpg') }}"/>
+                                @endif
+                            </div>
                             <div class="grid-item-content">
                                 <img class="blogPics blogPicProfile"
                                      src="{{ asset('uploads/avatars/') }}/{{ empty($post->user->avatar) ? 'default.png' : $post->user->avatar }}">
                                 <p class="byUser">@lang('general.by') {{ empty($post->user->name) ? 'No user' : $post->user->name }}</p>
                                 <h1 class="post-title">{{ $post->title }}</h1>
-                                @foreach($post->tags as $tag)
-                                    <span class="tagblock">{{ $tag->name }}</span>
-                                @endforeach
+                                <div class="tags">
+                                    @foreach($post->tags as $tag)
+
+                                        {!! Form::open(array('route' => array('content.sortByTag', $tag->id))) !!}
+
+                                        {!! Form::hidden('id', $tag->id, ['class'=>'form-control']) !!}
+                                        <button type="submit" id="{{ $tag->id }}" class="tagblock">{{ $tag->name }}</button>
+
+
+                                        {!! Form::close() !!}
+                                    @endforeach
+                                </div>
                                 <p class="indexContent">{{ $post->content }}</p>
                             </div>
                         </div>
