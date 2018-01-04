@@ -5885,11 +5885,6 @@ h1 {
     transition: 0.1s ease; }
     .grid .grid-item-content {
       position: relative; }
-      .grid .grid-item-content .tags {
-        text-align: justify;
-        padding: 3px 20px; }
-        .grid .grid-item-content .tags form {
-          display: inline-block; }
     .grid .grid-item h1 {
       margin-bottom: 20px;
       margin-top: -30px;
@@ -5971,6 +5966,15 @@ h1 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); }
+
+.tags {
+  text-align: justify;
+  padding: 3px 20px; }
+  .tags form {
+    display: inline-block; }
+
+.tagName {
+  font-size: 4em; }
 
 .tagblock {
   background-color: #3d6983;

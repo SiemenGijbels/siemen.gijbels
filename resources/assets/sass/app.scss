@@ -49,13 +49,6 @@ h1 {
     transition: 0.1s ease;
     &-content {
       position: relative;
-      .tags {
-        text-align: justify;
-        padding: 3px 20px;
-        form {
-          display: inline-block;
-        }
-      }
     }
     h1 {
       margin-bottom: 20px;
@@ -155,6 +148,18 @@ h1 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.tags {
+  text-align: justify;
+  padding: 3px 20px;
+  form {
+    display: inline-block;
+  }
+}
+
+.tagName {
+  font-size: 4em;
 }
 
 .tagblock {
