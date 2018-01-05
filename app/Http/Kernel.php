@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'checkLike' => \App\Http\Middleware\checkLike::class,
         'checkUnlike' => \App\Http\Middleware\checkUnlike::class,
         'checkEdit' => \App\Http\Middleware\checkEdit::class,
+        'checkSoftDelete' => \App\Http\Middleware\checkSoftDelete::class,
     ];
 }

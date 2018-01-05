@@ -161,7 +161,7 @@ Route::group(['middleware' => 'checkEdit'], function () {
 Route::get('post/{id}/delete', [
     'uses' => 'PostController@getSoftDelete',
     'as' => 'content.post.softdelete'
-]);
+])->middleware('checkSoftDelete');
 
 
 // ARCHIVE
