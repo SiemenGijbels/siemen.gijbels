@@ -12,85 +12,48 @@
     {{--https://devdojo.com/episode/laravel-user-image--}}
     <div class="content">
         <div class="profileTop">
-            <img class="profilePic" src="{{ asset('uploads/avatars/') }}/{{ Auth::user()->avatar  }}">
-            <h1 class="profileName">{{ Auth::user()->name }}</h1>
-            <h2 class="profileSettings">
-                <a href="#" id="settingsBtn">
-                    <i class="fas fa-cogs"></i>
-                </a>
-            </h2>
-            <br style="clear: both;">
-            <div id="settings">
-                {!! Form::open(array('route' => array('profile.index.changeAvatar'), 'files' => true)) !!}
+            <img class="profilePic" src="{{ asset('uploads/avatars/') }}/{{ $user->avatar  }}">
+            <h1 class="tagName profileName">{{ $user->name }}</h1>
+            @if($user->id == Auth::user()->id)
+                <h2 class="profileSettings">
+                    <a href="#" id="settingsBtn">
+                        <i class="fas fa-cogs"></i>
+                    </a>
+                </h2>
+                <br style="clear: both;">
+                <div id="settings">
+                    {!! Form::open(array('route' => array('profile.index.changeAvatar'), 'files' => true)) !!}
 
-                <div class="form-group">
-                    {!! Form::label(trans('general.updateavatar')) !!}
-                    {!! Form::file('avatar') !!}
+                    <div class="form-group">
+                        {!! Form::label(trans('general.updateavatar')) !!}
+                        {!! Form::file('avatar') !!}
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-success">@lang('general.submit')</button>
+                    </div>
+
+                    {!! Form::close() !!}
                 </div>
-
-                <div class="form-group">
-                    <button class="btn btn-success">@lang('general.submit')</button>
-                </div>
-
-                {!! Form::close() !!}
-            </div>
+            @endif
         </div>
         <div class="grid">
-            @foreach($posts as $post)
-                @if($post->user_id == Auth::user()->id)
-                    @if($post->archived == 0 || $post->archived == NULL)
-                        <a class="grid-link" href="{{ route('content.post', ['id' => $post->id]) }}">
-                            <div id="grid-item{{ $post->id }}" class="grid-item text-center">
-                                <div class="blogPicsDiv">
-                                    @if(!$post->image == "")
-                                        <img id="photo{{ $post->id }}" class="blogPics withId"
-                                             src="{{ asset('uploads/images/') }}/{{ $post->image }}">
-                                    @else
-                                        <img class="blogPics" src="{{ asset('uploads/images/default.jpg') }}"/>
-                                    @endif
-                                </div>
-                                <div class="grid-item-content">
-                                    <img class="blogPics blogPicProfile"
-                                         src="{{ asset('uploads/avatars/') }}/{{ empty($post->user->avatar) ? 'default.png' : $post->user->avatar }}">
-                                    <p class="byUser">@lang('general.by') {{ empty($post->user->name) ? 'No user' : $post->user->name }}</p>
-                                    <h1 class="post-title">{{ $post->title }}</h1>
-                                    <div class="tags">
-                                        @foreach($post->tags as $tag)
-                                            <a class="tagblock" href="{{ route('content.sortByTag', ['name' => $tag->name]) }}">#{{ $tag->name }}</a>
-                                        @endforeach
-                                    </div>
-                                    <p class="indexContent">{{ $post->content }}</p>
-                                </div>
-                            </div>
-                        </a>
-                    @elseif($post->archived == 1)
-                        <a class="grid-link" href="{{ route('content.post', ['id' => $post->id]) }}">
-                            <div id="grid-item{{ $post->id }}" class="grid-item text-center">
-                                <div class="blogPicsDiv">
-                                    @if(!$post->image == "")
-                                        <img id="photo{{ $post->id }}" class="blogPics archived withId"
-                                             src="{{ asset('uploads/images/') }}/{{ $post->image }}">
-                                    @else
-                                        <img class="blogPics archived" src="{{ asset('uploads/images/default.jpg') }}"/>
-                                    @endif
-                                </div>
-                                <div class="grid-item-content">
-                                    <img class="blogPics blogPicProfile"
-                                         src="{{ asset('uploads/avatars/') }}/{{ empty($post->user->avatar) ? 'default.png' : $post->user->avatar }}">
-                                    <p class="byUser">@lang('general.by') {{ empty($post->user->name) ? 'No user' : $post->user->name }}</p>
-                                    <h1 class="post-title">{{ $post->title }}</h1>
-                                    <div class="tags">
-                                        @foreach($post->tags as $tag)
-                                            <a class="tagblock" href="{{ route('content.sortByTag', ['name' => $tag->name]) }}">#{{ $tag->name }}</a>
-                                        @endforeach
-                                    </div>
-                                    <p class="indexContent">{{ $post->content }}</p>
-                                </div>
-                            </div>
-                        </a>
+            @if($user->id == Auth::user()->id)
+                @foreach($ownPosts as $ownPost)
+                    @if($ownPost->archived == 0 || $ownPost->archived == NULL)
+                        @include('partials.ownPost')
+                    @elseif($ownPost->archived == 1)
+                        @include('partials.ownPostArchived')
                     @endif
-                @endif
-            @endforeach
+                @endforeach
+            @endif
+            @if($user->id != Auth::user()->id)
+                @foreach($posts as $post)
+                    @if($post->archived == 0 || $post->archived == NULL)
+                        @include('partials.post')
+                    @endif
+                @endforeach
+            @endif
         </div>
         <div>
             <div style="text-align: center">

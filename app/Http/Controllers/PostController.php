@@ -64,6 +64,35 @@ class PostController extends Controller
         return view('content.sortByTag', ['blogPosts' => $blogPosts, 'tag' => $tag]);
     }
 
+    // USER PROFILE
+
+    public function getProfileIndex($id)
+    {
+        $me = Auth::user();
+        $ownPosts = Post::where('user_id', $me->id)
+            ->where(function ($query) {
+                $query->whereNull('archived')
+                    ->orWhere('archived', 0)
+                    ->orWhere('archived', 1);
+            })
+            ->orderBy('id', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
+
+        $user= User::where('id', $id)->first();
+
+        $posts = Post::where(function ($query) {
+            $query->whereNull('archived')
+                ->orWhere('archived', 0);
+        })
+            ->where('user_id', $user->id)
+            ->orderBy('id', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
+
+        return view('profile.index', ['ownPosts' => $ownPosts, 'posts' => $posts, 'user' => $user]);
+    }
+
 
     // POST PAGE
 
@@ -208,23 +237,6 @@ class PostController extends Controller
         $post->save();
 
         return redirect("/");
-    }
-
-    // PROFILE
-
-    public function getProfileIndex()
-    {
-        $user = Auth::user();
-        $posts = Post::where('user_id', $user->id)
-            ->where(function ($query) {
-                $query->whereNull('archived')
-                    ->orWhere('archived', 0)
-                    ->orWhere('archived', 1);
-            })
-            ->orderBy('id', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->paginate(15);
-        return view('profile.index', ['posts' => $posts]);
     }
 
     //https://devdojo.com/episode/laravel-user-image

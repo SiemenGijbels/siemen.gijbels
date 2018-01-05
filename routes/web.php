@@ -74,7 +74,7 @@ Route::get('/', [
 
 // PROFILE
 
-Route::get('profile', [
+Route::get('profile/{id}', [
     'uses' => 'PostController@getProfileIndex',
     'as' => 'profile.index'
 ]);

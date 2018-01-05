@@ -15,63 +15,63 @@
             <!-- Left Side Of Navbar -->
             <!-- Branding Image -->
             @if(Auth::user())
-                <a href="{{ route('content.create') }}" class="btn btn-success createBtn"
+                <a href="{{ route('content.create') }}" class="btn btn-success navEl createBtn"
                    @if (\Request::is('admin'))style="display: none" @endif><i
                             class="fas fa-plus-circle"></i> @lang('general.newpost')</a>
             @endif
 
             @if (\Request::is('/'))
-                <a class="navbar-brand activeFront" href="{{ url('/') }}">
+                <a class="navbar-brand navEl33 activeFront" href="{{ url('/') }}">
                     <i class="fas fa-th"></i> Blog
                 </a>
                 @if(Auth::user())
-                    <a class="navbar-brand" href="{{ route('content.archive') }}">
+                    <a class="navbar-brand navEl33" href="{{ route('content.archive') }}">
                         <i class="fas fa-archive"></i> @lang('general.archive')
                     </a>
                 @endif
-                <a class="navbar-brand" href="{{ route('content.about') }}">
+                <a class="navbar-brand navEl33" href="{{ route('content.about') }}">
                     <i class="fas fa-info-circle"></i> @lang('general.about')
                 </a>
             @elseif (\Request::is('archive'))
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand navEl33" href="{{ url('/') }}">
                     <i class="fas fa-th"></i> Blog
                 </a>
                 @if(Auth::user())
-                    <a class="navbar-brand activeFront" href="{{ url('archive') }}">
+                    <a class="navbar-brand navEl33 activeFront" href="{{ url('archive') }}">
                         <i class="fas fa-archive"></i> @lang('general.archive')
                     </a>
                 @endif
-                <a class="navbar-brand" href="{{ route('content.about') }}">
+                <a class="navbar-brand navEl33" href="{{ route('content.about') }}">
                     <i class="fas fa-info-circle"></i> @lang('general.about')
                 </a>
             @elseif (\Request::is('about'))
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand navEl33" href="{{ url('/') }}">
                     <i class="fas fa-th"></i> Blog
                 </a>
                 @if(Auth::user())
-                    <a class="navbar-brand" href="{{ route('content.archive') }}">
+                    <a class="navbar-brand navEl33" href="{{ route('content.archive') }}">
                         <i class="fas fa-archive"></i> @lang('general.archive')
                     </a>
                 @endif
-                <a class="navbar-brand activeFront" href="{{ route('content.about') }}">
+                <a class="navbar-brand navEl33 activeFront" href="{{ route('content.about') }}">
                     <i class="fas fa-info-circle"></i> @lang('general.about')
                 </a>
             @else
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand navEl33" href="{{ url('/') }}">
                     <i class="fas fa-th"></i> Blog
                 </a>
                 @if(Auth::user())
-                    <a class="navbar-brand" href="{{ route('content.archive') }}">
+                    <a class="navbar-brand navEl33" href="{{ route('content.archive') }}">
                         <i class="fas fa-archive"></i> @lang('general.archive')
                     </a>
                 @endif
-                <a class="navbar-brand" href="{{ route('content.about') }}">
+                <a class="navbar-brand navEl33" href="{{ route('content.about') }}">
                     <i class="fas fa-info-circle"></i> @lang('general.about')
                 </a>
         @endif
 
             <!-- Right Side Of Navbar -->
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navEl navbar-right">
                 <!-- Authentication Links -->
                 @guest
                     <li><a href="{{ route('login') }}">@lang('general.login')</a></li>
@@ -109,7 +109,7 @@
                                 @endif
                             @endforeach
                             <li>
-                                <a href="{{ route('profile.index') }}"><i class="fas fa-user"></i> @lang('general.profile')</a>
+                                <a href="{{ route('profile.index', ['id' => Auth::user()->id]) }}"><i class="fas fa-user"></i> @lang('general.profile')</a>
                             </li>
                             @if(Auth::user()->type == 1)
                                 <li>

@@ -65,26 +65,26 @@
 @stop
 
 @section('content')
-    <div class="content">
+    <div class="content postContent">
         <div class="left">
             <div class="imageDiv">
                 <img id="photo{{ $post->id }}" class="postImg" src="{{ asset('uploads/images/') }}/{{ $post->image }}">
             </div>
         </div>
         <div class="right">
-            <div class="row">
+            <div class="row postRow">
                 <div class="col-md-12 post-title">
                     <h1 class="titlePost">{{ $post->title }}</h1>
                 </div>
             </div>
-            <div class="row">
+            <div class="row postRow">
                 <div class="col-md-12 tags">
                     @foreach($post->tags as $tag)
                         <a class="tagblock" href="{{ route('content.sortByTag', ['name' => $tag->name]) }}">#{{ $tag->name }}</a>
                     @endforeach
                 </div>
             </div>
-            <div class="row">
+            <div class="row postRow">
                 <div class="col-md-12 post-content">
                     <h5>{{  $post->user->name }} — {{ $post->created_at }}</h5>
                     <p>{{  $post->content }}</p>

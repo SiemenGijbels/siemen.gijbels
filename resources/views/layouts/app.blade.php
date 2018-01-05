@@ -30,7 +30,7 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script>
     $(document).ready(function () {
-        $('.dropdown-toggle').dropdownHover();
+        $('.dropdown-toggle').dropdownHover(options);
     });
 </script>
 @yield('scripts')

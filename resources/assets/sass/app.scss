@@ -143,10 +143,26 @@ h1 {
   }
 }
 
+.userLink{
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+    transform: scale(1.1);
+  }
+}
+
+a:hover {
+  text-decoration: none;
+}
+
 .content {
   padding: 100px 0 0 0;
   overflow: auto !important;
   height: 100vh;
+}
+
+.checkbox {
+  display: inline-block;
 }
 
 .postImg {
@@ -208,11 +224,11 @@ h1 {
   }
   .profileName, .profileSettings {
     float: left;
-    margin-top: 32px;
     margin-right: 20px;
   }
   .profileSettings {
     margin-right: 2.5%;
+    margin-top: 40px;
   }
   #settings {
     display: none;
@@ -260,6 +276,10 @@ canvas {
   }
 }
 
+.fb-share-button span {
+  vertical-align: top !important;
+}
+
 .form-group-like {
   @extend .form-group;
   width: 30px;
@@ -282,7 +302,7 @@ canvas {
 }
 
 .fb_iframe_widget {
-  margin-top: -8px;
+  margin-top: -4px;
   margin-bottom: 6px;
   vertical-align: middle;
 }
@@ -321,7 +341,7 @@ canvas {
 
 .like {
   width: 15%;
-  min-width: 75px;
+  min-width: 115px;
   max-width: 300px;
 }
 
@@ -419,9 +439,81 @@ table tbody tr td {
   }
 }
 
+@media only screen and (max-width: 1000px) {
+  .left, .right {
+    width: 100%;
+    height: auto;
+  }
+  .left {
+    .imageDiv {
+      position: static;
+      .postImg {
+        position: static;
+        transform: translate(0, 0);
+      }
+    }
+  }
+  .like {
+    min-width: 115px;
+  }
+  .post-actions {
+    clear: both;
+  }
+}
+
 @media only screen and (max-width: 850px) {
   .grid, .profileTop {
     width: 90%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .navbar {
+    background-color: transparent;
+  }
+  .navbar-collapse, .navbar-toggle {
+    border: none;
+  }
+  .navbar-collapse {
+    background-color: white;
+  }
+  .navbar-toggle {
+    .icon-bar {
+      width: 40px;
+      margin-bottom: 10px;
+      height: 4px;
+      border-radius: 6px;
+    }
+  }
+  .navEl {
+    width: 100%;
+    margin-top: 50px;
+    .dropdown {
+      .dropdown-menu {
+        li {
+          display: inline-block;
+          width: 50%;
+          float: left;
+          padding: 10px;
+        }
+      }
+      .dropdown-toggle {
+        position: static !important;
+        margin: 20px 0 10px 0;
+        padding: 0 50px;
+        img {
+          position: static !important;
+        }
+      }
+    }
+  }
+  .navEl33 {
+    width: percentage(1/3);
+    padding: 14px 0;
+    text-align: center;
+  }
+  .postContent {
+    padding-top: 0;
   }
 }
 
@@ -445,6 +537,9 @@ table tbody tr td {
         }
       }
     }
+  }
+  .commentDiv {
+    width: calc(100% - 52px);
   }
 }
 
@@ -472,6 +567,9 @@ table tbody tr td {
     .profileName {
       font-size: 36px;
     }
+  }
+  .row {
+    margin: 0 10px;
   }
 }
 

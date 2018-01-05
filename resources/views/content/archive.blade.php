@@ -13,32 +13,9 @@
                     <h1>No archived posts yet!</h1>
                 </div>
             @else
-            @foreach($posts as $post)
-                    <a class="grid-link" href="{{ route('content.post', ['id' => $post->id]) }}">
-                        <div id="grid-item{{ $post->id }}" class="grid-item text-center">
-                            <div class="blogPicsDiv">
-                                @if(!$post->image == "")
-                                    <img id="photo{{ $post->id }}" class="blogPics withId"
-                                         src="{{ asset('uploads/images/') }}/{{ $post->image }}">
-                                @else
-                                    <img class="blogPics" src="{{ asset('uploads/images/default.jpg') }}"/>
-                                @endif
-                            </div>
-                            <div class="grid-item-content">
-                                <img class="blogPics blogPicProfile"
-                                     src="{{ asset('uploads/avatars/') }}/{{ empty($post->user->avatar) ? 'default.png' : $post->user->avatar }}">
-                                <p class="byUser">@lang('general.by') {{ empty($post->user->name) ? 'No user' : $post->user->name }}</p>
-                                <h1 class="post-title">{{ $post->title }}</h1>
-                                <div class="tags">
-                                    @foreach($post->tags as $tag)
-                                        <a class="tagblock" href="{{ route('content.sortByTag', ['name' => $tag->name]) }}">#{{ $tag->name }}</a>
-                                    @endforeach
-                                </div>
-                                <p class="indexContent">{{ $post->content }}</p>
-                            </div>
-                        </div>
-                    </a>
-            @endforeach
+                @foreach($posts as $post)
+                    @include('partials.post')
+                @endforeach
             @endif
         </div>
         <div>

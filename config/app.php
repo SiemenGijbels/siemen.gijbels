@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'locale' => 'nl_NL',
+    'locale' => 'en_US',
 
     'languages'     => array(
         'en' => 'en_US',
