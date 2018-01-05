@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
 
@@ -80,7 +80,7 @@
 
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                        <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" role="button"
                            aria-expanded="false" style="position:relative; padding-left:50px;">
                             <img src="{{ asset('uploads/avatars/') }}/{{ Auth::user()->avatar }}"
                                  style="width:32px; height:32px; position:absolute; top:10px; left:10px; border-radius:50%">

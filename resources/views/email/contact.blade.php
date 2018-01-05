@@ -1,3 +1,5 @@
+@extends('layouts.mail')
+@section('content')
 You received a message from : {{ $name }}
 
 <p>
@@ -11,3 +13,5 @@ You received a message from : {{ $name }}
 <p>
     Message: {{ $user_message }}
 </p>
+
+@stop
