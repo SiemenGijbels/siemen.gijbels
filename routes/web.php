@@ -89,12 +89,12 @@ Route::post('profile', [
 //https://www.cloudways.com/blog/laravel-contact-form/
 
 Route::get('about', [
-    'uses' => 'ContactUSController@contactUs',
+    'uses' => 'ContactUsController@contactUs',
     'as' => 'content.about'
 ]);
 
 Route::post('about', [
-    'uses'=>'ContactUSController@contactUsPost',
+    'uses'=>'ContactUsController@contactUsPost',
     'as'=>'content.about.store'
 ]);
 

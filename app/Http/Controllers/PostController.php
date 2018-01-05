@@ -93,6 +93,24 @@ class PostController extends Controller
         return view('profile.index', ['ownPosts' => $ownPosts, 'posts' => $posts, 'user' => $user]);
     }
 
+    //https://devdojo.com/episode/laravel-user-image
+    public function postAvatarUpdate(Request $request)
+    {
+        $me = Auth::user();
+
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+            Image::make($avatar)->fit(300, 300)->save(public_path('/uploads/avatars/' . $filename));
+
+            $me->avatar = $filename;
+            $me->save();
+        }
+
+        return redirect()->back();
+
+    }
+
 
     // POST PAGE
 
@@ -237,28 +255,6 @@ class PostController extends Controller
         $post->save();
 
         return redirect("/");
-    }
-
-    //https://devdojo.com/episode/laravel-user-image
-    public function postAvatarUpdate(Request $request)
-    {
-        $user = Auth::user();
-        $posts = Post::where('user_id', $user->id)
-            ->orderBy('id', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->paginate(15);
-
-        if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-            $filename = time() . '.' . $avatar->getClientOriginalExtension();
-            Image::make($avatar)->fit(300, 300)->save(public_path('/uploads/avatars/' . $filename));
-
-            $user->avatar = $filename;
-            $user->save();
-        }
-
-        return view('profile.index', ['posts' => $posts]);
-
     }
 
     // CREATE POST

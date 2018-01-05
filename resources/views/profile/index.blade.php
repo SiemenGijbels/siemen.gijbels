@@ -30,6 +30,10 @@
                     </div>
 
                     <div class="form-group">
+                        {!! Form::hidden('user_id',  Auth::user()->id) !!}
+                    </div>
+
+                    <div class="form-group">
                         <button class="btn btn-success">@lang('general.submit')</button>
                     </div>
 
