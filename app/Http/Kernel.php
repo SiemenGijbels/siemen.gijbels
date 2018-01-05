@@ -59,5 +59,11 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'checkAdmin' => \App\Http\Middleware\checkAdmin::class,
+        'checkDeleteComment' => \App\Http\Middleware\checkDeleteComment::class,
+        'checkArchive' => \App\Http\Middleware\checkArchive::class,
+        'checkLike' => \App\Http\Middleware\checkLike::class,
+        'checkUnlike' => \App\Http\Middleware\checkUnlike::class,
+        'checkEdit' => \App\Http\Middleware\checkEdit::class,
     ];
 }

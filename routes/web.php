@@ -26,7 +26,7 @@ Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 //  ADMIN
 
-Route::group(['prefix' => 'admin'], function (){
+Route::group(['prefix' => 'admin', 'middleware' => ['checkAdmin', 'auth']], function (){
     //GET routes Admin
     Route::get('', [
         'uses' => 'PostController@getAdminIndex',
@@ -101,15 +101,17 @@ Route::post('about', [
 
 // CREATE
 
-Route::get('create', [
-    'uses' => 'PostController@getCreate',
-    'as' => 'content.create'
-]);
+Route::group(['middleware' => 'auth'], function (){
+    Route::get('create', [
+        'uses' => 'PostController@getCreate',
+        'as' => 'content.create'
+    ]);
 
-Route::post('create', [
-    'uses' => 'PostController@postCreate',
-    'as' => 'content.create'
-]);
+    Route::post('create', [
+        'uses' => 'PostController@postCreate',
+        'as' => 'content.create'
+    ]);
+});
 
 
 // POST
@@ -122,17 +124,17 @@ Route::get('post/{id}', [
 Route::get('post/{postId}/deleteComment/{commentId}', [
     'uses' => 'CommentController@getDeleteComment',
     'as' => 'content.post.deleteComment'
-]);
+])->middleware('checkDeleteComment');
 
 Route::post('post/{postId}/Like/{userId}', [
     'uses' => 'PostController@postLikePost',
     'as' => 'content.post.like'
-]);
+])->middleware('checkLike');
 
 Route::get('post/{postId}/unlike/{likeId}', [
     'uses' => 'PostController@getUnlikePost',
     'as' => 'content.post.unlike'
-]);
+])->middleware('checkUnlike');
 
 Route::post('post/{id}', [
     'uses' => 'CommentController@postCommentPost',
@@ -141,16 +143,17 @@ Route::post('post/{id}', [
 
 
 // EDIT
+Route::group(['middleware' => 'checkEdit'], function () {
+    Route::get('edit/{id}', [
+        'uses' => 'PostController@getEdit',
+        'as' => 'content.edit'
+    ]);
 
-Route::get('edit/{id}', [
-    'uses' => 'PostController@getEdit',
-    'as' => 'content.edit'
-]);
-
-Route::post('edit', [
-    'uses' => 'PostController@postUpdate',
-    'as' => 'content.update'
-]);
+    Route::post('edit', [
+        'uses' => 'PostController@postUpdate',
+        'as' => 'content.update'
+    ]);
+});
 
 
 // SOFT DELETE
@@ -166,17 +169,17 @@ Route::get('post/{id}/delete', [
 Route::get('archive', [
     'uses' => 'PostController@getArchiveIndex',
     'as' => 'content.archive'
-]);
+])->middleware('auth');
 
 Route::get('post/{id}/archive', [
     'uses' => 'PostController@setArchived',
     'as' => 'content.post.archive'
-]);
+])->middleware('checkArchive');
 
 Route::get('post/{id}/unarchive', [
     'uses' => 'PostController@setUnarchived',
     'as' => 'content.post.unarchive'
-]);
+])->middleware('checkArchive');
 
 
 // LANGUAGES
