@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('page_title')
-    @lang('general.profile') {{ Auth::user()->name }}
+    @lang('general.profile') {{ $user->name }}
 @stop
 
 @section('content')
@@ -14,44 +14,54 @@
         <div class="profileTop">
             <img class="profilePic" src="{{ asset('uploads/avatars/') }}/{{ $user->avatar  }}">
             <h1 class="tagName profileName">{{ $user->name }}</h1>
-            @if($user->id == Auth::user()->id)
-                <h2 class="profileSettings">
-                    <a href="#" id="settingsBtn">
-                        <i class="fas fa-cogs"></i>
-                    </a>
-                </h2>
-                <br style="clear: both;">
-                <div id="settings">
-                    {!! Form::open(array('route' => array('profile.index.changeAvatar'), 'files' => true)) !!}
+            @if(Auth::user())
+                @if($user->id == Auth::user()->id)
+                    <h2 class="profileSettings">
+                        <a href="#" id="settingsBtn">
+                            <i class="fas fa-cogs"></i>
+                        </a>
+                    </h2>
+                    <br style="clear: both;">
+                    <div id="settings">
+                        {!! Form::open(array('route' => array('profile.index.changeAvatar'), 'files' => true)) !!}
 
-                    <div class="form-group">
-                        {!! Form::label(trans('general.updateavatar')) !!}
-                        {!! Form::file('avatar') !!}
+                        <div class="form-group">
+                            {!! Form::label(trans('general.updateavatar')) !!}
+                            {!! Form::file('avatar') !!}
+                        </div>
+
+                        <div class="form-group">
+                            {!! Form::hidden('user_id',  Auth::user()->id) !!}
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-success">@lang('general.submit')</button>
+                        </div>
+
+                        {!! Form::close() !!}
                     </div>
-
-                    <div class="form-group">
-                        {!! Form::hidden('user_id',  Auth::user()->id) !!}
-                    </div>
-
-                    <div class="form-group">
-                        <button class="btn btn-success">@lang('general.submit')</button>
-                    </div>
-
-                    {!! Form::close() !!}
-                </div>
+                @endif
             @endif
         </div>
         <div class="grid">
-            @if($user->id == Auth::user()->id)
-                @foreach($ownPosts as $ownPost)
-                    @if($ownPost->archived == 0 || $ownPost->archived == NULL)
-                        @include('partials.ownPost')
-                    @elseif($ownPost->archived == 1)
-                        @include('partials.ownPostArchived')
-                    @endif
-                @endforeach
-            @endif
-            @if($user->id != Auth::user()->id)
+            @if(Auth::user())
+                @if($user->id == Auth::user()->id)
+                    @foreach($ownPosts as $ownPost)
+                        @if($ownPost->archived == 0 || $ownPost->archived == NULL)
+                            @include('partials.ownPost')
+                        @elseif($ownPost->archived == 1)
+                            @include('partials.ownPostArchived')
+                        @endif
+                    @endforeach
+                @endif
+                @if($user->id != Auth::user()->id)
+                    @foreach($posts as $post)
+                        @if($post->archived == 0 || $post->archived == NULL)
+                            @include('partials.post')
+                        @endif
+                    @endforeach
+                @endif
+            @else
                 @foreach($posts as $post)
                     @if($post->archived == 0 || $post->archived == NULL)
                         @include('partials.post')

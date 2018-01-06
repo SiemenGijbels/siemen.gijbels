@@ -165,7 +165,7 @@
                         <script type="IN/Share" data-url="{{ Request::url() }}"></script>
                     </div>
                     <div class="col-md-12 post-actions">
-                        @if($post->user_id == Auth::user()->id || Auth::user()->type == 1)
+                        @if($post->user_id == Auth::user()->id)
                             <a class="action-link" href="{{ route('content.edit', ['id' => $post->id]) }}"><i
                                         class="fas fa-pencil-alt"></i></a>
                             @if($post->archived == 0 || $post->archived == NULL)
@@ -185,6 +185,26 @@
                                             class="fas fa-trash-alt"></i></a>
                             @endif
                         @endif
+                            @if(Auth::user()->type == 1)
+                                <a class="action-link" href="{{ route('admin.edit', ['id' => $post->id]) }}"><i
+                                            class="fas fa-pencil-alt"></i></a>
+                                @if($post->archived == 0 || $post->archived == NULL)
+                                    <a class="action-link"
+                                       href="{{ route('content.admin.archive', ['id' => $post->id]) }}"><i
+                                                class="fas fa-archive"></i></a>
+                                    <a class="action-link"
+                                       href="{{ route('content.admin.softdelete', ['id' => $post->id]) }}"><i
+                                                class="fas fa-trash-alt"></i></a>
+                                @endif
+                                @if($post->archived == 1)
+                                    <a class="action-link"
+                                       href="{{ route('content.admin.unarchive', ['id' => $post->id]) }}"><i
+                                                class="fas fa-th"></i></a>
+                                    <a class="action-link"
+                                       href="{{ route('content.admin.softdelete', ['id' => $post->id]) }}"><i
+                                                class="fas fa-trash-alt"></i></a>
+                                @endif
+                            @endif
                     </div>
                 @elseif(!Auth::check())
                     <div class="col-md-12 like">

@@ -54,6 +54,26 @@ Route::group(['prefix' => 'admin', 'middleware' => ['checkAdmin', 'auth']], func
         'as' => 'content.admin.deleteComment'
     ]);
 
+    Route::get('post/{postId}/delete/{commentId}', [
+        'uses' => 'CommentController@getDeleteComment',
+        'as' => 'content.admin.deleteComment'
+    ]);
+
+    Route::get('post/{id}/adminArchive', [
+        'uses' => 'PostController@setArchived',
+        'as' => 'content.admin.archive'
+    ]);
+
+    Route::get('post/{id}/adminUnarchive', [
+        'uses' => 'PostController@setUnarchived',
+        'as' => 'content.admin.unarchive'
+    ]);
+
+    Route::get('post/{id}/adminSoftDelete', [
+        'uses' => 'PostController@getSoftDelete',
+        'as' => 'content.admin.softdelete'
+    ]);
+
     //POST routes Admin
     Route::post('edit', [
         'uses' => 'PostController@postAdminUpdate',

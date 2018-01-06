@@ -68,17 +68,6 @@ class PostController extends Controller
 
     public function getProfileIndex($id)
     {
-        $me = Auth::user();
-        $ownPosts = Post::where('user_id', $me->id)
-            ->where(function ($query) {
-                $query->whereNull('archived')
-                    ->orWhere('archived', 0)
-                    ->orWhere('archived', 1);
-            })
-            ->orderBy('id', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->paginate(15);
-
         $user= User::where('id', $id)->first();
 
         $posts = Post::where(function ($query) {
@@ -89,6 +78,22 @@ class PostController extends Controller
             ->orderBy('id', 'desc')
             ->orderBy('created_at', 'desc')
             ->paginate(15);
+
+        if(Auth::user()) {
+            $me = Auth::user();
+
+            $ownPosts = Post::where('user_id', $me->id)
+                ->where(function ($query) {
+                    $query->whereNull('archived')
+                        ->orWhere('archived', 0)
+                        ->orWhere('archived', 1);
+                })
+                ->orderBy('id', 'desc')
+                ->orderBy('created_at', 'desc')
+                ->paginate(15);
+        } else {
+            $ownPosts = $posts;
+        }
 
         return view('profile.index', ['ownPosts' => $ownPosts, 'posts' => $posts, 'user' => $user]);
     }
