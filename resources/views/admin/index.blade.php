@@ -42,7 +42,6 @@
             <div class="col-md-12 text-center">
                 <table>
                     <tr>
-                        <th>ID</th>
                         <th>@lang('general.user')</th>
                         <th>@lang('general.title')</th>
                         <th>Likes</th>
@@ -54,15 +53,14 @@
                     </tr>
                     @foreach($posts as $post)
                         <tr>
-                            <td>{{ $post->id }}</td>
-                            <td>{{ empty($post->user) ? trans('general.nouser') : $post->user->name }}</td>
+                            <td><a href="{{ route('profile.index', ['id' => $post->user->id]) }}">{{ empty($post->user) ? trans('general.nouser') : $post->user->name }}</a></td>
                             <td>
                                 <a href="{{ route('content.post', ['id' => $post->id]) }}">{{ $post->title }}</a>
                             </td>
                             <td>{{ $post->likes->count() }}</td>
                             <td>{{ $post->comments->count() }}</td>
                             @if($post->archived == 1)
-                                <td>@lang('general.yes')</td>
+                                <td>@lang('general.yes') | <a href="{{ route('admin.post.putback', ['id' => $post->id]) }}">@lang('general.unarchive')</a></td>
                             @else
                                 <td>@lang('general.no')</td>
                             @endif

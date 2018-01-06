@@ -68,7 +68,7 @@
     <div class="content postContent">
         <div class="left">
             <div class="imageDiv">
-                <img id="photo{{ $post->id }}" class="postImg" src="{{ asset('uploads/images/') }}/{{ $post->image }}">
+                <img id="photo{{ $post->id }}" class="postImg" src="{{ asset('uploads/images/') }}/{{ $post->image }}?lastmod={{ rand(0, 10000) }}">
             </div>
         </div>
         <div class="right">
@@ -86,7 +86,7 @@
             </div>
             <div class="row postRow">
                 <div class="col-md-12 post-content">
-                    <h5>{{  $post->user->name }} — {{ $post->created_at }}</h5>
+                    <h5><a href="{{ route('profile.index', ['id' => $post->user->id]) }}">{{  $post->user->name }}</a> — {{ $post->created_at }}</h5>
                     <p>{{  $post->content }}</p>
                 </div>
                 @if(Auth::check())
@@ -226,21 +226,8 @@
 @section('scripts')
     <script type="text/javascript" src="{{ asset('js/color-thief.min.js') }}"></script>
     <script>
-        $(document).ready(function () {
-            var sourceImage = document.getElementById("photo{{ $post->id }}");
-            var colorThief = new ColorThief();
-            var color = colorThief.getColor(sourceImage);
-            $(".action-link").css("color", "rgb(" + color + ")");
-            $(".deletecomment").css("color", "rgb(" + color + ")");
-            $(".btn-success").css("background-color", "rgb(" + color + ")");
-            $(".btn-like").css("background-color", "rgb(" + color + ")");
-        });
-    </script>
-    {{--https://github.com/lokesh/color-thief/--}}
-    <script type="text/javascript" defer src="{{ asset('js/color-thief.min.js') }}"></script>
-    <script>
         @if($post->tags->count() > 1)
-        $(document).ready(function () {
+        $('.postImg').on('load', function () {
             var sourceImage = document.getElementById('photo{{ $post->id }}');
             var colorThief = new ColorThief();
             var obj = $(".tagblock");
@@ -251,12 +238,23 @@
             }
             ;
         });
+        $(document).on('beforeunload', function () {
+            var sourceImage = document.getElementById('photo{{ $post->id }}');
+            sourceImage.attr('src', '');
+            window.location = window.location.href+'?eraseCache=true';
+            alert('lol');
+        });
         @elseif($post->tags->count() == 1)
-        $(document).ready(function () {
+        $('.postImg').on('load', function () {
             var sourceImage = document.getElementById('photo{{ $post->id }}');
             var colorThief = new ColorThief();
             var color = colorThief.getColor(sourceImage);
-            $("#grid-item{{ $post->id }} .grid-item-content .tagblock").css("background-color", "rgb(" + color + ")");
+            $(".tagblock").css("background-color", "rgb(" + color + ")");
+        });
+        $(document).on('beforeunload', function () {
+            var sourceImage = document.getElementById('photo{{ $post->id }}');
+            sourceImage.attr('src', '');
+            window.location = window.location.href+'?eraseCache=true';
         });
         @endif
     </script>

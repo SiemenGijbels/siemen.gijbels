@@ -34,10 +34,18 @@
         <div class="col-md-12 commentPost">
             <img class="commentAvatar" src="{{ asset('uploads/avatars/') }}/{{ $comment->user->avatar }}">
             <div class="commentDiv">
-                <h6>{{ $comment->user->name }} — {{ $comment->created_at }}    @if(Auth::user() && Auth::user()->type == 1 || Auth::user() && Auth::user()->id == $comment->user_id)
-                        <a class="deletecomment" href="{{ route('content.post.deleteComment', ['postId' => $post->id, 'commentId' => $comment->id]) }}"><i
-                                    class="fas fa-trash-alt"></i></a>
-                    @endif</h6>
+                <h6>{{ $comment->user->name }} — {{ $comment->created_at }}
+                    @if(Auth::user() && Auth::user()->id == $comment->user_id)
+                        <a class="deletecomment" href="{{ route('content.post.deleteComment', ['postId' => $post->id, 'commentId' => $comment->id]) }}">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    @endif
+                    @if(Auth::user() && Auth::user()->type == 1)
+                        <a class="deletecomment" href="{{ route('content.admin.deleteComment', ['postId' => $post->id, 'commentId' => $comment->id]) }}">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    @endif
+                </h6>
                 <p>{{ $comment->content }}</p>
             </div>
         </div>

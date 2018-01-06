@@ -45,23 +45,27 @@
     <script>
         @foreach($posts as $post)
         @if($post->tags->count() > 1)
-        $(document).ready(function () {
-            var sourceImage = document.getElementById('photo{{ $post->id }}');
-            var colorThief = new ColorThief();
-            var obj = $("#grid-item{{ $post->id }} .grid-item-content .tagblock");
-            var tagArray = $.makeArray(obj);
-            var colorPalette = colorThief.getPalette(sourceImage, '{{ $post->tags->count() }}');
-            for (var i = 0; i < tagArray.length; i++) {
-                $(tagArray[i]).css("background-color", "rgb(" + colorPalette[i] + ")");
-            }
-            ;
+        $(function () {
+            $(".blogPics").imagesLoaded(function () {
+                var sourceImage = document.getElementById('photo{{ $post->id }}');
+                var colorThief = new ColorThief();
+                var obj = $("#grid-item{{ $post->id }} .grid-item-content .tagblock");
+                var tagArray = $.makeArray(obj);
+                var colorPalette = colorThief.getPalette(sourceImage, '{{ $post->tags->count() }}');
+                for (var i = 0; i < tagArray.length; i++) {
+                    $(tagArray[i]).css("background-color", "rgb(" + colorPalette[i] + ")");
+                }
+                ;
+            });
         });
         @elseif($post->tags->count() == 1)
-        $(document).ready(function () {
-            var sourceImage = document.getElementById('photo{{ $post->id }}');
-            var colorThief = new ColorThief();
-            var color = colorThief.getColor(sourceImage);
-            $("#grid-item{{ $post->id }} .grid-item-content .tagblock").css("background-color", "rgb(" + color + ")");
+        $(function () {
+            $(".blogPics").imagesLoaded(function () {
+                var sourceImage = document.getElementById('photo{{ $post->id }}');
+                var colorThief = new ColorThief();
+                var color = colorThief.getColor(sourceImage);
+                $("#grid-item{{ $post->id }} .grid-item-content .tagblock").css("background-color", "rgb(" + color + ")");
+            });
         });
         @endif
         @endforeach

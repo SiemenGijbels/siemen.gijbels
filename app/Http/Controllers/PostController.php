@@ -387,4 +387,97 @@ class PostController extends Controller
         $post->tags()->sync($request->input('tags') === null ? [] : $request->input('tags'));
         return redirect()->route('admin.index')->with('info', 'Post edited, new Title is: ' . $request->input('title'));
     }
+
+    public function getAdminPost($id)
+    {
+        $post = Post::where('id', $id)
+            ->first();
+
+        $comments = Comment::where('post_id', $post->id)
+            ->orderBy('id', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $likes = Like::where('post_id', $post->id)
+            ->get();
+
+        if (Auth::user()) {
+            $userLike = Like::where('user_id', Auth::user()->id)
+                ->where('post_id', $post->id)
+                ->first();
+
+            if ($likes->isEmpty() || count($userLike) == 0 || count($userLike) == NULL) {
+                $userLikeCount = 0;
+            } else {
+                $userLikeCount = 1;
+            }
+        }
+
+        $countLikes = $likes->count();
+
+        if (Auth::user()) {
+            return view('content.post', ['post' => $post, 'comments' => $comments, 'userLike' => $userLike, 'userLikeCount' => $userLikeCount, 'countLikes' => $countLikes]);
+        } else {
+            return view('content.post', ['post' => $post, 'comments' => $comments, 'countLikes' => $countLikes]);
+        }
+    }
+
+    public function postAdminLikePost(Request $request)
+    {
+        $like = new Like([
+            'post_id' => $request->input('post_id'),
+            'user_id' => $request->input('user_id')
+        ]);
+        $like->save();
+
+        return redirect()->route('content.post', ['id' => $request->input('post_id')]);
+    }
+
+    public function getAdminUnlikePost($postId, $likeId)
+    {
+        $post = Post::find($postId);
+        $like = Like::find($likeId);
+        $like->delete();
+
+        return redirect()->route('content.post', ['id' => $post->id]);
+    }
+
+    // EDIT POST
+
+    public function getAdminPostEdit($id)
+    {
+        $post = Post::find($id);
+        $tags = Tag::all();
+        return view('content.edit', ['post' => $post, 'postId' => $id, 'tags' => $tags]);
+    }
+
+    public function postAdminPostUpdate(Request $request)
+    {
+        $posts = Post::where(function ($query) {
+            $query->whereNull('archived')
+                ->orWhere('archived', 0);
+        })
+            ->orderBy('id', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(30);
+
+        $this->validate($request, [
+            'title' => 'required|min:3',
+            'content' => 'required|min:3'
+        ]);
+        $post = Post::find($request->get('post_id'));
+        $post->title = $request->get('title');
+        $post->content = $request->get('content');
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            Image::make($image)->save(public_path('/uploads/images/' . $filename));
+            $post->image = $filename;
+        }
+        $post->save();
+
+        $post->tags()->sync($request->input('tags') === null ? [] : $request->input('tags'));
+
+        return redirect()->route('content.index', ['posts' => $posts]);
+    }
 }

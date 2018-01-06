@@ -43,7 +43,7 @@
     <script>
         @foreach($blogPosts as $blogPost)
         @if($blogPost->tags->count() > 1)
-        $(document).ready(function () {
+        $('.blogPics').on('load', function () {
             var sourceImage = document.getElementById('photo{{ $blogPost->id }}');
             var colorThief = new ColorThief();
             var obj = $("#grid-item{{ $blogPost->id }} .grid-item-content .tagblock");
@@ -55,7 +55,7 @@
             ;
         });
         @elseif($blogPost->tags->count() == 1)
-        $(document).ready(function () {
+        $('.blogPics').on('load', function () {
             var sourceImage = document.getElementById('photo{{ $blogPost->id }}');
             var colorThief = new ColorThief();
             var color = colorThief.getColor(sourceImage);

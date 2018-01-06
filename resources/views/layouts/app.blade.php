@@ -29,6 +29,28 @@
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
 <script>
+    $.fn.imagesLoaded = function(callback, fireOne) {
+        var
+            args = arguments,
+            elems = this.filter('img'),
+            elemsLen = elems.length - 1;
+
+        elems
+            .bind('load', function(e) {
+                if (fireOne) {
+                    !elemsLen-- && callback.call(elems, e);
+                } else {
+                    callback.call(this, e);
+                }
+            }).each(function() {
+            // cached images don't fire load sometimes, so we reset src.
+            if (this.complete || this.complete === undefined){
+                this.src = this.src;
+            }
+        });
+    }
+</script>
+<script>
     $(document).ready(function () {
         $('.dropdown-toggle').dropdownHover(options);
     });

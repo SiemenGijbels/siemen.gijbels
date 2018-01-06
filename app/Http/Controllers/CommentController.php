@@ -35,5 +35,4 @@ class CommentController
         $comment->delete();
         return redirect()->route('content.post', ['id' => $postId]);
     }
-
 }

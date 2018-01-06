@@ -32,25 +32,26 @@ Route::group(['prefix' => 'admin', 'middleware' => ['checkAdmin', 'auth']], func
         'uses' => 'PostController@getAdminIndex',
         'as' => 'admin.index'
     ]);
-
     Route::get('create', [
         'uses' => 'PostController@getAdminCreate',
         'as' => 'admin.create'
     ]);
-
     Route::get('edit/{id}', [
         'uses' => 'PostController@getAdminEdit',
         'as' => 'admin.edit'
     ]);
-
     Route::get('delete/{id}', [
         'uses' => 'PostController@getAdminDelete',
         'as' => 'admin.delete'
     ]);
-
     Route::get('post/{id}/putback', [
         'uses' => 'PostController@getPutBack',
         'as' => 'admin.post.putback'
+    ]);
+
+    Route::get('post/{postId}/delete/{commentId}', [
+        'uses' => 'CommentController@getDeleteComment',
+        'as' => 'content.admin.deleteComment'
     ]);
 
     //POST routes Admin
@@ -58,7 +59,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['checkAdmin', 'auth']], func
         'uses' => 'PostController@postAdminUpdate',
         'as' => 'admin.update'
     ]);
-
     Route::post('create', [
         'uses' => 'PostController@postAdminCreate',
         'as' => 'admin.create'
