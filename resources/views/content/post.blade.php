@@ -68,7 +68,8 @@
     <div class="content postContent">
         <div class="left">
             <div class="imageDiv">
-                <img id="photo{{ $post->id }}" class="postImg" src="{{ asset('uploads/images/') }}/{{ $post->image }}?lastmod={{ rand(0, 10000) }}">
+                <img id="photo{{ $post->id }}" class="postImg"
+                     src="{{ asset('uploads/images/') }}/{{ $post->image }}?lastmod={{ rand(0, 10000) }}">
             </div>
         </div>
         <div class="right">
@@ -80,13 +81,15 @@
             <div class="row postRow">
                 <div class="col-md-12 tags">
                     @foreach($post->tags as $tag)
-                        <a class="tagblock" href="{{ route('content.sortByTag', ['name' => $tag->name]) }}">#{{ $tag->name }}</a>
+                        <a class="tagblock"
+                           href="{{ route('content.sortByTag', ['name' => $tag->name]) }}">#{{ $tag->name }}</a>
                     @endforeach
                 </div>
             </div>
             <div class="row postRow">
                 <div class="col-md-12 post-content">
-                    <h5><a href="{{ route('profile.index', ['id' => $post->user->id]) }}">{{  $post->user->name }}</a> — {{ $post->created_at }}</h5>
+                    <h5><a href="{{ route('profile.index', ['id' => $post->user->id]) }}">{{  $post->user->name }}</a>
+                        — {{ $post->created_at }}</h5>
                     <p>{{  $post->content }}</p>
                 </div>
                 @if(Auth::check())
@@ -165,7 +168,45 @@
                         <script type="IN/Share" data-url="{{ Request::url() }}"></script>
                     </div>
                     <div class="col-md-12 post-actions">
-                        @if($post->user_id == Auth::user()->id)
+                        @if($post->user_id == Auth::user()->id )
+                            <a class="action-link" href="{{ route('content.edit', ['id' => $post->id]) }}"><i
+                                        class="fas fa-pencil-alt"></i></a>
+                            @if($post->archived == 0 || $post->archived == NULL)
+                                <a class="action-link"
+                                   href="{{ route('content.post.archive', ['id' => $post->id]) }}"><i
+                                            class="fas fa-archive"></i></a>
+                                <a class="action-link"
+                                   href="{{ route('content.post.softdelete', ['id' => $post->id]) }}"><i
+                                            class="fas fa-trash-alt"></i></a>
+                            @endif
+                            @if($post->archived == 1)
+                                <a class="action-link"
+                                   href="{{ route('content.post.unarchive', ['id' => $post->id]) }}"><i
+                                            class="fas fa-th"></i></a>
+                                <a class="action-link"
+                                   href="{{ route('content.post.softdelete', ['id' => $post->id]) }}"><i
+                                            class="fas fa-trash-alt"></i></a>
+                            @endif
+                        @elseif(Auth::user()->type == 1 && $post->user_id != Auth::user()->id)
+                            <a class="action-link" href="{{ route('admin.edit', ['id' => $post->id]) }}"><i
+                                        class="fas fa-pencil-alt"></i></a>
+                            @if($post->archived == 0 || $post->archived == NULL)
+                                <a class="action-link"
+                                   href="{{ route('content.admin.archive', ['id' => $post->id]) }}"><i
+                                            class="fas fa-archive"></i></a>
+                                <a class="action-link"
+                                   href="{{ route('content.admin.softdelete', ['id' => $post->id]) }}"><i
+                                            class="fas fa-trash-alt"></i></a>
+                            @endif
+                            @if($post->archived == 1)
+                                <a class="action-link"
+                                   href="{{ route('content.admin.unarchive', ['id' => $post->id]) }}"><i
+                                            class="fas fa-th"></i></a>
+                                <a class="action-link"
+                                   href="{{ route('content.admin.softdelete', ['id' => $post->id]) }}"><i
+                                            class="fas fa-trash-alt"></i></a>
+                            @endif
+                        @elseif(Auth::user()->type == 1 && $post->user_id == Auth::user()->id)
                             <a class="action-link" href="{{ route('content.edit', ['id' => $post->id]) }}"><i
                                         class="fas fa-pencil-alt"></i></a>
                             @if($post->archived == 0 || $post->archived == NULL)
@@ -185,26 +226,6 @@
                                             class="fas fa-trash-alt"></i></a>
                             @endif
                         @endif
-                            @if(Auth::user()->type == 1)
-                                <a class="action-link" href="{{ route('admin.edit', ['id' => $post->id]) }}"><i
-                                            class="fas fa-pencil-alt"></i></a>
-                                @if($post->archived == 0 || $post->archived == NULL)
-                                    <a class="action-link"
-                                       href="{{ route('content.admin.archive', ['id' => $post->id]) }}"><i
-                                                class="fas fa-archive"></i></a>
-                                    <a class="action-link"
-                                       href="{{ route('content.admin.softdelete', ['id' => $post->id]) }}"><i
-                                                class="fas fa-trash-alt"></i></a>
-                                @endif
-                                @if($post->archived == 1)
-                                    <a class="action-link"
-                                       href="{{ route('content.admin.unarchive', ['id' => $post->id]) }}"><i
-                                                class="fas fa-th"></i></a>
-                                    <a class="action-link"
-                                       href="{{ route('content.admin.softdelete', ['id' => $post->id]) }}"><i
-                                                class="fas fa-trash-alt"></i></a>
-                                @endif
-                            @endif
                     </div>
                 @elseif(!Auth::check())
                     <div class="col-md-12 like">
@@ -261,7 +282,7 @@
         $(document).on('beforeunload', function () {
             var sourceImage = document.getElementById('photo{{ $post->id }}');
             sourceImage.attr('src', '');
-            window.location = window.location.href+'?eraseCache=true';
+            window.location = window.location.href + '?eraseCache=true';
             alert('lol');
         });
         @elseif($post->tags->count() == 1)
@@ -274,7 +295,7 @@
         $(document).on('beforeunload', function () {
             var sourceImage = document.getElementById('photo{{ $post->id }}');
             sourceImage.attr('src', '');
-            window.location = window.location.href+'?eraseCache=true';
+            window.location = window.location.href + '?eraseCache=true';
         });
         @endif
     </script>

@@ -106,7 +106,7 @@ class PostController extends Controller
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
             $filename = time() . '.' . $avatar->getClientOriginalExtension();
-            Image::make($avatar)->fit(300, 300)->save(public_path('/uploads/avatars/' . $filename));
+            Image::make($avatar)->fit(300, 300)->save(base_path('/public_html/blog/uploads/avatars/' . $filename));
 
             $me->avatar = $filename;
             $me->save();
@@ -202,7 +202,7 @@ class PostController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $filename = time() . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->save(public_path('/uploads/images/' . $filename));
+            Image::make($image)->save(base_path('/public_html/blog/uploads/images/' . $filename));
             $post->image = $filename;
         }
         $post->save();
@@ -285,7 +285,7 @@ class PostController extends Controller
         ]);
         $image = $request->file('image');
         $filename = time() . '.' . $image->getClientOriginalExtension();
-        Image::make($image)->save(public_path('/uploads/images/' . $filename));
+        Image::make($image)->save(base_path('/public_html/blog/uploads/images/' . $filename));
         $post->image = $filename;
         $post->save();
         $post->tags()->attach($request->input('tags') === null ? [] : $request->input('tags'));
@@ -476,7 +476,7 @@ class PostController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $filename = time() . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->save(public_path('/uploads/images/' . $filename));
+            Image::make($image)->save(base_path('/public_html/blog/uploads/images/' . $filename));
             $post->image = $filename;
         }
         $post->save();
